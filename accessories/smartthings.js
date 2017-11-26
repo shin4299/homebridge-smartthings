@@ -235,14 +235,14 @@ function SmartThingsAccessory(platform, device) {
 }
 	    	   else if (device.commands.Irrigation) {
             this.deviceGroup = "Valve"
-            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Irrigation)
-            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Open)
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.valve == "open"); })
             thisCharacteristic.on('set', function(value, callback) {
                     if (value)
-                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                        that.platform.api.runCommand(callback, that.deviceid, "Open");
                     else
-                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
-		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+                        that.platform.api.runCommand(callback, that.deviceid, "Close"); });
+		        that.platform.addAttributeUsage("valve", this.deviceid, thisCharacteristic);
 }
  else {
         this.deviceGroup = "switch";
