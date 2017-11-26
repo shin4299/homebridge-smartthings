@@ -233,17 +233,6 @@ function SmartThingsAccessory(platform, device) {
                         that.platform.api.runCommand(callback, that.deviceid, "off"); });
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 }
-	    	   else if (device.commands.Irrigation) {
-            this.deviceGroup = "valve"
-            thisCharacteristic = this.getaddService(Service.Irrigation).getCharacteristic(Characteristic.Open)
-            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.valve == "open"); })
-            thisCharacteristic.on('set', function(value, callback) {
-                    if (value)
-                        that.platform.api.runCommand(callback, that.deviceid, "Open");
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "Close"); });
-		        that.platform.addAttributeUsage("valve", this.deviceid, thisCharacteristic);
-}
  else {
         this.deviceGroup = "switch";
         thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
