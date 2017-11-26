@@ -233,9 +233,9 @@ function SmartThingsAccessory(platform, device) {
                         that.platform.api.runCommand(callback, that.deviceid, "off"); });
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 }
-	    	   else if (device.commands.Faucet) {
-            this.deviceGroup = "faucet"
-            thisCharacteristic = this.getaddService(Service.Faucet).getCharacteristic(Characteristic.On)
+	    	   else if (device.commands.Irrigation) {
+            this.deviceGroup = "Valve"
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Irrigation)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
             thisCharacteristic.on('set', function(value, callback) {
                     if (value)
