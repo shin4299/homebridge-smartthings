@@ -233,7 +233,7 @@ function SmartThingsAccessory(platform, device) {
                         that.platform.api.runCommand(callback, that.deviceid, "off"); });
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 }
-	    	    	    if (device.commands.Faucet) {
+	    	   else if (device.commands.Faucet) {
             this.deviceGroup = "faucet"
             thisCharacteristic = this.getaddService(Service.waterFaucet).getCharacteristic(Characteristic.On)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
