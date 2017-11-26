@@ -235,7 +235,7 @@ function SmartThingsAccessory(platform, device) {
 }
 	    	   else if (device.commands.Faucet) {
             this.deviceGroup = "faucet"
-            thisCharacteristic = this.getaddService(Service.waterFaucet).getCharacteristic(Characteristic.On)
+            thisCharacteristic = this.getaddService(Service.Faucet).getCharacteristic(Characteristic.On)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
             thisCharacteristic.on('set', function(value, callback) {
                     if (value)
