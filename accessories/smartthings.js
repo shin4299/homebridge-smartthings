@@ -222,6 +222,19 @@ function SmartThingsAccessory(platform, device) {
         
     }
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
+	    	        if (device.commands.Outlet) {
+            this.deviceGroup = "outlet"
+            
+            thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
+            thisCharacteristic.on('set', function(value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
+		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+}
+ else {
         this.deviceGroup = "switch";
         thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
         thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
@@ -233,7 +246,7 @@ function SmartThingsAccessory(platform, device) {
             });
 		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
     }
-
+    }
     if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attributes.smoke)) {
         this.deviceGroup = "detectors";
 
