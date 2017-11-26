@@ -222,10 +222,20 @@ function SmartThingsAccessory(platform, device) {
         
     }
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
-	    	        if (device.commands.Outlet) {
+	    	    if (device.commands.Outlet) {
             this.deviceGroup = "outlet"
-            
             thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
+            thisCharacteristic.on('set', function(value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
+		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+}
+	    	    	    if (device.commands.Faucet) {
+            this.deviceGroup = "faucet"
+            thisCharacteristic = this.getaddService(Service.Faucet).getCharacteristic(Characteristic.On)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
             thisCharacteristic.on('set', function(value, callback) {
                     if (value)
