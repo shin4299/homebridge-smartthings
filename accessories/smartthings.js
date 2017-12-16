@@ -311,7 +311,7 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.Light)); });
 		that.platform.addAttributeUsage("Light", this.deviceid, thisCharacteristic);
-    	}
+    }
 	
     if (device.capabilities["Temperature Measurement"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
