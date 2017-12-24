@@ -222,7 +222,18 @@ function SmartThingsAccessory(platform, device) {
         
     }
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
-	    	    if (device.commands.Outlet) {
+	 if (device.commands.Outlet) {
+            this.deviceGroup = "outlet"
+            thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
+            thisCharacteristic.on('set', function(value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
+		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+}
+	 else if (device.capabilities["Power Meter"] !== undefined) {
             this.deviceGroup = "outlet"
             thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
@@ -370,12 +381,6 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 		that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
 	}
-
-    if (device.capabilities["Power Meter"] !== undefined) {	
-        thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.CurrentConsumption1)
-        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); });
-		that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
-    }
 
     if (device.capabilities["Acceleration Sensor"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
