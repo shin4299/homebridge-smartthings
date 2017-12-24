@@ -335,10 +335,10 @@ function SmartThingsAccessory(platform, device) {
 	
     if (device.capabilities["Temperature Measurement"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({minValue: -10})
+        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({minValue: -20})
         thisCharacteristic.on('get', function(callback) {
                 if (that.platform.temperature_unit == 'C')
-                    callback(null, parseInt(that.device.attributes.temperature));
+                    callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8)*10)/10);
                 else
                     callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8)*10)/10);
             });
