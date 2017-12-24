@@ -335,7 +335,7 @@ function SmartThingsAccessory(platform, device) {
 	
     if (device.capabilities["Temperature Measurement"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature)
+        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({minValue: -10})
         thisCharacteristic.on('get', function(callback) {
                 if (that.platform.temperature_unit == 'C')
                     callback(null, parseInt(that.device.attributes.temperature));
