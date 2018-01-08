@@ -221,7 +221,7 @@ function SmartThingsAccessory(platform, device) {
         this.deviceGroup = "button";	
     }
     if (device.capabilities["alarm"] !== undefined && this.deviceGroup == "unknown") {
-      	if (device.commands.SecuritySystem) {  this.deviceGroup = "SecuritySystem"
+      	if (device.commands.SecuritySystem) {  this.deviceGroup = "SecuritySystem";
         thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
         thisCharacteristic.on('get', function(callback) {
                 alarm (that.device.attributes.alarm) {
@@ -278,7 +278,7 @@ function SmartThingsAccessory(platform, device) {
                         that.device.attributes.alarm = "off";
                         break;
                     case Characteristic.SecuritySystemTargetState.AWAY_ARM:
-                        that.platform.api.runCommand(callback, that.deviceid, "siren");
+                        that.platform.api.runCommand(callback, that.deviceid, "strobe");
                         that.device.attributes.alarm = "strobe";
                         break;
                     case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
@@ -291,7 +291,8 @@ function SmartThingsAccessory(platform, device) {
                         break;
                 } });
 		that.platform.addAttributeUsage("alarm", this.deviceid, thisCharacteristic);
-		
+		}			     
+	else {this.deviceGroup = "button"};	
     }
 
 	
