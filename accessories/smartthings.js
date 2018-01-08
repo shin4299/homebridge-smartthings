@@ -222,31 +222,78 @@ function SmartThingsAccessory(platform, device) {
     }
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
-	 if (device.commands.SecuritySystem) {
-            this.deviceGroup = "SecuritySystem"
-            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
-            thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.switch == 'on')
-                    callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
-                else if (that.device.attributes.switch == 'on1')
-                    callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
-                else if (that.device.attributes.switch == 'on2')
-                    callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
-                else
-                    callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
-            });
-            thisCharacteristic.on('set', function(value, callback) {
-                    if (Characteristic.SecuritySystemCurrentState.AWAY_ARM == value)
+      	if (device.commands.SecuritySystem) {  this.deviceGroup = "SecuritySystem"
+        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
+        thisCharacteristic.on('get', function(callback) {
+                switch (that.device.attributes.switch) {
+                    case 'on':
+                        callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+                        break;
+                    case 'on1':
+                        callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+                        break;
+                    case 'on2':
+                        callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+                        break;
+                    case 'off':
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                    default:
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                } });
+		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+		
+        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
+        thisCharacteristic.on('get', function(callback) {
+                switch (that.device.attributes.switch) {
+                    case 'on':
+                        callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+                        break;
+                    case 'on1':
+                        callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+                        break;
+                    case 'on2':
+                        callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+                        break;
+                    case 'off':
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                    default:
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                } });
+        thisCharacteristic.on('set', function(value, callback) {
+		if (value == off) {
+                    value = Characteristic.SecuritySystemTargetState.DISARM;
+                } else if (value == on) {
+                    value = Characteristic.SecuritySystemTargetState.AWAY_ARM;
+                } else if (value == on1) {
+                    value = Characteristic.SecuritySystemTargetState.NIGHT_ARM;
+                } else if (value == on2) {
+                    value = Characteristic.SecuritySystemTargetState.STAY_ARM;
+                }  
+                switch (value) {
+                    case Characteristic.SecuritySystemTargetState.DISARM:
+                        that.platform.api.runCommand(callback, that.deviceid, "off");
+                        that.device.attributes.switch = "off";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.AWAY_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "on");
-                    else if (Characteristic.SecuritySystemCurrentState.NIGHT_ARM == value)
+                        that.device.attributes.switch = "on";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "on1");
-                    else if (Characteristic.SecuritySystemCurrentState.STAY_ARM == value)
+                        that.device.attributes.switch = "on1";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.STAY_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "on2");
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
-                        
-		    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-}
+                        that.device.attributes.switch = "on2";
+                        break;
+                } });
+		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+		
+    }
 
 	else if (device.commands.Outlet) {
             this.deviceGroup = "outlet"
