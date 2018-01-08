@@ -218,9 +218,17 @@ function SmartThingsAccessory(platform, device) {
 //    }
 
     if (device.capabilities["Button"] !== undefined) {
-        this.deviceGroup = " button";
-        
+        this.deviceGroup = "button"
+            thisCharacteristic = this.getaddService(Service.Button).getCharacteristic(Characteristic.Push)
+            thisCharacteristic.push('get', function(callback) { callback(null, that.device.attributes.button == "push"); })
+            thisCharacteristic.push('set', function(value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "push");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "push"); });
+		        that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);	
     }
+	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
 	 if (device.commands.Outlet) {
             this.deviceGroup = "outlet"
