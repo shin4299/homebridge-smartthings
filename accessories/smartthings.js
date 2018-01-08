@@ -220,36 +220,9 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Button"] !== undefined) {
         this.deviceGroup = "button";	
     }
-    if (device.capabilities["alarm"] !== undefined && this.deviceGroup == "unknown") {
-      	if (device.commands.SecuritySystem) {  
-	this.deviceGroup = "SecuritySystem"
-        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
-            thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.alarm == 'strobe')
-                    callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
-                else if (that.device.attributes.alarm == 'siren')
-                    callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
-                else if (that.device.attributes.alarm == 'both')
-                    callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
-                else if (that.device.attributes.alarm == 'off')
-                    callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
-            });
-            thisCharacteristic.on('set', function(value, callback) {
-                    if (Characteristic.SecuritySystemCurrentState.AWAY_ARM == value)
-                        that.platform.api.runCommand(callback, that.deviceid, "strobe");
-                    else if (Characteristic.SecuritySystemCurrentState.NIGHT_ARM == value)
-                        that.platform.api.runCommand(callback, that.deviceid, "siren");
-                    else if (Characteristic.SecuritySystemCurrentState.STAY_ARM == value)
-                        that.platform.api.runCommand(callback, that.deviceid, "both");
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
-                        
-		    that.platform.addAttributeUsage("alarm", this.deviceid, thisCharacteristic);
-}
 
-	else {this.deviceGroup = "button"};	
-    }
-
+	
+	
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
 	 if (device.commands.Outlet) {
