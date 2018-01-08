@@ -222,7 +222,33 @@ function SmartThingsAccessory(platform, device) {
     }
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
-	 if (device.commands.Outlet) {
+	 if (device.commands.SecuritySystem) {
+            this.deviceGroup = "SecuritySystem"
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
+            thisCharacteristic.on('get', function(callback) {
+                if (that.device.attributes.switch == 'on')
+                    callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+                else if (that.device.attributes.switch == 'on1')
+                    callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+                else if (that.device.attributes.switch == 'on2')
+                    callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+                else
+                    callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+            });
+            thisCharacteristic.on('set', function(value, callback) {
+                    if (Characteristic.SecuritySystemCurrentState.AWAY_ARM == value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else if (Characteristic.SecuritySystemCurrentState.NIGHT_ARM == value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on1");
+                    else if (Characteristic.SecuritySystemCurrentState.STAY_ARM == value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on2");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
+                        
+		    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+}
+
+	else if (device.commands.Outlet) {
             this.deviceGroup = "outlet"
             thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
