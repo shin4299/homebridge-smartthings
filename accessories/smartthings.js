@@ -230,7 +230,7 @@ function SmartThingsAccessory(platform, device) {
       	if (device.commands.SecuritySystem) {  
         thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
         thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.door == 'closed')
+                if (that.device.attributes.door == 'close')
                     callback(null, Characteristic.SecuritySystemTargetState.AWAY_ARM);
                 else if (that.device.attributes.door == 'closing')
                     callback(null, Characteristic.SecuritySystemTargetState.NIGHT_ARM);
@@ -240,8 +240,8 @@ function SmartThingsAccessory(platform, device) {
                     callback(null, Characteristic.SecuritySystemTargetState.DISARMED); });
         thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SecuritySystemCurrentState.AWAY_ARM) {
-                    that.platform.api.runCommand(callback, that.deviceid, "closed");
-                    that.device.attributes.door = "closed";
+                    that.platform.api.runCommand(callback, that.deviceid, "close");
+                    that.device.attributes.door = "close";
                 }
                  else if (value == Characteristic.SecuritySystemCurrentState.NIGHT_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "closing");
@@ -266,7 +266,7 @@ function SmartThingsAccessory(platform, device) {
                     case 'opening':
                         callback(null, Characteristic.SecuritySystemTargetState.STAY_ARM);
                         break;
-                    case 'closed':
+                    case 'close':
                         callback(null, Characteristic.SecuritySystemTargetState.AWAY_ARM);
                         break;
                     case 'closing':
