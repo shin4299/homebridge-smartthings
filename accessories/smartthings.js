@@ -262,8 +262,9 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.Brightness)
             thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
             thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-	}
+			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic));
+	});
+    }
     }
     if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attributes.smoke)) {
         this.deviceGroup = "detectors";
