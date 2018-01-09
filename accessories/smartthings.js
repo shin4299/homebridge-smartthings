@@ -273,9 +273,6 @@ function SmartThingsAccessory(platform, device) {
                     case 'closing':
                         callback(null, Characteristic.SecuritySystemTargetState.NIGHT_ARM);
                         break;
-                    default:
-                        callback(null, Characteristic.TSecuritySystemTargetState.DISARMED);
-                        break;
                 }
             });
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
