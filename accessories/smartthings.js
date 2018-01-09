@@ -228,29 +228,73 @@ function SmartThingsAccessory(platform, device) {
   
 	    
       	if (device.commands.SecuritySystem) {  
-	this.deviceGroup = "SecuritySystem"
-        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
             thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.alarm == 'strobe')
-                    callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
-                else if (that.device.attributes.alarm == 'siren')
-                    callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
-                else if (that.device.attributes.alarm == 'both')
-                    callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
-                else if (that.device.attributes.alarm == 'off')
-                    callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
-            });
-            thisCharacteristic.on('set', function(value, callback) {
-                    if (Characteristic.SecuritySystemCurrentState.AWAY_ARM == value)
+                switch (that.device.attributes.alarm) {
+                    case 'strobe':
+                        callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+                        break;
+                    case 'siren':
+                        callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+                        break;
+                    case 'both':
+                        callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+                        break;
+                    case 'off':
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                    default:
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                } });
+		that.platform.addAttributeUsage("alarm", this.deviceid, thisCharacteristic);
+
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
+            thisCharacteristic.on('get', function(callback) {
+                switch (that.device.attributes.alarm) {
+                    case 'strobe':
+                        callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+                        break;
+                    case 'siren':
+                        callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+                        break;
+                    case 'both':
+                        callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+                        break;
+                    case 'off':
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                    default:
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                } });
+
+
+        thisCharacteristic.on('set', function(value, callback) {
+		if (value === false) {
+                    value = Characteristic.SecuritySystemTargetState.DISARMED;
+                } else if (value === true) {
+                    value = Characteristic.SecuritySystemTargetState.AWAY_ARM;
+                }  
+                switch (value) {
+                    case Characteristic.SecuritySystemTargetState.AWAY_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "strobe");
-                    else if (Characteristic.SecuritySystemCurrentState.NIGHT_ARM == value)
+                        that.device.attributes.alarm = "strobe";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "siren");
-                    else if (Characteristic.SecuritySystemCurrentState.STAY_ARM == value)
+                        that.device.attributes.alarm = "siren";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.STAY_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "both");
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
-                        
-		    that.platform.addAttributeUsage("alarm", this.deviceid, thisCharacteristic);
+                        that.device.attributes.alarm = "both";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.DISARMED:
+                        that.platform.api.runCommand(callback, that.deviceid, "off");
+                        that.device.attributes.alarm = "off";
+                        break;
+                } });
+		that.platform.addAttributeUsage("alarm", this.deviceid, thisCharacteristic);
 }
 
 	    
