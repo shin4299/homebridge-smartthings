@@ -238,7 +238,7 @@ function SmartThingsAccessory(platform, device) {
                 else if (that.device.attributes.door == 'opening')
                     callback(null, Characteristic.SecuritySystemTargetState.STAY_ARM);
                 else if (that.device.attributes.door == 'open')
-                    callback(null, Characteristic.SecuritySystemTargetState.DISARMED); });
+                    callback(null, Characteristic.SecuritySystemTargetState.DISARM); });
         thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SecuritySystemCurrentState.AWAY_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "close");
@@ -262,7 +262,7 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) {
                 switch (that.device.attributes.door) {
                     case 'open':
-                        callback(null, Characteristic.SecuritySystemTargetState.DISARMED);
+                        callback(null, Characteristic.SecuritySystemTargetState.DISARM);
                         break;
                     case 'opening':
                         callback(null, Characteristic.SecuritySystemTargetState.STAY_ARM);
