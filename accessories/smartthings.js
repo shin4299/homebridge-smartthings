@@ -271,11 +271,6 @@ function SmartThingsAccessory(platform, device) {
 
 
         thisCharacteristic.on('set', function(value, callback) {
-		if (value === false) {
-                    value = Characteristic.SecuritySystemTargetState.DISARMED;
-                } else if (value === true) {
-                    value = Characteristic.SecuritySystemTargetState.AWAY_ARM;
-                }  
                 switch (value) {
                     case Characteristic.SecuritySystemTargetState.AWAY_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "strobe");
