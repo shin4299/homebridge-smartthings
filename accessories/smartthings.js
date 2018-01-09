@@ -228,6 +228,7 @@ function SmartThingsAccessory(platform, device) {
   
 	    
       	if (device.commands.SecuritySystem) {  
+        this.deviceGroup = "SecuritySystem"
         thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
         thisCharacteristic.on('get', function(callback) {
                 if (that.device.attributes.door == 'close')
