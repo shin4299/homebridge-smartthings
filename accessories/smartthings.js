@@ -279,7 +279,6 @@ function SmartThingsAccessory(platform, device) {
             });
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 			
-        this.getaddService(Service.SecuritySystem).setCharacteristic(Characteristic.SecuritySystemCurrentState, false);
 }
 
 	    
