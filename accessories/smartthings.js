@@ -273,6 +273,9 @@ function SmartThingsAccessory(platform, device) {
                     case 'night':
                         callback(null, Characteristic.SecuritySystemTargetState.NIGHT_ARM);
                         break;
+                    default:
+                        callback(null, Characteristic.SecuritySystemTargetState.DISARM);
+                        break;
                 }
             });
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
