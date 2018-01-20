@@ -49,6 +49,10 @@ function SmartThingsAccessory(platform, device) {
         this.value = this.getDefaultValue();
     };
     inherits(TotalPowerConsumption, Characteristic);    
+
+	this.service = new Service.Outlet(this.options['name']);
+
+	this.service.addOptionalCharacteristic(TotalPowerConsumption);
 	
 	
 	
