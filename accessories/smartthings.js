@@ -41,8 +41,8 @@ function SmartThingsAccessory(platform, device) {
     var EvePowerConsumption = function() {
         Characteristic.call(this, 'Consumption');
         this.setProps({
-            format: Characteristic.Formats.UINT16,
-            unit: 'watts',
+            format: Characteristic.Formats.FLOAT,
+            unit: 'W',
             maxValue: 1000000000,
             minValue: 0,
             minStep: 1,
@@ -56,7 +56,7 @@ function SmartThingsAccessory(platform, device) {
         Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
         this.setProps({
             format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
-            unit: 'kilowatthours',
+            unit: 'KWh',
             maxValue: 1000000000,
             minValue: 0,
             minStep: 0.001,
@@ -67,7 +67,7 @@ function SmartThingsAccessory(platform, device) {
     inherits(EveTotalPowerConsumption, Characteristic);
 
     var PowerMeterService = function(displayName, subtype) {
-        Service.call(this, displayName, '00000001-0000-1777-8000-775D67EC4377', subtype);
+        Service.call(this, displayName, subtype);
         this.addCharacteristic(EvePowerConsumption);
         this.addOptionalCharacteristic(EveTotalPowerConsumption);
     };
@@ -516,12 +516,10 @@ function SmartThingsAccessory(platform, device) {
 	}
 
     if (device.capabilities["Power Source"] !== undefined) {
+
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({illuminance_unit: 'KWh',
-            maxValue: 1000000,
-            minValue: 0,
-            minStep: 0.01})
+        thisCharacteristic = this.getaddService(Service.PowerMeterService).getCharacteristic(Characteristic.EveTotalPowerConsumption)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
