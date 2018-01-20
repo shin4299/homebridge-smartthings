@@ -469,8 +469,8 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Power Source"] !== undefined) {
 
         if(device.commands.energy) {
-	 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.setProps({
+	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
+        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({
             format: Characteristic.Formats.FLOAT,
             unit: "KWh",
             maxValue: 4294967295,
