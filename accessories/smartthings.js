@@ -473,7 +473,7 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.setProps({format: Characteristic.Formats.FLOAT, unit: 'W',
+        thisCharacteristic = this.getaddService(Service.LightSensor).setProps({format: Characteristic.Formats.FLOAT, unit: 'W',
             maxValue: 1000000,
             minValue: 0,
             minStep: 1});
