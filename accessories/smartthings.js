@@ -35,26 +35,6 @@ function SmartThingsAccessory(platform, device) {
     var idKey = 'hbdev:smartthings:' + this.deviceid;
     var id = uuid.generate(idKey);	
 
-
-    var TotalPowerConsumption = function() {
-        Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
-        this.setProps({
-            format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
-            unit: 'KWh',
-            maxValue: 1000000000,
-            minValue: 0,
-            minStep: 0.1,
-            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-        });
-        this.value = this.getDefaultValue();
-    };
-    inherits(TotalPowerConsumption, Characteristic);    
-
-	this.service = new Service.Outlet(this.options['name']);
-
-	this.service.addOptionalCharacteristic(TotalPowerConsumption);
-	
-	
 	
     Accessory.call(this, this.name, id);
     var that = this;
@@ -494,7 +474,12 @@ function SmartThingsAccessory(platform, device) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
 				
-        thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.TotalPowerConsumption)
+        thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.RotationSpeed).setProps({
+            unit: 'KWh',
+            maxValue: 1000000,
+            minValue: 0,
+            minStep: 0.1,
+        });
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
