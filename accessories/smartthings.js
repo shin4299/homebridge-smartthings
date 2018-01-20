@@ -53,6 +53,41 @@ function SmartThingsAccessory(platform, device) {
 
     this.deviceGroup = "unknown"; //This way we can easily tell if we set a device group
 	var thisCharacteristic;
+
+	
+	
+	
+    var PowerConsumption = function() {
+        Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
+        this.setProps({
+            format: Characteristic.Formats.UINT16,
+            unit: 'watts',
+            maxValue: 1000000000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+        });
+        this.value = this.getDefaultValue();
+    };
+    inherits(PowerConsumption, Characteristic);
+
+    var TotalPowerConsumption = function() {
+        Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+        this.setProps({
+            format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
+            unit: 'kilowatthours',
+            maxValue: 1000000000,
+            minValue: 0,
+            minStep: 0.001,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+        });
+        this.value = this.getDefaultValue();
+    };
+    inherits(TotalPowerConsumption, Characteristic);
+	
+	
+	
+	
 	
     if (device.capabilities["Switch Level"] !== undefined) {
         if (device.commands.levelOpenClose) {
@@ -469,7 +504,7 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Power Source"] !== undefined) {
         if(device.commands.energy) {
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-        thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(EnergyCharacteristics.TotalConsumption1)
+        thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristics.TotalPowerConsumption)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
