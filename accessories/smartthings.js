@@ -457,8 +457,8 @@ function SmartThingsAccessory(platform, device) {
             maxValue: 1000000,
             minValue: 0,
             minStep: 1})
-        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.real)); });
-                that.platform.addAttributeUsage("real", this.deviceid, thisCharacteristic);
+        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); });
+                that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
         }
 	    else {
         this.deviceGroup = 'EnergyMeter';
