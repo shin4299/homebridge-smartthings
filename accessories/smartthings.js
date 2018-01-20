@@ -471,7 +471,7 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = 'EnergyMeter';
-        thisCharacteristic = this.getaddService(PowerMeterService.PowerMeterService).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
+        thisCharacteristic = this.addService(PowerMeterService.PowerMeterService).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
