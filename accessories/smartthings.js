@@ -486,7 +486,7 @@ function SmartThingsAccessory(platform, device) {
 		this.value = this.getDefaultValue();
 	};
 
-	inherits(EveTotalPowerConsumption, Characteristic);
+	inherits(TotalPowerConsumption, Characteristic);
 		
 		
         thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.TotalPowerConsumption)
