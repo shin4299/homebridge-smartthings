@@ -15,7 +15,7 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
 
 	    
 	    
-    TotalPowerConsumption = function() {
+        var TotalPowerConsumption = function() {
         Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
         this.setProps({
             format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
@@ -27,7 +27,8 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         });
         this.value = this.getDefaultValue();
     };
-	    
+	inherits(TotalPowerConsumption, Characteristic);
+    
 	    
 	    
         uuid = ouuid;
