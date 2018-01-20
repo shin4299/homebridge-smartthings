@@ -12,8 +12,24 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Service = oService;
         Characteristic = oCharacteristic;
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
-        TotalPowerConsumption = require('../lib/TotalPowerConsumption').TotalPowerConsumption(Characteristic)
 
+	    
+	    
+    TotalPowerConsumption = function() {
+        Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+        this.setProps({
+            format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
+            unit: 'KWh',
+            maxValue: 1000000000,
+            minValue: 0,
+            minStep: 0.1,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+        });
+        this.value = this.getDefaultValue();
+    };
+	    
+	    
+	    
         uuid = ouuid;
 
         inherits(SmartThingsAccessory, Accessory);
