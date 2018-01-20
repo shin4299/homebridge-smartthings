@@ -470,11 +470,9 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
         thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristic.CurrentRelativeHumidity).setProps({
-            unit: "KWh",
-            maxValue: 4294967295,
+            maxValue: 9999,
             minValue: 0,
-            minStep: 0.1,
-            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+            minStep: 0.1
         });
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
