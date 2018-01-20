@@ -39,7 +39,7 @@ function SmartThingsAccessory(platform, device) {
 	
 	
     var EvePowerConsumption = function() {
-        Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
+        Characteristic.call(this, 'Consumption');
         this.setProps({
             format: Characteristic.Formats.UINT16,
             unit: 'watts',
@@ -74,9 +74,6 @@ function SmartThingsAccessory(platform, device) {
 
     inherits(PowerMeterService, Service);
 
-    this.service = new PowerMeterService(this.options['name']);
-    this.service.getCharacteristic(EvePowerConsumption).on('get', this.getPowerConsumption.bind(this));
-    this.service.addCharacteristic(EveTotalPowerConsumption).on('get', this.getTotalPowerConsumption.bind(this));
 	
 	
 	
