@@ -469,7 +469,13 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Power Source"] !== undefined) {
         if(device.commands.energy) {
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-        thisCharacteristic = this.getaddService(Service.CarbonMonoxideSensor).getCharacteristic(Characteristic.CarbonMonoxideLevel)
+        thisCharacteristic = this.getaddService(Service.CarbonMonoxideSensor).getCharacteristic(Characteristic.CarbonMonoxideLevel).setProps({
+            unit: "KWh",
+            maxValue: 4294967295,
+            minValue: 0,
+            minStep: 0.1,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+        });
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
