@@ -453,10 +453,10 @@ function SmartThingsAccessory(platform, device) {
 
     if (device.capabilities["Energy Meter"] !== undefined) {
         if(device.commands.power) {
-                if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
+                if (this.deviceGroup == 'unknown') this.deviceGroup = "nergy Meter";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
-        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.view)); });
-                that.platform.addAttributeUsage("view", this.deviceid, thisCharacteristic);
+        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
+                that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
         }
 	    else {
         this.deviceGroup = 'EnergyMeter';
@@ -467,7 +467,6 @@ function SmartThingsAccessory(platform, device) {
 	}
 
     if (device.capabilities["Power Source"] !== undefined) {
-
         if(device.commands.energy) {
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
