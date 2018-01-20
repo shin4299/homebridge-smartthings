@@ -12,7 +12,7 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Service = oService;
         Characteristic = oCharacteristic;
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
-        EnergyService = require('../lib/customCharacteristics').EnergyService(Service)
+        EnergyService = require('../lib/customService').EnergyService(Service)
 
         uuid = ouuid;
 
