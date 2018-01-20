@@ -12,6 +12,7 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Service = oService;
         Characteristic = oCharacteristic;
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
+        TotalPowerConsumption = require('../lib/TotalPowerConsumption').TotalPowerConsumption
 
         uuid = ouuid;
 
@@ -472,7 +473,7 @@ function SmartThingsAccessory(platform, device) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
 				
-        thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(EnergyCharacteristics.TotalPowerConsumption)
+        thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.TotalPowerConsumption)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
