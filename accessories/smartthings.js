@@ -33,40 +33,7 @@ function SmartThingsAccessory(platform, device) {
     this.device = device;
 
     var idKey = 'hbdev:smartthings:' + this.deviceid;
-    var id = uuid.generate(idKey);
-
-
-	
-	
- var PowerConsumption = function() {
-        Characteristic.call(this, 'Consumption');
-        this.setProps({
-            format: Characteristic.Formats.FLOAT,
-            unit: 'W',
-            maxValue: 1000000,
-            minValue: 0,
-            minStep: 1,
-        });
-        this.value = this.getDefaultValue();
-    };
-    inherits(PowerConsumption, Characteristic);
-
-    var TotalPowerConsumption = function() {
-        Characteristic.call(this, 'Total Consumption');
-        this.setProps({
-            format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
-            unit: 'KWh',
-            maxValue: 10000000,
-            minValue: 0,
-            minStep: 0.01,
-        });
-        this.value = this.getDefaultValue();
-    };
-    inherits(TotalPowerConsumption, Characteristic);	
-	
-	
-	
-	
+    var id = uuid.generate(idKey);	
 	
     Accessory.call(this, this.name, id);
     var that = this;
@@ -504,7 +471,7 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Power Source"] !== undefined) {
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.TotalPowerConsumption)
+        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
