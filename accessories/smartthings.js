@@ -38,39 +38,6 @@ function SmartThingsAccessory(platform, device) {
 	
 	
 	
-    var EvePowerConsumption = function() {
-        Characteristic.call(this, 'Consumption');
-        this.setProps({
-            format: Characteristic.Formats.FLOAT,
-            unit: 'W',
-            maxValue: 1000000000,
-            minValue: 0,
-            minStep: 1,
-        });
-        this.value = this.getDefaultValue();
-    };
-    inherits(EvePowerConsumption, Characteristic);
-
-    var EveTotalPowerConsumption = function() {
-        Characteristic.call(this, 'Total Consumption');
-        this.setProps({
-            format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
-            unit: 'KWh',
-            maxValue: 1000000000,
-            minValue: 0,
-            minStep: 0.1,
-        });
-        this.value = this.getDefaultValue();
-    };
-    inherits(EveTotalPowerConsumption, Characteristic);
-
-    var PowerMeterService = function(displayName, subtype) {
-        Service.call(this, displayName, subtype);
-        this.addCharacteristic(EvePowerConsumption);
-        this.addOptionalCharacteristic(EveTotalPowerConsumption);
-    };
-
-    inherits(PowerMeterService, Service);
 
 	
 	
@@ -517,7 +484,7 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.TotalConsumption).setProps({format: Characteristic.Formats.FLOAT, unit: 'KWh',
+        thisCharacteristic = this.getaddService(Service.LightSensor).setProps({format: Characteristic.Formats.FLOAT, unit: 'KWh',
             maxValue: 1000000,
             minValue: 0,
             minStep: 0.1})
