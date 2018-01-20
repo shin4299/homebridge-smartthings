@@ -484,7 +484,7 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({LightLevel_unit: 'KWh',
+        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({unit: 'KWh',
             maxValue: 1000000,
             minValue: 0,
             minStep: 0.1})
