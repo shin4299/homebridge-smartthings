@@ -473,10 +473,7 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({
-            maxValue: 1000000,
-            minValue: 0,
-            minStep: 0.1});
+        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
