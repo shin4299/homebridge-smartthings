@@ -34,6 +34,56 @@ function SmartThingsAccessory(platform, device) {
 
     var idKey = 'hbdev:smartthings:' + this.deviceid;
     var id = uuid.generate(idKey);	
+
+	
+	
+	
+    var EvePowerConsumption = function() {
+        Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
+        this.setProps({
+            format: Characteristic.Formats.UINT16,
+            unit: 'watts',
+            maxValue: 1000000000,
+            minValue: 0,
+            minStep: 1,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+        });
+        this.value = this.getDefaultValue();
+    };
+    inherits(EvePowerConsumption, Characteristic);
+
+    var EveTotalPowerConsumption = function() {
+        Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+        this.setProps({
+            format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
+            unit: 'kilowatthours',
+            maxValue: 1000000000,
+            minValue: 0,
+            minStep: 0.001,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+        });
+        this.value = this.getDefaultValue();
+    };
+    inherits(EveTotalPowerConsumption, Characteristic);
+
+    var PowerMeterService = function(displayName, subtype) {
+        Service.call(this, displayName, '00000001-0000-1777-8000-775D67EC4377', subtype);
+        this.addCharacteristic(EvePowerConsumption);
+        this.addOptionalCharacteristic(EveTotalPowerConsumption);
+    };
+
+    inherits(PowerMeterService, Service);
+
+    this.service = new PowerMeterService(this.options['name']);
+    this.service.getCharacteristic(EvePowerConsumption).on('get', this.getPowerConsumption.bind(this));
+    this.service.addCharacteristic(EveTotalPowerConsumption).on('get', this.getTotalPowerConsumption.bind(this));
+	
+	
+	
+	
+	
+	
+	
 	
     Accessory.call(this, this.name, id);
     var that = this;
