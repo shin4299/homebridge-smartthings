@@ -46,21 +46,19 @@ function SmartThingsAccessory(platform, device) {
             maxValue: 1000000000,
             minValue: 0,
             minStep: 1,
-            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
         });
         this.value = this.getDefaultValue();
     };
     inherits(EvePowerConsumption, Characteristic);
 
     var EveTotalPowerConsumption = function() {
-        Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+        Characteristic.call(this, 'Total Consumption');
         this.setProps({
             format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
             unit: 'KWh',
             maxValue: 1000000000,
             minValue: 0,
-            minStep: 0.001,
-            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+            minStep: 0.1,
         });
         this.value = this.getDefaultValue();
     };
