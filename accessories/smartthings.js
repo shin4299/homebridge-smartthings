@@ -36,17 +36,6 @@ function SmartThingsAccessory(platform, device) {
     var id = uuid.generate(idKey);	
 
 	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
     Accessory.call(this, this.name, id);
     var that = this;
 
@@ -468,7 +457,7 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({unit: 'W',
             maxValue: 1000000,
             minValue: 0,
-            minStep: 1})
+            minStep: 1});
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); });
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
         }
@@ -484,10 +473,10 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({unit: 'KWh',
+        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({
             maxValue: 1000000,
             minValue: 0,
-            minStep: 0.1})
+            minStep: 0.1});
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
