@@ -465,7 +465,7 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Energy Meter"] !== undefined) {
         if(device.commands.power) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({illuminance_unit: 'W',
+        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({unit: 'W',
             maxValue: 1000000,
             minValue: 0,
             minStep: 1})
@@ -484,7 +484,7 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
                 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({AmbientLightLevel_unit: 'KWh',
+        thisCharacteristic = this.getaddService(Service.LightSensor)).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({LightLevel_unit: 'KWh',
             maxValue: 1000000,
             minValue: 0,
             minStep: 0.1})
