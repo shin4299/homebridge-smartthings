@@ -12,7 +12,6 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Service = oService;
         Characteristic = oCharacteristic;
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
-        PowerMeterService = require('../lib/customService').PowerMeterService(Service)
 
         uuid = ouuid;
 
@@ -461,7 +460,7 @@ function SmartThingsAccessory(platform, device) {
         }
 	    else {
         this.deviceGroup = 'EnergyMeter';
-        thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
+        thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(EnergyCharacteristics.TotalConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 		that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
     	}
@@ -471,7 +470,7 @@ function SmartThingsAccessory(platform, device) {
 
         if(device.commands.energy) {
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
-        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(EnergyCharacteristics.TotalConsumption1)
+        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
