@@ -451,11 +451,41 @@ function SmartThingsAccessory(platform, device) {
     }
 
     if (device.capabilities["Energy Meter"] !== undefined) {
+        if(device.commands.power) {
+                if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
+        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({unit: 'W',
+            maxValue: 1000000,
+            minValue: 0,
+            minStep: 1})
+        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.real)); });
+                that.platform.addAttributeUsage("real", this.deviceid, thisCharacteristic);
+        }
+	    else {
         this.deviceGroup = 'EnergyMeter';
         thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 		that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
+    	}
 	}
+
+    if (device.capabilities["Power Source"] !== undefined) {
+        if(device.commands.energy) {
+                if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
+        thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel).setProps({unit: 'KWh',
+            maxValue: 1000000,
+            minValue: 0,
+            minStep: 0.01})
+        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
+                that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
+        }
+	    else {
+        this.deviceGroup = 'EnergyMeter';
+        thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
+        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
+		that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
+    	}
+	}
+
 
     if (device.capabilities["Acceleration Sensor"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
