@@ -474,8 +474,17 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-        thisCharacteristic = this.getaddService(Service.HumiditySensor).addCharacteristic(EnergyCharacteristics.TotalPowerConsumption)
-        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
+//        thisCharacteristic = this.getaddService(Service.HumiditySensor).addCharacteristic(EnergyCharacteristics.TotalPowerConsumption)
+        thisCharacteristic = this.getaddService(Service.HumiditySensor).addCharacteristic('Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+        this.setProps({
+            format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
+            unit: 'KWh',
+            maxValue: 1000000000,
+            minValue: 0,
+            minStep: 0.1,
+            perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+        });
+		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
 	    else {
