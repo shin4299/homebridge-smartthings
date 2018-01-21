@@ -462,7 +462,7 @@ function SmartThingsAccessory(platform, device) {
         }
 	    else {
         this.deviceGroup = 'EnergyMeter';
-        thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(EnergyCharacteristics.PowerConsumption)
+        thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(EnergyCharacteristics.CurrentConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 		that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
     	}
@@ -474,13 +474,13 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.TotalPowerConsumption)
+                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(EnergyCharacteristics.TotalConsumption1)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
 	    else {
         this.deviceGroup = 'EnergyMeter';
-        thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.TotalPowerConsumption)
+        thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 		that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
     	}
