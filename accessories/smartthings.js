@@ -243,19 +243,19 @@ function SmartThingsAccessory(platform, device) {
                 else if (that.device.attributes.door == 'disarm')
                     callback(null, Characteristic.SecuritySystemTargetState.DISARM); });
         thisCharacteristic.on('set', function(value, callback) {
-                if (value == Characteristic.SecuritySystemCurrentState.AWAY_ARM) {
+                if (value == Characteristic.SecuritySystemTargetState.AWAY_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "away");
                     that.device.attributes.door = "away";
                 }
-                 else if (value == Characteristic.SecuritySystemCurrentState.NIGHT_ARM) {
+                 else if (value == Characteristic.SecuritySystemTargetState.NIGHT_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "night");
                     that.device.attributes.door = "night";
                 } 
-                 else if (value == Characteristic.SecuritySystemCurrentState.STAY_ARM) {
+                 else if (value == Characteristic.SecuritySystemTargetState.STAY_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "stay");
                     that.device.attributes.door = "stay";
                 } 
-                 else if (value == Characteristic.SecuritySystemCurrentState.DISARMED) {
+                 else if (value == Characteristic.SecuritySystemTargetState.DISARMED) {
                     that.platform.api.runCommand(callback, that.deviceid, "disarm");
                     that.device.attributes.door = "disarm";
                 } });
@@ -265,19 +265,19 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) {
                 switch (that.device.attributes.door) {
                     case 'disarm':
-                        callback(null, Characteristic.SecuritySystemCurrentState.DISARM);
+                        callback(null, Characteristic.SecuritySystemTargetState.DISARM);
                         break;
                     case 'stay':
-                        callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+                        callback(null, Characteristic.SecuritySystemTargetState.STAY_ARM);
                         break;
                     case 'away':
-                        callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+                        callback(null, Characteristic.SecuritySystemTargetState.AWAY_ARM);
                         break;
                     case 'night':
-                        callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+                        callback(null, Characteristic.SecuritySystemTargetState.NIGHT_ARM);
                         break;
                     default:
-                        callback(null, Characteristic.SecuritySystemCurrentState.DISARM);
+                        callback(null, Characteristic.SecuritySystemTargetState.DISARM);
                         break;
                 }
             });
