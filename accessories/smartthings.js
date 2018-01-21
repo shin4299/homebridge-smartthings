@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var Accessory, Service, Characteristic, uuid, EnergyCharacteristics;
+var Accessory, Service, Characteristic, uuid, EnergyCharacteristics, TotalPowerConsumption;
 
 /*
  *   SmartThings Accessory
@@ -12,7 +12,7 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Service = oService;
         Characteristic = oCharacteristic;
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
-//        TotalPowerConsumption = require('../lib/TotalPowerConsumption').TotalPowerConsumption
+        TotalPowerConsumption = require('../lib/TotalPowerConsumption').TotalPowerConsumption
 
         uuid = ouuid;
 
@@ -474,12 +474,7 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxideLevel).setProps({
-            unit: 'KWh',
-            maxValue: 9999,
-            minValue: 0,
-            minStep: 1,
-        });
+                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.TotalPowerConsumption)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
