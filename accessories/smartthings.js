@@ -1,5 +1,6 @@
 var inherits = require('util').inherits;
-var Accessory, Service, Characteristic, uuid, EnergyCharacteristics /*TotalPowerConsumption*/;
+
+var Accessory, Service, Characteristic, uuid, EnergyCharacteristics;
 
 /*
  *   SmartThings Accessory
@@ -473,7 +474,7 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-        thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(EnergyCharacteristics.TotalPowerConsumption)
+                thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
