@@ -474,7 +474,7 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbondioxideLevel).setProps({
+                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxideLevel).setProps({
             unit: 'KWh',
             maxValue: 9999,
             minValue: 0,
