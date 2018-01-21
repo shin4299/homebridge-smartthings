@@ -470,6 +470,10 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
+        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
+	that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
+	
         }
 	    else {
         this.deviceGroup = 'EnergyMeter';
