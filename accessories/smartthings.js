@@ -11,6 +11,7 @@ var TotalPowerConsumption = function() {
         });
         this.value = this.getDefaultValue();
     };
+var inherits(TotalPowerConsumption, Characteristic);    
 
 var Accessory, Service, Characteristic, uuid, EnergyCharacteristics /*TotalPowerConsumption*/;
 
