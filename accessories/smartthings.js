@@ -474,7 +474,12 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(EnergyCharacteristics.TotalConsumption1)
+                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CurrentTemperature).setProps({
+            unit: 'KWh',
+            maxValue: 9999,
+            minValue: 0,
+            minStep: 1,
+        });
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
