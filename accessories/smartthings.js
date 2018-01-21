@@ -300,9 +300,9 @@ function SmartThingsAccessory(platform, device) {
 	    thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.OutletInUse)
             thisCharacteristic.on('get', function(callback) {
                 if (that.device.attributes.battery < 1)
-                    callback(null, Characteristic.OutletInUse.OUTLET_USE);
+                    callback(null, Characteristic.OutletInUse.OUTLET_USED);
                 else
-                    callback(null, Characteristic.OutletInUse.OUTLET_NOT_USE);
+                    callback(null, Characteristic.OutletInUse.OUTLET_NOT_USED);
 	    
 		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxideLevel)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
