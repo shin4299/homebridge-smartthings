@@ -1,5 +1,5 @@
 var inherits = require('util').inherits;
-var TotalPowerConsumption = function() {
+var Characteristic.TotalPowerConsumption = function() {
       Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
         this.setProps({
             format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
@@ -11,7 +11,7 @@ var TotalPowerConsumption = function() {
         });
         this.value = this.getDefaultValue();
     };
-var inherits(TotalPowerConsumption, Characteristic);    
+var inherits(Characteristic.TotalPowerConsumption, Characteristic);    
 
 var Accessory, Service, Characteristic, uuid, EnergyCharacteristics /*TotalPowerConsumption*/;
 
