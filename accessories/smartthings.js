@@ -475,7 +475,7 @@ function SmartThingsAccessory(platform, device) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
 //        thisCharacteristic = this.getaddService(Service.HumiditySensor).addCharacteristic(EnergyCharacteristics.TotalPowerConsumption)
-        thisCharacteristic = this.getaddService(Service.HumiditySensor).addCharacteristic('Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+        thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic('Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
         this.setProps({
             format: Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
             unit: 'KWh',
