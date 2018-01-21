@@ -1,6 +1,7 @@
 var inherits = require('util').inherits;
+var EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
 
-var Accessory, Service, Characteristic, uuid, EnergyCharacteristics;
+var Accessory, Service, Characteristic, uuid, /*EnergyCharacteristics*/;
 
 /*
  *   SmartThings Accessory
@@ -11,7 +12,7 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Accessory = oAccessory;
         Service = oService;
         Characteristic = oCharacteristic;
-        EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
+//        EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
 //        TotalPowerConsumption = require('../lib/TotalPowerConsumption').TotalPowerConsumption
 
         uuid = ouuid;
