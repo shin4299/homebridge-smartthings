@@ -265,19 +265,19 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) {
                 switch (that.device.attributes.door) {
                     case 'disarm':
-                        callback(null, Characteristic.SecuritySystemTargetState.DISARM);
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARM);
                         break;
                     case 'stay':
-                        callback(null, Characteristic.SecuritySystemTargetState.STAY_ARM);
+                        callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
                         break;
                     case 'away':
-                        callback(null, Characteristic.SecuritySystemTargetState.AWAY_ARM);
+                        callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
                         break;
                     case 'night':
-                        callback(null, Characteristic.SecuritySystemTargetState.NIGHT_ARM);
+                        callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
                         break;
                     default:
-                        callback(null, Characteristic.SecuritySystemTargetState.DISARM);
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARM);
                         break;
                 }
             });
@@ -297,6 +297,13 @@ function SmartThingsAccessory(platform, device) {
                     else
                         that.platform.api.runCommand(callback, that.deviceid, "off"); });
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxideLevel)
+		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
+                that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
+		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.work)); })
+                that.platform.addAttributeUsage("work", this.deviceid, thisCharacteristic);
+		    
 }
 	 else if (device.capabilities["Power Meter"] !== undefined) {
             this.deviceGroup = "outlet"
@@ -308,6 +315,10 @@ function SmartThingsAccessory(platform, device) {
                     else
                         that.platform.api.runCommand(callback, that.deviceid, "off"); });
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxideLevel)
+		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
+                that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+
 }
  else {
         this.deviceGroup = "switch";
@@ -474,7 +485,7 @@ function SmartThingsAccessory(platform, device) {
         if(device.commands.energy) {
 		
 	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(EnergyCharacteristics.TotalConsumption1)
+                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
                 that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
         }
