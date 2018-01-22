@@ -227,8 +227,8 @@ function SmartThingsAccessory(platform, device) {
 
     if (device.capabilities["valve"] !== undefined && this.deviceGroup == "unknown") {
 	
-            this.deviceGroup = "outlet"
-            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.GenericValve)
+            this.deviceGroup = "valve"
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Valve)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
             thisCharacteristic.on('set', function(value, callback) {
                     if (value)
