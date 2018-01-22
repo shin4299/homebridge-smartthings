@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var Accessory, Service, Characteristic, uuid, EnergyCharacteristics;
+var Accessory, Service, Characteristic, uuid, EnergyCharacteristics, TotalConsumption1, CurrentConsumption1;
 
 /*
  *   SmartThings Accessory
@@ -12,7 +12,8 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Service = oService;
         Characteristic = oCharacteristic;
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
-//        TotalPowerConsumption = require('../lib/TotalPowerConsumption').Energy(Characteristic)
+        TotalConsumption1 = require('../lib/ShinCharacteristics').CustomCharacteristics(Characteristic)
+        CurrentConsumption1 = require('../lib/ShinCharacteristics').CustomCharacteristics(Characteristic)
 
         uuid = ouuid;
 
@@ -509,10 +510,10 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
-	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxideLevel)
+	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CurrentConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); });
 	that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);		
-	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxidePeakLevel)
+	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.TotalConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 	that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
 	
