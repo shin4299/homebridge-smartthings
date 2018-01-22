@@ -224,7 +224,20 @@ function SmartThingsAccessory(platform, device) {
         this.deviceGroup = "button";	
     }
 
+
+    if (device.capabilities["valve"] !== undefined && this.deviceGroup == "unknown") {
 	
+            this.deviceGroup = "outlet"
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.GenericValve)
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
+            thisCharacteristic.on('set', function(value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
+		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+	
+    }
 	
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
@@ -283,6 +296,8 @@ function SmartThingsAccessory(platform, device) {
 }	    
 */	    
 	    	    
+	    
+	    
 	    if (device.commands.Outlet) {
             this.deviceGroup = "outlet"
             thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
