@@ -230,7 +230,7 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
   
 
-      	if (device.commands.SecuritySystem) {  
+/*      	if (device.commands.SecuritySystem) {  
         this.deviceGroup = "SecuritySystem"
         thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
         thisCharacteristic.on('get', function(callback) {
@@ -281,7 +281,7 @@ function SmartThingsAccessory(platform, device) {
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 			
 }	    
-	    
+*/	    
 	    	    
 	    if (device.commands.Outlet) {
             this.deviceGroup = "outlet"
