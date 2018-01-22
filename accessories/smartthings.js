@@ -483,7 +483,7 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); });
 	that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);		
 //	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxidePeakLevel)
-	thisCharacteristic = this.getaddService(Service.LightSensor).addOptionalCharacteristic(EnergyCharacteristics.TotalConsumption1)
+	thisCharacteristic = new this.getaddService(Service.LightSensor).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 	that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
 	
