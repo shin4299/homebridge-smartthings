@@ -315,7 +315,7 @@ function SmartThingsAccessory(platform, device) {
 }
 	 else if (device.capabilities["Power Meter"] !== undefined) {
             this.deviceGroup = "outlet"
-            thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
+            thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.OutletInUse)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
             thisCharacteristic.on('set', function(value, callback) {
                     if (value)
