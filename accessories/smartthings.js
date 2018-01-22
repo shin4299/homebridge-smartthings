@@ -232,7 +232,7 @@ function SmartThingsAccessory(platform, device) {
 	    
       	if (device.commands.SecuritySystem) {  
         this.deviceGroup = "SecuritySystem"
-        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.TargetSecuritySystemState)
+        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystem)
         thisCharacteristic.on('get', function(callback) {
                 if (that.device.attributes.door == 'away')
                     callback(null, Characteristic.CurrentSecuritySystemState.awayArm);
@@ -261,7 +261,7 @@ function SmartThingsAccessory(platform, device) {
                 } });
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 			
-        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.CurrentSecuritySystemState)
+        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystem)
         thisCharacteristic.on('get', function(callback) {
                 switch (that.device.attributes.door) {
                     case 'disarm':
