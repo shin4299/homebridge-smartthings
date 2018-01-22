@@ -225,7 +225,7 @@ function SmartThingsAccessory(platform, device) {
     }
 
 
-    if (device.capabilities["valve"] !== undefined && this.deviceGroup == "unknown") {
+/*    if (device.capabilities["valve"] !== undefined && this.deviceGroup == "unknown") {
 	
             this.deviceGroup = "valve"
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Valve)
@@ -238,7 +238,7 @@ function SmartThingsAccessory(platform, device) {
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 	
     }
-	
+*/	
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
   
