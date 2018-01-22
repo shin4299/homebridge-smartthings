@@ -509,22 +509,11 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
-	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxideLevel).setProps({
-            format: Characteristic.Formats.FLOAT,
-            unit: "W",
-            maxValue: 4294967295,
-            minValue: 0,
-            minStep: 1,
-        });
+	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxideLevel).setProps({unit: "W",});
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); });
 	that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);		
-	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxidePeakLevel).setProps({
+	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxidePeakLevel).setProps({unit: "KWh",});
             format: Characteristic.Formats.FLOAT,
-            unit: "KWh",
-            maxValue: 4294967295,
-            minValue: 0,
-            minStep: 1,
-        });
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
 	that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
 	
