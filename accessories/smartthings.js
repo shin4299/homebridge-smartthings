@@ -476,7 +476,7 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxideLevel)
-        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); });
+        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.real)); });
 	that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);		
 	thisCharacteristic = this.getaddService(Service.LightSensor).addCharacteristic(Characteristic.CarbonDioxidePeakLevel)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
