@@ -229,62 +229,58 @@ function SmartThingsAccessory(platform, device) {
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
   
-	    
+
       	if (device.commands.SecuritySystem) {  
         this.deviceGroup = "SecuritySystem"
-        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystem)
+        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
         thisCharacteristic.on('get', function(callback) {
                 if (that.device.attributes.door == 'away')
-                    callback(null, Characteristic.CurrentSecuritySystemState.awayArm);
+                    callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
                 else if (that.device.attributes.door == 'night')
-                    callback(null, Characteristic.CurrentSecuritySystemState.nightArm);
+                    callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
                 else if (that.device.attributes.door == 'stay')
-                    callback(null, Characteristic.CurrentSecuritySystemState.stayArm);
+                    callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
                 else if (that.device.attributes.door == 'disarm')
-                    callback(null, Characteristic.CurrentSecuritySystemState.disarm); });
+                    callback(null, Characteristic.SecuritySystemCurrentState.DISARM); });
         thisCharacteristic.on('set', function(value, callback) {
-                if (value == Characteristic.TargetSecuritySystemState.away) {
-                    that.platform.api.runCommand(callback, that.deviceid, "awayArm");
+                if (value == Characteristic.SecuritySystemCurrentState.AWAY_ARM) {
+                    that.platform.api.runCommand(callback, that.deviceid, "away");
                     that.device.attributes.door = "away";
                 }
-                 else if (value == Characteristic.TargetSecuritySystemState.nightArm) {
+                 else if (value == Characteristic.SecuritySystemCurrentState.NIGHT_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "night");
                     that.device.attributes.door = "night";
                 } 
-                 else if (value == Characteristic.TargetSecuritySystemState.stayArm) {
+                 else if (value == Characteristic.SecuritySystemCurrentState.STAY_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "stay");
                     that.device.attributes.door = "stay";
                 } 
-                 else if (value == Characteristic.TargetSecuritySystemState.disarm) {
+                 else if (value == Characteristic.SecuritySystemCurrentState.DISARMED) {
                     that.platform.api.runCommand(callback, that.deviceid, "disarm");
                     that.device.attributes.door = "disarm";
                 } });
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 			
-        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystem)
+        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
         thisCharacteristic.on('get', function(callback) {
                 switch (that.device.attributes.door) {
                     case 'disarm':
-                        callback(null, Characteristic.CurrentSecuritySystemState.disarm);
+                        callback(null, Characteristic.SecuritySystemTargetState.DISARM);
                         break;
                     case 'stay':
-                        callback(null, Characteristic.CurrentSecuritySystemState.stayArm);
+                        callback(null, Characteristic.SecuritySystemTargetState.STAY_ARM);
                         break;
                     case 'away':
-                        callback(null, Characteristic.CurrentSecuritySystemState.awayArm);
+                        callback(null, Characteristic.SecuritySystemTargetState.AWAY_ARM);
                         break;
                     case 'night':
-                        callback(null, Characteristic.CurrentSecuritySystemState.nightArm);
-                        break;
-                    default:
-                        callback(null, Characteristic.CurrentSecuritySystemState.disarm);
+                        callback(null, Characteristic.SecuritySystemTargetState.NIGHT_ARM);
                         break;
                 }
             });
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 			
-}
-
+}	    
 	    
 	    	    
 	    if (device.commands.Outlet) {
