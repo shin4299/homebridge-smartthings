@@ -41,7 +41,7 @@ function SmartThingsAccessory(platform, device) {
 // ------------------------
 	
     Characteristic.CurrentPowerConsumption = function() {
-		Characteristic.call('Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
+		Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format : Characteristic.Formats.FLOAT,
 			unit : 'watts',
@@ -56,7 +56,7 @@ function SmartThingsAccessory(platform, device) {
 	Characteristic.CurrentPowerConsumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52';
 
     Characteristic.TotalPowerConsumption = function() {
-		Characteristic.call('Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+		Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format : Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
 			unit : 'kilowatthours',
@@ -71,7 +71,7 @@ function SmartThingsAccessory(platform, device) {
 	Characteristic.TotalPowerConsumption.UUID = 'E863F10C-079E-48FF-8F27-9C2605A29F52';
 
     Characteristic.UVIndex = function() {
-		Characteristic.call('UV Index', '05ba0fe0-b848-4226-906d-5b64272e05ce');
+		Characteristic.call(this, 'UV Index', '05ba0fe0-b848-4226-906d-5b64272e05ce');
 		this.setProps({
 			format: Characteristic.Formats.UINT8,
 			maxValue: 10,
@@ -85,7 +85,7 @@ function SmartThingsAccessory(platform, device) {
 	Characteristic.UVIndex.UUID = '05ba0fe0-b848-4226-906d-5b64272e05ce';
 
     Characteristic.AirPressure = function() {
-		Characteristic.call('Air Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
+		Characteristic.call(this, 'Air Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format: Characteristic.Formats.UINT16,
 			unit: "hPa",
