@@ -51,7 +51,6 @@ function SmartThingsAccessory(platform, device) {
 		this.value = this.getDefaultValue();
 	};
 	inherits(Characteristic.CurrentPowerConsumption, Characteristic);
-	CurrentPowerConsumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52';
 
     var TotalPowerConsumption = function() {
 		Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
@@ -94,13 +93,13 @@ function SmartThingsAccessory(platform, device) {
 	};
 	inherits(AirPressure, Characteristic);	
 	
-	this.service = new Service.Outlet(this.options['name']);
+/*	this.service = new Service.Outlet(this.options['name']);
 
 	this.service.addOptionalCharacteristic(CurrentPowerConsumption);
 	this.service.addOptionalCharacteristic(TotalPowerConsumption);
 	this.service.addOptionalCharacteristic(AirPressure);
 	this.service.addOptionalCharacteristic(UVIndex);
-	
+	*/
 	
 // ------------------------	
 		
