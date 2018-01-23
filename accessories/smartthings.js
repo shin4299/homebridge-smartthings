@@ -39,7 +39,7 @@ function SmartThingsAccessory(platform, device) {
 
 // ------------------------
 	
-    CurrentPowerConsumption = function() {
+    Characteristic.CurrentPowerConsumption = function() {
 		Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format : Characteristic.Formats.FLOAT,
@@ -51,9 +51,9 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(CurrentPowerConsumption, Characteristic);
+	inherits(Characteristic.CurrentPowerConsumption, Characteristic);
 
-    TotalPowerConsumption = function() {
+    Characteristic.TotalPowerConsumption = function() {
 		Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format : Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
@@ -65,9 +65,9 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(TotalPowerConsumption, Characteristic);
+	inherits(Characteristic.TotalPowerConsumption, Characteristic);
 
-    UVIndex = function() {
+    Characteristic.UVIndex = function() {
 		Characteristic.call(this, 'UV Index', '05ba0fe0-b848-4226-906d-5b64272e05ce');
 		this.setProps({
 			format: Characteristic.Formats.UINT8,
@@ -78,9 +78,9 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(UVIndex, Characteristic);	
+	inherits(Characteristic.UVIndex, Characteristic);	
 
-    AirPressure = function() {
+    Characteristic.AirPressure = function() {
 		Characteristic.call(this, 'Air Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format: Characteristic.Formats.UINT16,
@@ -92,7 +92,7 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(AirPressure, Characteristic);	
+	inherits(Characteristic.AirPressure, Characteristic);	
 	
 /*	this.service = new Service.Outlet(this.options['name']);
 
