@@ -3,7 +3,7 @@ var smartthings = require('./lib/smartthingsapi');
 var http = require('http')
 var os = require('os');
 
-var Service, Characteristic, Accessory, uuid, EnergyCharacteristics;
+var Service, Characteristic, Accessory, uuid, EnergyCharacteristics, CurrentPowerConsumption;
 
 var SmartThingsAccessory;
 
