@@ -50,7 +50,7 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(Characteristic.CurrentPowerConsumption, Characteristic);
+	inherits(CurrentPowerConsumption, Characteristic);
 
     var TotalPowerConsumption = function() {
 		Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
