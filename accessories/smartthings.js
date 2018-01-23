@@ -38,7 +38,7 @@ function SmartThingsAccessory(platform, device) {
 
 // ------------------------
 	
-    var Characteristic.CurrentPowerConsumption = function() {
+    var CurrentPowerConsumption = function() {
 		Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format : Characteristic.Formats.FLOAT,
@@ -51,9 +51,9 @@ function SmartThingsAccessory(platform, device) {
 		this.value = this.getDefaultValue();
 	};
 	inherits(Characteristic.CurrentPowerConsumption, Characteristic);
-	Characteristic.CurrentPowerConsumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52';
+	CurrentPowerConsumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52';
 
-    var Characteristic.TotalPowerConsumption = function() {
+    var TotalPowerConsumption = function() {
 		Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format : Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
@@ -65,10 +65,9 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(Characteristic.TotalPowerConsumption, Characteristic);
-	Characteristic.TotalPowerConsumption.UUID = 'E863F10C-079E-48FF-8F27-9C2605A29F52';
+	inherits(TotalPowerConsumption, Characteristic);
 
-    var Characteristic.UVIndex = function() {
+    var UVIndex = function() {
 		Characteristic.call(this, 'UV Index', '05ba0fe0-b848-4226-906d-5b64272e05ce');
 		this.setProps({
 			format: Characteristic.Formats.UINT8,
@@ -79,10 +78,9 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(Characteristic.UVIndex, Characteristic);	
-	Characteristic.UVIndex.UUID = '05ba0fe0-b848-4226-906d-5b64272e05ce';
+	inherits(UVIndex, Characteristic);	
 
-    var Characteristic.AirPressure = function() {
+    var AirPressure = function() {
 		Characteristic.call(this, 'Air Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
 		this.setProps({
 			format: Characteristic.Formats.UINT16,
@@ -94,9 +92,14 @@ function SmartThingsAccessory(platform, device) {
 		});
 		this.value = this.getDefaultValue();
 	};
-	inherits(Characteristic.AirPressure, Characteristic);	
-	Characteristic.AirPressure.UUID = 'E863F10F-079E-48FF-8F27-9C2605A29F52';	
+	inherits(AirPressure, Characteristic);	
 	
+	this.service = new Service.Outlet(this.options['name']);
+
+	this.service.addOptionalCharacteristic(CurrentPowerConsumption);
+	this.service.addOptionalCharacteristic(TotalPowerConsumption);
+	this.service.addOptionalCharacteristic(AirPressure);
+	this.service.addOptionalCharacteristic(UVIndex);
 	
 	
 // ------------------------	
