@@ -36,6 +36,71 @@ function SmartThingsAccessory(platform, device) {
     var idKey = 'hbdev:smartthings:' + this.deviceid;
     var id = uuid.generate(idKey);	
 
+// ------------------------
+	
+    var Characteristic.CurrentPowerConsumption = function() {
+		Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
+		this.setProps({
+			format : Characteristic.Formats.FLOAT,
+			unit : 'watts',
+			maxValue : 1000000000,
+			minValue : 0,
+			minStep : 1,
+			perms : [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+		});
+		this.value = this.getDefaultValue();
+	};
+	inherits(Characteristic.CurrentPowerConsumption, Characteristic);
+	Characteristic.CurrentPowerConsumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52';
+
+    var Characteristic.TotalPowerConsumption = function() {
+		Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
+		this.setProps({
+			format : Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
+			unit : 'kilowatthours',
+			maxValue : 1000000000,
+			minValue : 0,
+			minStep : 0.001,
+			perms : [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+		});
+		this.value = this.getDefaultValue();
+	};
+	inherits(Characteristic.TotalPowerConsumption, Characteristic);
+	Characteristic.TotalPowerConsumption.UUID = 'E863F10C-079E-48FF-8F27-9C2605A29F52';
+
+    var Characteristic.UVIndex = function() {
+		Characteristic.call(this, 'UV Index', '05ba0fe0-b848-4226-906d-5b64272e05ce');
+		this.setProps({
+			format: Characteristic.Formats.UINT8,
+			maxValue: 10,
+			minValue: 0,
+			minStep: 1,
+			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+		});
+		this.value = this.getDefaultValue();
+	};
+	inherits(Characteristic.UVIndex, Characteristic);	
+	Characteristic.UVIndex.UUID = '05ba0fe0-b848-4226-906d-5b64272e05ce';
+
+    var Characteristic.AirPressure = function() {
+		Characteristic.call(this, 'Air Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
+		this.setProps({
+			format: Characteristic.Formats.UINT16,
+			unit: "hPa",
+			maxValue: 1100,
+			minValue: 700,
+			minStep: 1,
+			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
+		});
+		this.value = this.getDefaultValue();
+	};
+	inherits(Characteristic.AirPressure, Characteristic);	
+	Characteristic.AirPressure.UUID = 'E863F10F-079E-48FF-8F27-9C2605A29F52';	
+	
+	
+	
+// ------------------------	
+		
 	
     Accessory.call(this, this.name, id);
     var that = this;
@@ -312,7 +377,7 @@ function SmartThingsAccessory(platform, device) {
 		thisCharacteristic.on('get', function(callback) { callback(null, (that.device.attributes.power > 0)); });
  		that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 		    
-		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxideLevel)
+		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CurrentPowerConsumption)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
