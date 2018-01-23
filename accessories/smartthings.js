@@ -98,6 +98,22 @@ function SmartThingsAccessory(platform, device) {
 	inherits(Characteristic.AirPressure, Characteristic);	
 	Characteristic.AirPressure.UUID = 'E863F10F-079E-48FF-8F27-9C2605A29F52';
 	
+
+	Service.PowerMonitor = function(displayName, subtype) {
+		Service.call(this, displayName, '0EB29E08-C307-498E-8E1A-4EDC5FF70607', subtype);
+
+		// Required Characteristics
+		this.addCharacteristic(Characteristic.CurrentPowerConsumption);
+		this.addCharacteristic(Characteristic.TotalPowerConsumption);
+
+		// Optional Characteristics
+
+	};
+	inherits(Service.PowerMonitor, Service);
+	Service.PowerMonitor.UUID = '0EB29E08-C307-498E-8E1A-4EDC5FF70607';
+	
+	
+	
 /*	this.service = new Service.Outlet(this.options['name']);
 
 	this.service.addOptionalCharacteristic(CurrentPowerConsumption);
@@ -384,7 +400,7 @@ function SmartThingsAccessory(platform, device) {
 		thisCharacteristic.on('get', function(callback) { callback(null, (that.device.attributes.power > 0)); });
  		that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 		    
-		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CurrentPowerConsumption)
+		thisCharacteristic = this.getaddService(Service.PowerMonitor).getCharacteristic(Characteristic.CurrentPowerConsumption)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
