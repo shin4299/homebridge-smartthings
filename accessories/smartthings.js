@@ -11,7 +11,9 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Accessory = oAccessory;
         Service = oService;
         Characteristic = oCharacteristic;
-        EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
+        EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics
+        EnergyCharacteristics = oCharacteristic
+	    
 //        CurrentConsumption1 = require('../lib/ShinCharacteristics').CustomCharacteristics(Characteristic)
 
         uuid = ouuid;
@@ -36,7 +38,7 @@ function SmartThingsAccessory(platform, device) {
     var idKey = 'hbdev:smartthings:' + this.deviceid;
     var id = uuid.generate(idKey);	
 
-// ------------------------
+/*/ ------------------------
 	
     var CurrentPowerConsumption = function() {
 		Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
@@ -100,7 +102,7 @@ function SmartThingsAccessory(platform, device) {
 	this.service.addOptionalCharacteristic(AirPressure);
 	this.service.addOptionalCharacteristic(UVIndex);
 	*/
-	
+*/	
 // ------------------------	
 		
 	
