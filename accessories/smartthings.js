@@ -314,25 +314,11 @@ function SmartThingsAccessory(platform, device) {
     }
 
 
-/*    if (device.capabilities["valve"] !== undefined && this.deviceGroup == "unknown") {
-	
-            this.deviceGroup = "valve"
-            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Valve)
-            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
-            thisCharacteristic.on('set', function(value, callback) {
-                    if (value)
-                        that.platform.api.runCommand(callback, that.deviceid, "on");
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
-		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-	
-    }
-*/	
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
   
 
-/*/
+/*
       	if (device.commands.SecuritySystem) {  
         this.deviceGroup = "SecuritySystem"
         thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
@@ -384,9 +370,8 @@ function SmartThingsAccessory(platform, device) {
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 			
 }	    
-/*/	    
-	    	    
-	    
+*/
+	    	     
 	    
 	   if (device.commands.Outlet) {
             this.deviceGroup = "outlet"
@@ -442,14 +427,15 @@ function SmartThingsAccessory(platform, device) {
             });
 		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 	    
-        if (device.capabilities["Switch Level"] !== undefined) {
+/*        if (device.capabilities["Switch Level"] !== undefined) {
             thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.Brightness)
             thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
             thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-	}
+	} */
     }
     }
+	
     if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attributes.smoke)) {
         this.deviceGroup = "detectors";
 
