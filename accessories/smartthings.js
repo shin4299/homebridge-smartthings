@@ -38,7 +38,7 @@ function SmartThingsAccessory(platform, device) {
     var idKey = 'hbdev:smartthings:' + this.deviceid;
     var id = uuid.generate(idKey);	
 
-// ------------------------
+/*/ ------------------------
 	
     Characteristic.CurrentPowerConsumption = function() {
 		Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
@@ -124,7 +124,7 @@ function SmartThingsAccessory(platform, device) {
 	*/
 	
 // ------------------------	
-		
+*/		
 	
     Accessory.call(this, this.name, id);
     var that = this;
@@ -332,7 +332,8 @@ function SmartThingsAccessory(platform, device) {
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
   
 
-/*      	if (device.commands.SecuritySystem) {  
+//
+      	if (device.commands.SecuritySystem) {  
         this.deviceGroup = "SecuritySystem"
         thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
         thisCharacteristic.on('get', function(callback) {
@@ -345,19 +346,19 @@ function SmartThingsAccessory(platform, device) {
                 else if (that.device.attributes.door == 'disarm')
                     callback(null, Characteristic.SecuritySystemTargetState.DISARM); });
         thisCharacteristic.on('set', function(value, callback) {
-                if (value == Characteristic.SecuritySystemTargetState.AWAY_ARM) {
+                if (value == Characteristic.SecuritySystemCurrentState.AWAY_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "away");
                     that.device.attributes.door = "away";
                 }
-                 else if (value == Characteristic.SecuritySystemTargetState.NIGHT_ARM) {
+                 else if (value == Characteristic.SecuritySystemCurrentState.NIGHT_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "night");
                     that.device.attributes.door = "night";
                 } 
-                 else if (value == Characteristic.SecuritySystemTargetState.STAY_ARM) {
+                 else if (value == Characteristic.SecuritySystemCurrentState.STAY_ARM) {
                     that.platform.api.runCommand(callback, that.deviceid, "stay");
                     that.device.attributes.door = "stay";
                 } 
-                 else if (value == Characteristic.SecuritySystemTargetState.DISARMED) {
+                 else if (value == Characteristic.SecuritySystemCurrentState.DISARMED) {
                     that.platform.api.runCommand(callback, that.deviceid, "disarm");
                     that.device.attributes.door = "disarm";
                 } });
@@ -367,7 +368,7 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) {
                 switch (that.device.attributes.door) {
                     case 'disarm':
-                        callback(null, Characteristic.SecuritySystemCurrentState.DISARM);
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
                         break;
                     case 'stay':
                         callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
@@ -383,7 +384,7 @@ function SmartThingsAccessory(platform, device) {
 		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 			
 }	    
-*/	    
+//	    
 	    	    
 	    
 	    
