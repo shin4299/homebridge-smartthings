@@ -11,10 +11,8 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Accessory = oAccessory;
         Service = oService;
         Characteristic = oCharacteristic;
-//	CurrentPowerConsumption = oCharacteristic;    
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
 	    
-//        CurrentConsumption1 = require('../lib/ShinCharacteristics').CustomCharacteristics(Characteristic)
 
         uuid = ouuid;
 
@@ -38,93 +36,7 @@ function SmartThingsAccessory(platform, device) {
     var idKey = 'hbdev:smartthings:' + this.deviceid;
     var id = uuid.generate(idKey);	
 
-/*/ ------------------------
-	
-    Characteristic.CurrentPowerConsumption = function() {
-		Characteristic.call(this, 'Consumption', 'E863F10D-079E-48FF-8F27-9C2605A29F52');
-		this.setProps({
-			format : Characteristic.Formats.FLOAT,
-			unit : 'watts',
-			maxValue : 1000000000,
-			minValue : 0,
-			minStep : 1,
-			perms : [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-		});
-		this.value = this.getDefaultValue();
-	};
-	inherits(Characteristic.CurrentPowerConsumption, Characteristic);
-	Characteristic.CurrentPowerConsumption.UUID = 'E863F10D-079E-48FF-8F27-9C2605A29F52';
 
-    Characteristic.TotalPowerConsumption = function() {
-		Characteristic.call(this, 'Total Consumption', 'E863F10C-079E-48FF-8F27-9C2605A29F52');
-		this.setProps({
-			format : Characteristic.Formats.FLOAT, // Deviation from Eve Energy observed type
-			unit : 'kilowatthours',
-			maxValue : 1000000000,
-			minValue : 0,
-			minStep : 0.001,
-			perms : [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-		});
-		this.value = this.getDefaultValue();
-	};
-	inherits(Characteristic.TotalPowerConsumption, Characteristic);
-	Characteristic.TotalPowerConsumption.UUID = 'E863F10C-079E-48FF-8F27-9C2605A29F52';
-
-    Characteristic.UVIndex = function() {
-		Characteristic.call(this, 'UV Index', '05ba0fe0-b848-4226-906d-5b64272e05ce');
-		this.setProps({
-			format: Characteristic.Formats.UINT8,
-			maxValue: 10,
-			minValue: 0,
-			minStep: 1,
-			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-		});
-		this.value = this.getDefaultValue();
-	};
-	inherits(Characteristic.UVIndex, Characteristic);	
-	Characteristic.UVIndex.UUID = '05ba0fe0-b848-4226-906d-5b64272e05ce';
-
-    Characteristic.AirPressure = function() {
-		Characteristic.call(this, 'Air Pressure', 'E863F10F-079E-48FF-8F27-9C2605A29F52');
-		this.setProps({
-			format: Characteristic.Formats.UINT16,
-			unit: "hPa",
-			maxValue: 1100,
-			minValue: 700,
-			minStep: 1,
-			perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
-		});
-		this.value = this.getDefaultValue();
-	};
-	inherits(Characteristic.AirPressure, Characteristic);	
-	Characteristic.AirPressure.UUID = 'E863F10F-079E-48FF-8F27-9C2605A29F52';
-	
-
-	Service.PowerMonitor = function(displayName, subtype) {
-		Service.call(this, displayName, '0EB29E08-C307-498E-8E1A-4EDC5FF70607', subtype);
-
-		// Required Characteristics
-		this.addCharacteristic(Characteristic.CurrentPowerConsumption);
-		this.addCharacteristic(Characteristic.TotalPowerConsumption);
-
-		// Optional Characteristics
-
-	};
-	inherits(Service.PowerMonitor, Service);
-	Service.PowerMonitor.UUID = '0EB29E08-C307-498E-8E1A-4EDC5FF70607';
-	
-	
-	
-/*	this.service = new Service.Outlet(this.options['name']);
-
-	this.service.addOptionalCharacteristic(CurrentPowerConsumption);
-	this.service.addOptionalCharacteristic(TotalPowerConsumption);
-	this.service.addOptionalCharacteristic(AirPressure);
-	this.service.addOptionalCharacteristic(UVIndex);
-	*/
-	
-// ------------------------	
-*/		
 	
     Accessory.call(this, this.name, id);
     var that = this;
@@ -427,12 +339,12 @@ function SmartThingsAccessory(platform, device) {
             });
 		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 	    
-/*        if (device.capabilities["Switch Level"] !== undefined) {
+        if (device.capabilities["Switch Level"] !== undefined) {
             thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.Brightness)
             thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
             thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-	} */
+	} 
     }
     }
 	
@@ -534,7 +446,6 @@ function SmartThingsAccessory(platform, device) {
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.illuminance)); });
 		that.platform.addAttributeUsage("illuminance", this.deviceid, thisCharacteristic);
     	}
-
     }
 	
     if (device.capabilities["Temperature Measurement"] !== undefined) {
@@ -603,23 +514,6 @@ function SmartThingsAccessory(platform, device) {
 	}
 
 	
-	
-/*    if (device.capabilities["Power Source"] !== undefined) {
-        if(device.commands.energy) {
-		
-	 if (this.deviceGroup == 'unknown') this.deviceGroup = "Energy Meter";
-                thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
-		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
-                that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
-        }
-	    else {
-        this.deviceGroup = 'EnergyMeter';
-        thisCharacteristic = this.getaddService(Service.Outlet).addCharacteristic(EnergyCharacteristics.TotalConsumption1)
-        thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); });
-		that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
-    	}
-	}
-*/
 
     if (device.capabilities["Acceleration Sensor"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
