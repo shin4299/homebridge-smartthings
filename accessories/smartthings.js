@@ -392,10 +392,6 @@ function SmartThingsAccessory(platform, device) {
     }
 	
     if (device.capabilities["Temperature Measurement"] !== undefined) {
-        if(device.commands.resetBatteryRuntime) {
-	 if (this.deviceGroup == 'unknown');
-	}
-        else{
 		if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
 	        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({minValue: -20})
         	thisCharacteristic.on('get', function(callback) {
@@ -406,7 +402,7 @@ function SmartThingsAccessory(platform, device) {
 	            });
 		that.platform.addAttributeUsage("temperature", this.deviceid, thisCharacteristic);
     	}    
-    }
+   
 
     if (device.capabilities["Contact Sensor"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
