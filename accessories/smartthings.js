@@ -229,7 +229,7 @@ function SmartThingsAccessory(platform, device) {
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
  	    
-	   if (device.commands.Outlet) {
+	   if (device.capabilities["Energy Meter"] !== undefined) {
             this.deviceGroup = "outlet"
             thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
@@ -247,8 +247,8 @@ function SmartThingsAccessory(platform, device) {
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 		thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
-		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.work)); })
-                that.platform.addAttributeUsage("work", this.deviceid, thisCharacteristic);
+		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.energy)); })
+                that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
 		    
 		}
 	 else if (device.capabilities["Power Meter"] !== undefined) {
