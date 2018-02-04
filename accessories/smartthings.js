@@ -327,7 +327,7 @@ function SmartThingsAccessory(platform, device) {
                 else
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
             });
- 		that.platform.addAttributeUsage("carbonMonoxide", this.deviceid, thisCharacteristic);
+ 		that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
 
 	        thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideLevel)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.carbonDioxide)); })
