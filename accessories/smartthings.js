@@ -228,7 +228,7 @@ function SmartThingsAccessory(platform, device) {
 
 	
     if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown") {
- 	    
+	   if (device.capabilities["Outlet"] !== undefined) { 	    
 	   if (device.capabilities["Energy Meter"] !== undefined) {
             this.deviceGroup = "outlet"
             thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
@@ -274,6 +274,20 @@ function SmartThingsAccessory(platform, device) {
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.power)); })
                 that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 		}
+	 else  {
+            this.deviceGroup = "outlet"
+            thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
+            thisCharacteristic.on('set', function(value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
+		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+	     } 
+		   
+	   }
+		   
  else {
         this.deviceGroup = "switch";
         thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
