@@ -71,6 +71,19 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 			
+        }   else if (device.commands.levelOpenClose2) {
+            //This is a Window Shade
+            this.deviceGroup = "shades"
+
+            thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition)
+            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(100 - that.device.attributes.level)); });
+            thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: 100 - value }); });
+			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+
+            thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition)
+            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(100 - that.device.attributes.level)); });
+			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+			
         } else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
