@@ -76,12 +76,24 @@ function SmartThingsAccessory(platform, device) {
             this.deviceGroup = "shades"
 
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition)
-            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(100 - that.device.attributes.level)); });
+            thisCharacteristic.on('get', function(callback) 
+            {if(that.device.attributes.switch = "off")
+             callback(null, parseInt(100)); 
+             else
+             callback(null, parseInt(0));
+             
+             });
             thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: 100 - value }); });
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition)
-            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(100 - that.device.attributes.level)); });
+            thisCharacteristic.on('get', function(callback) {
+            if(that.device.attributes.switch = "off")
+             callback(null, parseInt(100)); 
+             else
+             callback(null, parseInt(0));
+             
+             });
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 			
         } else if (device.commands.lowSpeed) {
