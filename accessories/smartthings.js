@@ -76,13 +76,7 @@ function SmartThingsAccessory(platform, device) {
             this.deviceGroup = "shades"
 
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition)
-            thisCharacteristic.on('get', function(callback) 
-            {if(that.device.attributes.switch = "off")
-             callback(null, parseInt(100)); 
-             else
-             callback(null, parseInt(0));
-             
-             });
+            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
             thisCharacteristic.on('set', function(value, callback) {
                 if (value < 50)
                     that.platform.api.runCommand(callback, that.deviceid, "on");
@@ -92,14 +86,8 @@ function SmartThingsAccessory(platform, device) {
 		    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
             
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition)
-            thisCharacteristic.on('get', function(callback) {
-            if(that.device.attributes.switch = "off")
-             callback(null, parseInt(100)); 
-             else
-             callback(null, parseInt(0));
-             
-             });
-		    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);			
+            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
+			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
         } else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
