@@ -83,9 +83,14 @@ function SmartThingsAccessory(platform, device) {
              callback(null, parseInt(0));
              
              });
-            thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: 100 - value }); });
-			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-
+            thisCharacteristic.on('set', function(value, callback) {
+                if (value < 50)
+                    that.platform.api.runCommand(callback, that.deviceid, "on");
+                else
+                    that.platform.api.runCommand(callback, that.deviceid, "off");
+            });
+		    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+            
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition)
             thisCharacteristic.on('get', function(callback) {
             if(that.device.attributes.switch = "off")
@@ -94,8 +99,7 @@ function SmartThingsAccessory(platform, device) {
              callback(null, parseInt(0));
              
              });
-			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-			
+		    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);			
         } else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
