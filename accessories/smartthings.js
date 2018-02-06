@@ -78,7 +78,7 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition)
             thisCharacteristic.on('get', function(callback) { callback(null, parseInt(100 - that.device.attributes.level)); });
             thisCharacteristic.on('set', function(value, callback) {
-                if (value < 50)
+                if (value = 0)
                     that.platform.api.runCommand(callback, that.deviceid, "on");
                 else
                     that.platform.api.runCommand(callback, that.deviceid, "off");
