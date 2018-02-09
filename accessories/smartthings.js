@@ -357,7 +357,7 @@ function SmartThingsAccessory(platform, device) {
         
 		thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideDetected)
         thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.carbonDioxide < 1000 )
+                if (that.device.attributes.carbonDioxide < 1200 )
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
                 else
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
