@@ -86,8 +86,8 @@ function SmartThingsAccessory(platform, device) {
             
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition)
             thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.level == 99)
-                    callback(null,  parseInt(1 + that.device.attributes.level));
+                if (that.device.attributes.level <= 99)
+                    callback(null,  parseInt(100));
                 else if (hat.device.attributes.level < 99)
                     callback(null, parseInt(that.device.attributes.level)); });
         } else if (device.commands.lowSpeed) {
