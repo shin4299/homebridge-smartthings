@@ -280,15 +280,15 @@ function SmartThingsAccessory(platform, device) {
                         break;
                     case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "night");
-                        that.device.attributes.lock = "night";
+                        that.device.attributes.door = "night";
                         break;
                     case Characteristic.SecuritySystemTargetState.DISARMED:
                         that.platform.api.runCommand(callback, that.deviceid, "disarm");
-                        that.device.attributes.lock = "disarm";
+                        that.device.attributes.door = "disarm";
                         break;
                     case Characteristic.SecuritySystemTargetState.STAY_ARM:
                         that.platform.api.runCommand(callback, that.deviceid, "stay");
-                        that.device.attributes.lock = "stay";
+                        that.device.attributes.door = "stay";
                         break;
                 } });
 
