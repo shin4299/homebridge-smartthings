@@ -234,6 +234,8 @@ function SmartThingsAccessory(platform, device) {
 		that.platform.addAttributeUsage("lock", this.deviceid, thisCharacteristic);
 		
     }
+	
+	
 
 //    if (devices.capabilities["Valve"] !== undefined) {
 //        this.deviceGroup = "valve";
@@ -306,7 +308,80 @@ function SmartThingsAccessory(platform, device) {
 	     } 
 		   
 	   }
-		   
+
+	    
+	
+      	else if (device.commands.SecuritySystem) {  
+        this.deviceGroup = "SecuritySystem"
+        thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
+        thisCharacteristic.on('get', function(callback) {
+                switch (that.device.attributes.door) {
+                    case 'disarm':
+                        callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+                        break;
+                    case 'stay':
+                        callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+                        break;
+                    case 'away':
+                        callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+                        break;
+                    case 'night':
+                        callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+                        break;
+		default:
+                        callback(null, Characteristic.SecuritySystemCurrentState.UNKNOWN);
+                        break;		
+                }
+            });
+	 thisCharacteristic.on('set', function(value, callback) {
+		if (value === false) {
+                    value = Characteristic.SecuritySystemTargetState.DISARM;
+                } else if (value === true) {
+                    value = Characteristic.SecuritySystemTargetState.AWAY_ARM;
+                }  
+                switch (value) {
+                    case Characteristic.SecuritySystemTargetState.AWAY_ARM:
+                        that.platform.api.runCommand(callback, that.deviceid, "away");
+                        that.device.attributes.door = "away";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
+                        that.platform.api.runCommand(callback, that.deviceid, "night");
+                        that.device.attributes.lock = "night";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.DISARMED:
+                        that.platform.api.runCommand(callback, that.deviceid, "disarm");
+                        that.device.attributes.lock = "disarm";
+                        break;
+                    case Characteristic.SecuritySystemTargetState.STAY_ARM:
+                        that.platform.api.runCommand(callback, that.deviceid, "stay");
+                        that.device.attributes.lock = "stay";
+                        break;
+                } });
+
+	thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
+        thisCharacteristic.on('get', function(value, callback) {
+                if (value == Characteristic.SecuritySystemCurrentState.AWAY_ARM) {
+                    that.platform.api.runCommand(callback, that.deviceid, "away");
+                    that.device.attributes.door = "away";
+                }
+                 else if (value == Characteristic.SecuritySystemCurrentState.NIGHT_ARM) {
+                    that.platform.api.runCommand(callback, that.deviceid, "night");
+                    that.device.attributes.door = "night";
+                } 
+                 else if (value == Characteristic.SecuritySystemCurrentState.STAY_ARM) {
+                    that.platform.api.runCommand(callback, that.deviceid, "stay");
+                    that.device.attributes.door = "stay";
+                } 
+                 else if (value == Characteristic.SecuritySystemCurrentState.DISARMED) {
+                    that.platform.api.runCommand(callback, that.deviceid, "disarm");
+                    that.device.attributes.door = "disarm";
+                } });
+		that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
+			
+}	    
+	    
+	    
+	    
  else {
         this.deviceGroup = "switch";
         thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
