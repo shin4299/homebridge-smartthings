@@ -311,7 +311,7 @@ function SmartThingsAccessory(platform, device) {
 
 	    
 	
-      	else if (device.commands.SecuritySystem) {  
+      	else if (device.capabilities["Alarm"]) {  
         this.deviceGroup = "SecuritySystem"
         thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
         thisCharacteristic.on('get', function(callback) {
