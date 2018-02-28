@@ -408,9 +408,9 @@ function SmartThingsAccessory(platform, device) {
     }
 
     if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
-	    if (device.commands.lowerCoolSetpoint) {
+	    if (device.capabilities["Thermostat"] !== undefined) {
         this.deviceGroup = "sensor";
-    }
+    		}
 	    else{
         this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristic.CurrentRelativeHumidity)
@@ -441,9 +441,9 @@ function SmartThingsAccessory(platform, device) {
     }
 	
     if (device.capabilities["Temperature Measurement"] !== undefined) {
-	            if (device.commands.lowerCoolSetpoint) {
+	    if (device.capabilities["Thermostat"] !== undefined) {
        this.deviceGroup = "sensor";
-    }
+    		}
 	    else{
 		this.deviceGroup = "sensor";
 	        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({minValue: -20})
