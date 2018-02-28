@@ -409,7 +409,7 @@ function SmartThingsAccessory(platform, device) {
 
     if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
 	    if (device.capabilities["Thermostat"] !== undefined) {
-        this.deviceGroup = "sensor";
+        if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
     		}
 	    else{
         this.deviceGroup = "sensor";
