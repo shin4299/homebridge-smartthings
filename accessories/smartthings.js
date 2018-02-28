@@ -408,10 +408,15 @@ function SmartThingsAccessory(platform, device) {
     }
 
     if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
+	    if (device.commands.lowerCoolSetpoint) {
+        if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
+    }
+	    else{
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristic.CurrentRelativeHumidity)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.humidity)); });
 		that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
+	    }
     }
 	
     if (device.capabilities["Illuminance Measurement"] !== undefined) {
@@ -436,6 +441,10 @@ function SmartThingsAccessory(platform, device) {
     }
 	
     if (device.capabilities["Temperature Measurement"] !== undefined) {
+	            if (device.commands.lowerCoolSetpoint) {
+        if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
+    }
+	    else{
 		if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
 	        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({minValue: -20})
         	thisCharacteristic.on('get', function(callback) {
@@ -445,6 +454,7 @@ function SmartThingsAccessory(platform, device) {
                 	    callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8)*10)/10);
 	            });
 		that.platform.addAttributeUsage("temperature", this.deviceid, thisCharacteristic);
+	    }
     	}    
    
 
