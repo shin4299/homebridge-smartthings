@@ -579,7 +579,7 @@ function SmartThingsAccessory(platform, device) {
             });
 		that.platform.addAttributeUsage("thermostatMode", this.deviceid, thisCharacteristic);
 
-        if (device.commands.humi) {
+        if (device.commands.humi !== undefined) {
             thisCharacteristic = this.getaddService(Service.Thermostat).getCharacteristic(Characteristic.CurrentRelativeHumidity)
             thisCharacteristic.on('get', function(callback) {
                     callback(null, parseInt(that.device.attributes.humidity));
