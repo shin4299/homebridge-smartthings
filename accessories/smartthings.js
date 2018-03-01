@@ -90,7 +90,7 @@ function SmartThingsAccessory(platform, device) {
                     callback(null,  parseInt(100));
                 else if (that.device.attributes.level <= 98)
                     callback(null, parseInt(that.device.attributes.level)); });
-        } else if (device.commands.kukufan) {
+        } /* else if (device.commands.kukufan) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
             
@@ -103,7 +103,7 @@ function SmartThingsAccessory(platform, device) {
                         that.platform.api.runCommand(callback, that.deviceid, "off"); });
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-	        thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationSpeed)
+	    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationSpeed)
             thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
             thisCharacteristic.on('set', function(value, callback) { 
             	    if (value > 0)
@@ -127,7 +127,7 @@ function SmartThingsAccessory(platform, device) {
                 } });
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 		
-        } else if (device.commands.lowSpeed) {
+        }*/ else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
             
@@ -146,6 +146,7 @@ function SmartThingsAccessory(platform, device) {
             	    if (value > 0)
             	    	that.platform.api.runCommand(callback, that.deviceid, "setLevel", {value1: value }); });
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+	
         
         } else {
             this.deviceGroup = "lights";
