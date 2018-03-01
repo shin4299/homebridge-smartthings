@@ -625,14 +625,6 @@ function SmartThingsAccessory(platform, device) {
 			that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
         }
 
-        if (device.capabilities["Air Conditioner Mode"] !== undefined) {
-            thisCharacteristic = this.getaddService(Service.Thermostat).getCharacteristic(Characteristic.CurrentRelativeHumidity)
-            thisCharacteristic.on('get', function(callback) {
-                    callback(null, parseInt(that.device.attributes.humidity));
-                });
-			that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
-        }
-		
         thisCharacteristic = this.getaddService(Service.Thermostat).getCharacteristic(Characteristic.CurrentTemperature)
         thisCharacteristic.on('get', function(callback) {
                 if (that.platform.temperature_unit == 'C')
