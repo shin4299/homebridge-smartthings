@@ -90,7 +90,7 @@ function SmartThingsAccessory(platform, device) {
                     callback(null,  parseInt(100));
                 else if (that.device.attributes.level <= 98)
                     callback(null, parseInt(that.device.attributes.level)); });
-        } /* else if (device.commands.kukufan) {
+        }  else if (device.commands.kukufan) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
             
@@ -127,7 +127,7 @@ function SmartThingsAccessory(platform, device) {
                 } });
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 		
-        }*/ else if (device.commands.lowSpeed) {
+        } else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
             
