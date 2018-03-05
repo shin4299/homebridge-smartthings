@@ -121,10 +121,10 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingon");
-                    that.device.attributes.swingMode = "on";
+                    that.device.attributes.swingMode = "swing";
                 } else if (value == Characteristic.SwingMode.SWING_DISABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingoff");
-                    that.device.attributes.swingMode = "off";
+                    that.device.attributes.swingMode = "noswing";
                 } });
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 		
