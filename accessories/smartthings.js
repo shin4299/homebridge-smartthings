@@ -112,7 +112,7 @@ function SmartThingsAccessory(platform, device) {
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)
             thisCharacteristic.on('get', function(callback) {
-		 switch (that.device.attributes.swingMode) {
+/*		 switch (that.device.attributes.swingMode) {
                     case 'swingon':
                         callback(null, Characteristic.SwingMode.SWING_ENABLED);
                         break;
@@ -123,20 +123,20 @@ function SmartThingsAccessory(platform, device) {
                         callback(null, Characteristic.SwingMode.SWING_DISABLED);
                         break;
                 }
-		 
+*/		 
 
-//                if (that.device.attributes.swingMode == 'swingon')
-//                    callback(null, Characteristic.SwingMode.SWING_ENABLED);
-//                else
-//                    callback(null, Characteristic.SwingMode.SWING_DISABLED);
+                if (that.device.attributes.swingMode == "on")
+                    callback(null, Characteristic.SwingMode.SWING_ENABLED);
+                else
+                    callback(null, Characteristic.SwingMode.SWING_DISABLED);
             });
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingon");
-                    that.device.attributes.swingMode = "swingon";
+                    that.device.attributes.swingMode = "on";
                 } else if (value == Characteristic.SwingMode.SWING_DISABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingoff");
-                    that.device.attributes.swingMode = "swingoff";
+                    that.device.attributes.swingMode = "off";
                 } });
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 		
