@@ -112,10 +112,10 @@ function SmartThingsAccessory(platform, device) {
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)		
             thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.swingMode == 'on')
-                    callback(null, Characteristic.SwingMode.SWING_ENABLED);
-                else
+		if (that.device.attributes.swingMode == 'ON')
                     callback(null, Characteristic.SwingMode.SWING_DISABLED);
+                else
+                    callback(null, Characteristic.SwingMode.SWING_ENABLED);
             });
 		    
             thisCharacteristic.on('set', function(value, callback) {
