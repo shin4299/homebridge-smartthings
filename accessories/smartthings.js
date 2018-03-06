@@ -168,22 +168,6 @@ function SmartThingsAccessory(platform, device) {
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 	
         
-        } else if (device.commands.kukulight) {
-            this.deviceGroup = "lights";
-            thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.On)
-            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); });
-            thisCharacteristic.on('set', function(value, callback) {
-                    if (value)
-                        that.platform.api.runCommand(callback, that.deviceid, null);
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
-			that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-
-            thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.Brightness)
-            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
-            thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-			
         } else {
             this.deviceGroup = "lights";
             thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.On)
