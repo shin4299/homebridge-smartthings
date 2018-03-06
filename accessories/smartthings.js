@@ -112,35 +112,35 @@ function SmartThingsAccessory(platform, device) {
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)		
             thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.swingMode = "on")
-                    callback(null, Characteristic.SwingMode.SWING_ENABLED);
-                else
+		if (that.device.attributes.swingMode == "off")
                     callback(null, Characteristic.SwingMode.SWING_DISABLED);
+                else
+                    callback(null, Characteristic.SwingMode.SWING_ENABLED);
             });		    
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                    that.device.attributes.swingMode = "on";
+//                    that.device.attributes.swingMode = "on";
                 } else if (value == Characteristic.SwingMode.SWING_DISABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                    that.device.attributes.swingMode = "off";
+//                    that.device.attributes.swingMode = "off";
                 } });
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)		
             thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.sleepMode = "on")
-                    callback(null, Characteristic.RotationDirection.CLOCKWISE);
-                else
+		if (that.device.attributes.sleepMode == "off")
                     callback(null, Characteristic.RotationDirection.COUNTER_CLOCKWISE);
+                else
+                    callback(null, Characteristic.RotationDirection.CLOCKWISE);
             });		    
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.RotationDirection.CLOCKWISE) {
                     that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-                    that.device.attributes.sleepMode = "on";
+//                    that.device.attributes.sleepMode = "on";
                 } else if (value == Characteristic.RotationDirection.COUNTER_CLOCKWISE) {
                     that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-                    that.device.attributes.sleepMode = "off";
+//                    that.device.attributes.sleepMode = "off";
                 } });
 		 that.platform.addAttributeUsage("sleepMode", this.deviceid, thisCharacteristic);	
 		
