@@ -112,12 +112,11 @@ function SmartThingsAccessory(platform, device) {
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)		
             thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.swingget == 'swing')
+		if (that.device.attributes.swingmode == 'on')
                     callback(null, Characteristic.SwingMode.SWING_ENABLED);
                 else
                     callback(null, Characteristic.SwingMode.SWING_DISABLED);
             });
-	   that.platform.addAttributeUsage("swingget", this.deviceid, thisCharacteristic);	
 
 		    
             thisCharacteristic.on('set', function(value, callback) {
@@ -128,7 +127,7 @@ function SmartThingsAccessory(platform, device) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingoff");
 //                    that.device.attributes.swingMode = "noswing";
                 } });
-		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
+		 that.platform.addAttributeUsage("swingmode", this.deviceid, thisCharacteristic);	
 		
         } else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
