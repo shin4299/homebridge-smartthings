@@ -116,9 +116,7 @@ function SmartThingsAccessory(platform, device) {
                     callback(null, Characteristic.SwingMode.SWING_ENABLED);
                 else
                     callback(null, Characteristic.SwingMode.SWING_DISABLED);
-            });
-
-		    
+            });		    
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingon");
@@ -128,6 +126,25 @@ function SmartThingsAccessory(platform, device) {
 //                    that.device.attributes.swingMode = "noswing";
                 } });
 		 that.platform.addAttributeUsage("swingmode", this.deviceid, thisCharacteristic);	
+
+            thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)		
+            thisCharacteristic.on('get', function(callback) {
+		if (that.device.attributes.sleepMode == "on")
+                    callback(null, Characteristic.RotationDirection.CLOCKWISE);
+                else
+                    callback(null, Characteristic.RotationDirection.COUNTER_CLOCKWISE);
+            });		    
+            thisCharacteristic.on('set', function(value, callback) {
+                if (value == Characteristic.RotationDirection.CLOCKWISE) {
+                    that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
+//                    that.device.attributes.swingMode = "swing";
+                } else if (value == Characteristic.RotationDirection.COUNTER_CLOCKWISE) {
+                    that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
+//                    that.device.attributes.swingMode = "noswing";
+                } });
+		 that.platform.addAttributeUsage("sleepMode", this.deviceid, thisCharacteristic);	
+		
+		
 		
         } else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
