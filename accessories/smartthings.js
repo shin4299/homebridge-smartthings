@@ -111,9 +111,8 @@ function SmartThingsAccessory(platform, device) {
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)		
-            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.swingMode == "on"); })
-		
-/*            thisCharacteristic.on('get', function(callback) {
+/*            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.swingMode == "on"); })		
+            thisCharacteristic.on('get', function(callback) {
 		if (that.device.attributes.swingMode == 'off' )
                     callback(null, Characteristic.SwingMode.SWING_DISABLED);
                 else if (that.device.attributes.swingMode == 'on' )
@@ -123,10 +122,8 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-//                    that.device.attributes.swingMode = "on";
                 } else if (value == Characteristic.SwingMode.SWING_DISABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-//                    that.device.attributes.swingMode = "off";
                 } });
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 
@@ -143,10 +140,8 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.RotationDirection.CLOCKWISE) {
                     that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-//                    that.device.attributes.sleepMode = "on";
                 } else if (value == Characteristic.RotationDirection.COUNTER_CLOCKWISE) {
                     that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-//                    that.device.attributes.sleepMode = "off";
                 } });
 		 that.platform.addAttributeUsage("sleepMode", this.deviceid, thisCharacteristic);	
 		
@@ -173,6 +168,22 @@ function SmartThingsAccessory(platform, device) {
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 	
         
+        } else if (device.commands.kukulight) {
+            this.deviceGroup = "lights";
+            thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.On)
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); });
+            thisCharacteristic.on('set', function(value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, null);
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
+			that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+
+            thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.Brightness)
+            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
+            thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+			
         } else {
             this.deviceGroup = "lights";
             thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.On)
