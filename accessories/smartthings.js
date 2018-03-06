@@ -98,7 +98,7 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
             thisCharacteristic.on('set', function(value, callback) {
                     if (value)
-                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                        that.platform.api.runCommand(callback, that.deviceid, null);
                     else
                         that.platform.api.runCommand(callback, that.deviceid, "off"); });
 		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
