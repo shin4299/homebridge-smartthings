@@ -120,10 +120,10 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-//                    that.device.attributes.swingMode = "swing";
+                    that.device.attributes.swingMode = "on";
                 } else if (value == Characteristic.SwingMode.SWING_DISABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-//                    that.device.attributes.swingMode = "noswing";
+                    that.device.attributes.swingMode = "off";
                 } });
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 
@@ -137,10 +137,10 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.RotationDirection.CLOCKWISE) {
                     that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-//                    that.device.attributes.swingMode = "swing";
+                    that.device.attributes.sleepMode = "on";
                 } else if (value == Characteristic.RotationDirection.COUNTER_CLOCKWISE) {
                     that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-//                    that.device.attributes.swingMode = "noswing";
+                    that.device.attributes.sleepMode = "off";
                 } });
 		 that.platform.addAttributeUsage("sleepMode", this.deviceid, thisCharacteristic);	
 		
