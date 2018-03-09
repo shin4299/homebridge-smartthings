@@ -113,11 +113,12 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)
 //            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.swingMode === "on"); })		
             thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.swingMode == "noswing" )
+		if (that.device.attributes.switch == "on" )
 		  callback(null, Characteristic.SwingMode.SWING_DISABLED);
                 else 
 		 callback(null, Characteristic.SwingMode.SWING_ENABLED);
             });		    
+		 that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);	
 		
             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) 
@@ -127,6 +128,15 @@ function SmartThingsAccessory(platform, device) {
                  }); 
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 
+
+        thisCharacteristic.on('get', function(callback) {
+                if (that.device.attributes.carbonDioxide < 1200 )
+                    callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
+                else
+                    callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
+            });
+ 		that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
+		
 		
 		
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)		
