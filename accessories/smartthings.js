@@ -112,20 +112,19 @@ function SmartThingsAccessory(platform, device) {
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)
             thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.hue == '2' )
+		if (that.device.attributes.swingMode == 'off' )
 		  callback(null, Characteristic.SwingMode.SWING_DISABLED);
                 else 
 		 callback(null, Characteristic.SwingMode.SWING_ENABLED);
             });		    
-//		 that.platform.addAttributeUsage("hue", this.deviceid, thisCharacteristic);	
 		
-/*            thisCharacteristic.on('set', function(value, callback) {
+            thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
                  else 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 }); */
-		 that.platform.addAttributeUsage("hue", this.deviceid, thisCharacteristic);	
+                 }); 
+	    that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 		
 		
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)		
