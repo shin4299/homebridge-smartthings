@@ -110,39 +110,14 @@ function SmartThingsAccessory(platform, device) {
             	    	that.platform.api.runCommand(callback, that.deviceid, "setLevel", {value1: value }); });
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
-            thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)
-/*            thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.door == 'open' )
-		  callback(null, Characteristic.SwingMode.SWING_ENABLED);
-                else 
-		 callback(null, Characteristic.SwingMode.SWING_DISABLED);
-            });		    
-		
-             thisCharacteristic.on('set', function(value, callback) {
+            thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)		
+            thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
                  else 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 }); */ 
-		
-		
-thisCharacteristic.on('get', function(callback) {
-                switch (that.device.attributes.door) {
-                    case 'open':
-                        callback(null, Characteristic.SwingMode.SWING_ENABLED);
-                        break;
-                    case 'closed':
-                        callback(null, Characteristic.SwingMode.SWING_DISABLED);
-                        break;
-                    default:
-                        callback(null, Characteristic.SwingMode.SWING_DISABLED);
-                        break;
-                }
-            });		
-		
-		
-		
-	    that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);	
+                 }); 
+	    that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
 		
 		
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)		
