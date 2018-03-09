@@ -127,17 +127,7 @@ function SmartThingsAccessory(platform, device) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
                  }); 
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
-*/
-
-        thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.carbonDioxide < 1200 )
-                    callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
-                else
-                    callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
-            });
- 		that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
-		
-		
+*/		
 		
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)		
 /*            thisCharacteristic.on('get', function(callback) {
