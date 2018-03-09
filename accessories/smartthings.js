@@ -114,9 +114,9 @@ function SmartThingsAccessory(platform, device) {
 //            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.swingMode === "on"); })		
             thisCharacteristic.on('get', function(callback) {
 		if (that.device.attributes.swingMode == 'noswing' )
-                    callback(null, Characteristic.SwingMode.SWING_DISABLED);
+		{  callback(null, Characteristic.SwingMode.SWING_DISABLED)};
                 else if (that.device.attributes.swingMode == 'swing' )
-                    callback(null, Characteristic.SwingMode.SWING_ENABLED);
+		{ callback(null, Characteristic.SwingMode.SWING_ENABLED)};
             });		    
 		
             thisCharacteristic.on('set', function(value, callback) {
