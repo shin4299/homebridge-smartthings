@@ -120,14 +120,14 @@ function SmartThingsAccessory(platform, device) {
             });		    
 		 that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);	
 		
-            thisCharacteristic.on('set', function(value, callback) {
+ /*           thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 else /*if (value == Characteristic.SwingMode.SWING_DISABLED) {*/
+                 else /*if (value == Characteristic.SwingMode.SWING_DISABLED) {
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
                  }); 
 		 that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
-
+*/
 
         thisCharacteristic.on('get', function(callback) {
                 if (that.device.attributes.carbonDioxide < 1200 )
