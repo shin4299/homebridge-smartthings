@@ -118,12 +118,12 @@ function SmartThingsAccessory(platform, device) {
 		 callback(null, Characteristic.SwingMode.SWING_DISABLED);
             });		    
 		
-            thisCharacteristic.on('set', function(value, callback) {
+/*             thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
                  else 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 }); 
+                 }); */ 
 	    that.platform.addAttributeUsage("smoke", this.deviceid, thisCharacteristic);	
 		
 		
