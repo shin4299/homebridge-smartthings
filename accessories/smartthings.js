@@ -111,7 +111,6 @@ function SmartThingsAccessory(platform, device) {
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
             thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)
-//            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.swingMode === "on"); })		
             thisCharacteristic.on('get', function(callback) {
 		if (that.device.attributes.hue == '2' )
 		  callback(null, Characteristic.SwingMode.SWING_DISABLED);
@@ -120,12 +119,12 @@ function SmartThingsAccessory(platform, device) {
             });		    
 //		 that.platform.addAttributeUsage("hue", this.deviceid, thisCharacteristic);	
 		
-            thisCharacteristic.on('set', function(value, callback) {
+/*            thisCharacteristic.on('set', function(value, callback) {
                 if (value == Characteristic.SwingMode.SWING_ENABLED) 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 else /*if (value == Characteristic.SwingMode.SWING_DISABLED) {*/
+                 else 
                     that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 }); 
+                 }); */
 		 that.platform.addAttributeUsage("hue", this.deviceid, thisCharacteristic);	
 		
 		
