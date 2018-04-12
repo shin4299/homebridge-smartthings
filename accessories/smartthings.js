@@ -12,7 +12,6 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
         Service = oService;
         Characteristic = oCharacteristic;
         EnergyCharacteristics = require('../lib/customCharacteristics').EnergyCharacteristics(Characteristic)
-	    
 
         uuid = ouuid;
 
@@ -34,13 +33,19 @@ function SmartThingsAccessory(platform, device) {
     this.device = device;
 
     var idKey = 'hbdev:smartthings:' + this.deviceid;
-    var id = uuid.generate(idKey);	
+    var id = uuid.generate(idKey);
 
-
-	
     Accessory.call(this, this.name, id);
     var that = this;
 
+	//Removing excluded capabilities from config
+	for (var i = 0; i < device.excludedCapabilities.length; i++) {
+		excludedCapability = device.excludedCapabilities[i];
+		if (device.capabilities[excludedCapability] !== undefined) {
+			platform.log.debug("Removing capability: "+excludedCapability+" for device: "+device.name)
+			delete device.capabilities[excludedCapability];
+		}
+	}
     //Get the Capabilities List
     for (var index in device.capabilities) {
         if ((platform.knownCapabilities.indexOf(index) == -1) && (platform.unknownCapabilities.indexOf(index) == -1))
@@ -55,10 +60,9 @@ function SmartThingsAccessory(platform, device) {
 
     this.deviceGroup = "unknown"; //This way we can easily tell if we set a device group
 	var thisCharacteristic;
-
 		
     if (device.capabilities["Switch Level"] !== undefined) {
-        if (device.commands.levelOpenClose) {
+        if (device.commands.levelOpenClose || device.commands.presetPosition) {
             //This is a Window Shade
             this.deviceGroup = "shades"
 
@@ -159,7 +163,7 @@ function SmartThingsAccessory(platform, device) {
 			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 	
         
-        } else {
+        } else if (device.commands.setLevel) {
             this.deviceGroup = "lights";
             thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.On)
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); });
