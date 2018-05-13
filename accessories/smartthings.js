@@ -367,7 +367,8 @@ else if (device.capabilities["Valve"] !== undefined){
             //Defines Valve State (opened/closed)
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
             thisCharacteristic.on('get', function(callback) {
-               callback(null, that.device.attributes.switch == "on");
+               callback(null, that.device.attributes.switch === 'on' ? 1 : 0);
+		    
             });
             thisCharacteristic.on('set', function(value, callback) {
                 if (value)
