@@ -373,7 +373,7 @@ else if (device.capabilities["Valve"] !== undefined){
                         break;
 //                    case 'GenericValve':
                     default:
-                        callback(null, Characteristic.ValveType.IRRIGATION);
+                        callback(null, Characteristic.ValveType.SHOWER_HEAD);
                         break;
                		 }
 		});
