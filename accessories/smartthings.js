@@ -366,9 +366,7 @@ else if (device.capabilities["Valve"] !== undefined){
            // that.platform.addAttributeUsage('valveType', this.deviceid, thisCharacteristic);
             //Defines Valve State (opened/closed)
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
-            thisCharacteristic.on('get', function(callback) {
-               callback(null, that.device.attributes.switch == "on" ? 1 : 0);
-            });
+            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
             thisCharacteristic.on('set', function(value, callback) {
                 if (value)
                     that.platform.api.runCommand(callback, that.deviceid, "on");
