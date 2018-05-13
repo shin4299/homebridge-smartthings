@@ -361,9 +361,9 @@ else if (device.capabilities["Valve"] !== undefined){
 	        this.deviceGroup = "valve";
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
             thisCharacteristic.on('get', function(callback) {
-                callback(null, valveType);
+                callback(null, irrigation);
             });
-            that.platform.addAttributeUsage('valveType', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage('irrigation', this.deviceid, thisCharacteristic);
             //Defines Valve State (opened/closed)
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
             thisCharacteristic.on('get', function(callback) {
