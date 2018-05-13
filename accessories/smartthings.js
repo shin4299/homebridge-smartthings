@@ -371,9 +371,9 @@ else if (device.capabilities["Valve"] !== undefined){
                     case 'Sprinkler':
                         callback(null, Characteristic.ValveType.IRRIGATION);
                         break;
-                    case 'GenericValve':
+//                    case 'GenericValve':
                     default:
-                        callback(null, Characteristic.ValveType.SHOWER_HEAD);
+                        callback(null, Characteristic.ValveType.IRRIGATION);
                         break;
                		 }
 		});
