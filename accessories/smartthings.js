@@ -361,7 +361,7 @@ else if (device.capabilities["Valve"] !== undefined){
 	        this.deviceGroup = "valve";
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
             thisCharacteristic.on('get', function(callback) {
-		 switch (that.device.attributes.door) {
+		 switch (that.device.attributes.switch) {
                     case 'Faucet':
                         callback(null, Characteristic.ValveType.WATER_FAUCET);
                         break;
@@ -375,10 +375,9 @@ else if (device.capabilities["Valve"] !== undefined){
                     default:
                         callback(null, Characteristic.ValveType.SHOWER_HEAD);
                         break;
-                }
-
+               		 }
 		});
-            that.platform.addAttributeUsage('valveType', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage('switch', this.deviceid, thisCharacteristic);
             //Defines Valve State (opened/closed)
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
             thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
