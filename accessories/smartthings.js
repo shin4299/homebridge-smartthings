@@ -359,8 +359,25 @@ function SmartThingsAccessory(platform, device) {
 	    
 else if (device.capabilities["Valve"] !== undefined){
 	        this.deviceGroup = "valve";
-            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType).updateValue(Characteristic.ValveType.SHOWER_HEAD);
-           // thisCharacteristic.on('get', function(callback) {callback(null, 2);});
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
+            thisCharacteristic.on('get', function(callback) {
+		 switch (that.device.attributes.door) {
+                    case 'Faucet':
+                        callback(null, Characteristic.ValveType.WATER_FAUCET);
+                        break;
+                    case 'ShowerHead':
+                        callback(null, Characteristic.ValveType.SHOWER_HEAD);
+                        break;
+                    case 'Sprinkler':
+                        callback(null, Characteristic.ValveType.IRRIGATION);
+                        break;
+                    case 'GenericValve':
+                    default:
+                        callback(null, Characteristic.ValveType.SHOWER_HEAD);
+                        break;
+                }
+
+		});
             that.platform.addAttributeUsage('valveType', this.deviceid, thisCharacteristic);
             //Defines Valve State (opened/closed)
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
