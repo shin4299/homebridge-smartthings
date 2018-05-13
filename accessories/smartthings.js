@@ -360,10 +360,10 @@ function SmartThingsAccessory(platform, device) {
 else if (device.capabilities["Valve"] !== undefined){
 	        this.deviceGroup = "valve";
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
-            thisCharacteristic.on('get', function(callback) {
-                callback(null, irrigation);
-            });
-            that.platform.addAttributeUsage('irrigation', this.deviceid, thisCharacteristic);
+           // thisCharacteristic.on('get', function(callback) {
+           //     callback(null, valveType);
+           // });
+           // that.platform.addAttributeUsage('valveType', this.deviceid, thisCharacteristic);
             //Defines Valve State (opened/closed)
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
             thisCharacteristic.on('get', function(callback) {
@@ -375,7 +375,7 @@ else if (device.capabilities["Valve"] !== undefined){
                 else
                     that.platform.api.runCommand(callback, that.deviceid, "off");
             });
-            that.platform.addAttributeUsage('active', that.deviceid, thisCharacteristic);	
+            that.platform.addAttributeUsage('switch', this.deviceid, thisCharacteristic);	
 	
 }
 	    
