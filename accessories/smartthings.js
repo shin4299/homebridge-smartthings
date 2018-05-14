@@ -361,7 +361,7 @@ function SmartThingsAccessory(platform, device) {
             });
             thisCharacteristic.on('set', function(value, callback) {
                 // that.platform.log(that.deviceid + ' set value : ' + value);
-                let val = convertAlarmState(value);
+                var val = convertAlarmState(value);
                 that.platform.api.runCommand(callback, 'SecurityStatus', val);
                 that.device.attributes.SecurityStatus = val;
             });
@@ -892,19 +892,19 @@ else if (device.capabilities["Valve"] !== undefined){
 function convertAlarmState(value, valInt = false) {
     switch (value) {
         case 'stay':
-        case 0:
+//        case 0:
             return valInt ? Characteristic.SecuritySystemCurrentState.STAY_ARM : 'stay';
         case 'away':
-        case 1:
+//        case 1:
             return valInt ? Characteristic.SecuritySystemCurrentState.AWAY_ARM : 'away';
         case 'night':
-        case 2:
+//        case 2:
             return valInt ? Characteristic.SecuritySystemCurrentState.NIGHT_ARM : 'night';
         case 'off':
-        case 3:
+//        case 3:
             return valInt ? Characteristic.SecuritySystemCurrentState.DISARMED : 'off';
         case 'alarm_active':
-        case 4:
+//        case 4:
             return valInt ? Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED : 'alarm_active';
     }
 }
