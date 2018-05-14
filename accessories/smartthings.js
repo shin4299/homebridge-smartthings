@@ -287,7 +287,7 @@ function SmartThingsAccessory(platform, device) {
         this.deviceGroup = "SecuritySystem"
 	thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState);
             thisCharacteristic.on('get', function(callback) {
-		    switch (that.device.attributes.SecuritySystem) {
+		    switch (that.device.attributes.SecurityStatus) {
 	case 'stay':
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
@@ -306,12 +306,12 @@ function SmartThingsAccessory(platform, device) {
                 }
 	    });
                 // that.platform.log(that.deviceid + ' check 1: ' + that.device.attributes.alarmSystemStatus);
-            that.platform.addAttributeUsage('SecuritySystem', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
 		
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState);
             thisCharacteristic.on('get', function(callback) {
                 // that.platform.log(that.deviceid + ' check 2: ' + that.device.attributes.alarmSystemStatus);
-		    switch (that.device.attributes.SecuritySystem) {
+		    switch (that.device.attributes.SecurityStatus) {
 	case 'stay':
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
@@ -343,7 +343,7 @@ function SmartThingsAccessory(platform, device) {
                     that.platform.api.runCommand(callback, that.deviceid, "alarm_active");
                 }
 	    });		    
-            that.platform.addAttributeUsage('SecuritySystem', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
     }	    	
 	
 //  ------------------------------------
