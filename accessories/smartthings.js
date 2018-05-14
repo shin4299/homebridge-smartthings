@@ -282,8 +282,31 @@ function SmartThingsAccessory(platform, device) {
 	
 	
 
-//    if (devices.capabilities["Valve"] !== undefined) {
-//        this.deviceGroup = "valve";
+//   --------------------------------------
+    if (device.attributes['SecuritySystem'] !== undefined) {  
+        this.deviceGroup = "SecuritySystem"
+	thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState);
+            thisCharacteristic.on('get', function(callback) {
+                // that.platform.log(that.deviceid + ' check 1: ' + that.device.attributes.alarmSystemStatus);
+                callback(null, convertAlarmState(that.device.attributes.SecuritySystem.toLowerCase(), true));
+            });
+            that.platform.addAttributeUsage('SecuritySystem', this.deviceid, thisCharacteristic);
+		
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState);
+            thisCharacteristic.on('get', function(callback) {
+                // that.platform.log(that.deviceid + ' check 2: ' + that.device.attributes.alarmSystemStatus);
+                callback(null, convertAlarmState(that.device.attributes.SecuritySystem.toLowerCase(), true));
+            });
+            thisCharacteristic.on('set', function(value, callback) {
+                // that.platform.log(that.deviceid + ' set value : ' + value);
+                let val = convertAlarmState(value);
+                that.platform.api.runCommand(callback, 'SecuritySystem', val);
+                that.device.attributes.SecuritySystem = val;
+            });
+            that.platform.addAttributeUsage('SecuritySystem', this.deviceid, thisCharacteristic);
+    }	    	
+	
+//  ------------------------------------
 // Thinking of implementing this as a Door service.
 //    }
 	   	
@@ -800,6 +823,26 @@ else if (device.capabilities["Valve"] !== undefined){
 		that.platform.addAttributeUsage("coolingSetpoint", this.deviceid, thisCharacteristic);
     }
     this.loadData(device, this);
+}
+
+function convertAlarmState(value, valInt = false) {
+    switch (value) {
+        case 'stay':
+        case 0:
+            return valInt ? Characteristic.SecuritySystemCurrentState.STAY_ARM : 'stay';
+        case 'away':
+        case 1:
+            return valInt ? Characteristic.SecuritySystemCurrentState.AWAY_ARM : 'away';
+        case 'night':
+        case 2:
+            return valInt ? Characteristic.SecuritySystemCurrentState.NIGHT_ARM : 'night';
+        case 'off':
+        case 3:
+            return valInt ? Characteristic.SecuritySystemCurrentState.DISARMED : 'off';
+        case 'alarm_active':
+        case 4:
+            return valInt ? Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED : 'alarm_active';
+    }
 }
 
 function loadData(data, myObject) {
