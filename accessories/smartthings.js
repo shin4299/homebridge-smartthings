@@ -351,13 +351,13 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState);
             thisCharacteristic.on('get', function(callback) {
                 // that.platform.log(that.deviceid + ' check 1: ' + that.device.attributes.alarmSystemStatus);
-                callback(null, convertAlarmState(that.device.attributes.SecurityStatus.toLowerCase(), true));
+                callback(null, convertAlarmState(that.device.attributes.SecurityStatus, true));
             });
             that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState);
             thisCharacteristic.on('get', function(callback) {
                 // that.platform.log(that.deviceid + ' check 2: ' + that.device.attributes.alarmSystemStatus);
-                callback(null, convertAlarmState(that.device.attributes.SecurityStatus.toLowerCase(), true));
+                callback(null, convertAlarmState(that.device.attributes.SecurityStatus, true));
             });
             thisCharacteristic.on('set', function(value, callback) {
                 // that.platform.log(that.deviceid + ' set value : ' + value);
