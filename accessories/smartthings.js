@@ -283,7 +283,7 @@ function SmartThingsAccessory(platform, device) {
 	
 
 //   --------------------------------------
-    if (device.attributes['SecurityStatus'] !== undefined) {  
+ /*   if (device.attributes['SecurityStatus'] !== undefined) {  
         this.deviceGroup = "SecuritySystem"
 	thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState);
             thisCharacteristic.on('get', function(callback) {
@@ -344,7 +344,31 @@ function SmartThingsAccessory(platform, device) {
                 }
 	    });		    
             that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
-    }	    	
+    }	   */
+	
+        if (device.attributes['SecurityStatus'] !== undefined) {
+            that.deviceGroup = 'alarm';
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState);
+            thisCharacteristic.on('get', function(callback) {
+                // that.platform.log(that.deviceid + ' check 1: ' + that.device.attributes.alarmSystemStatus);
+                callback(null, convertAlarmState(that.device.attributes.SecurityStatus.toLowerCase(), true));
+            });
+            that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState);
+            thisCharacteristic.on('get', function(callback) {
+                // that.platform.log(that.deviceid + ' check 2: ' + that.device.attributes.alarmSystemStatus);
+                callback(null, convertAlarmState(that.device.attributes.SecurityStatus.toLowerCase(), true));
+            });
+            thisCharacteristic.on('set', function(value, callback) {
+                // that.platform.log(that.deviceid + ' set value : ' + value);
+                let val = convertAlarmState(value);
+                that.platform.api.runCommand(callback, 'SecurityStatus', val);
+                that.device.attributes.SecurityStatus = val;
+            });
+            that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
+        }
+	
+	
 	
 //  ------------------------------------
 // Thinking of implementing this as a Door service.
