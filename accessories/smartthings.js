@@ -289,23 +289,18 @@ function SmartThingsAccessory(platform, device) {
             thisCharacteristic.on('get', function(callback) {
 		    switch (that.device.attributes.SecuritySystem) {
 	case 'stay':
-        case 0:
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
         case 'away':
-        case 1:
             callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
 	    break;
         case 'night':
-        case 2:
             callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
 	    break;
         case 'off':
-        case 3:
              callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
 	    break;
         case 'alarm_active':
-        case 4:
             callback(null, Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED);
 	    break;
                 }
@@ -318,23 +313,18 @@ function SmartThingsAccessory(platform, device) {
                 // that.platform.log(that.deviceid + ' check 2: ' + that.device.attributes.alarmSystemStatus);
 		    switch (that.device.attributes.SecuritySystem) {
 	case 'stay':
-        case 0:
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
         case 'away':
-        case 1:
             callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
 	    break;
         case 'night':
-        case 2:
             callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
 	    break;
         case 'off':
-        case 3:
              callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
 	    break;
         case 'alarm_active':
-        case 4:
             callback(null, Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED);
 	    break;
                 }            
