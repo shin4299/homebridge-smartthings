@@ -29,6 +29,7 @@ function STCon(log, config) {
 	this.carbonDioxideSet = config["carbonDioxideSet"];
 	if (!this.carbonDioxideSet) this.carbonDioxideSet = 1200;
 	this.initService();
+	var carbonDioxideSet = this.carbonDioxideSet
 }
 
 function SmartThingsAccessory(platform, device) {
@@ -539,11 +540,10 @@ else if (device.capabilities["Valve"] !== undefined){
 
     if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.device.attributes.carbonDioxide)) {
         this.deviceGroup = "detectors";
-        STCon.prototype.initService = function () {
 
 		thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideDetected)
         thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.carbonDioxide < this.carbonDioxideSet )
+                if (that.device.attributes.carbonDioxide < carbonDioxideSet )
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
                 else
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
@@ -554,7 +554,6 @@ else if (device.capabilities["Valve"] !== undefined){
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.carbonDioxide)); })
                 that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
 
-    }
     }
 	
 	
