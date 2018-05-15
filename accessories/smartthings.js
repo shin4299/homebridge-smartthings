@@ -28,7 +28,7 @@ function Smartthingsconfig(log, config) {
 	// Load Wink Authentication From Config File
 	this.carbonDioxideSet = config["carbonDioxideSet"];
 	if (!this.carbonDioxideSet) this.carbonDioxideSet = 1200;
-}
+
 
 
 function SmartThingsAccessory(platform, device) {
@@ -893,25 +893,6 @@ else if (device.capabilities["Valve"] !== undefined){
     }
     this.loadData(device, this);
 }
-
-function convertAlarmState(value, valInt = false) {
-    switch (value) {
-        case 'stay':
-//        case 0:
-            return valInt ? Characteristic.SecuritySystemCurrentState.STAY_ARM : 'stay';
-        case 'away':
-//        case 1:
-            return valInt ? Characteristic.SecuritySystemCurrentState.AWAY_ARM : 'away';
-        case 'night':
-//        case 2:
-            return valInt ? Characteristic.SecuritySystemCurrentState.NIGHT_ARM : 'night';
-        case 'off':
-//        case 3:
-            return valInt ? Characteristic.SecuritySystemCurrentState.DISARMED : 'off';
-        case 'alarm_active':
-//        case 4:
-            return valInt ? Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED : 'alarm_active';
-    }
 }
 
 function loadData(data, myObject) {
