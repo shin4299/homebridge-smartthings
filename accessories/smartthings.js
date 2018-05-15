@@ -347,11 +347,11 @@ function SmartThingsAccessory(platform, device) {
     }	   */
 	
         if (device.attributes['securityStatus'] !== undefined) {
-            that.deviceGroup = 'alarm';
+            that.deviceGroup = "alarm";
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
             thisCharacteristic.on('get', function(callback) {
-		    switch (this.device.attributes.door) {
-	case 'stay':
+		    switch (that.device.attributes.door) {
+	case "stay":
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
         case 'away':
@@ -372,8 +372,8 @@ function SmartThingsAccessory(platform, device) {
 		
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
             thisCharacteristic.on('get', function(callback) {
-		    switch (this.device.attributes.door) {
-	case 'stay':
+		    switch (that.device.attributes.door) {
+	case "stay":
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
         case 'away':
