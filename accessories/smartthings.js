@@ -368,7 +368,7 @@ function SmartThingsAccessory(platform, device) {
 	    break;
                 }
 	    });
-            that.platform.addAttributeUsage('door', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
 		
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
             thisCharacteristic.on('get', function(callback) {
@@ -404,7 +404,7 @@ function SmartThingsAccessory(platform, device) {
                     that.platform.api.runCommand(callback, that.deviceid, "alarm_active");
                 }
 	    });		    
-            that.platform.addAttributeUsage('door', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
         }
 	
 	
