@@ -24,6 +24,10 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
 };
 module.exports.SmartThingsAccessory = SmartThingsAccessory;
 
+function SmartThingsPlatform(log, config) {
+	this.carbonDioxideSet = config.carbonDioxideSet || 1200;
+
+
 function SmartThingsAccessory(platform, device) {
 
     this.deviceid = device.deviceid;
@@ -51,8 +55,9 @@ function SmartThingsAccessory(platform, device) {
     };
 
     this.deviceGroup = "unknown"; //This way we can easily tell if we set a device group
-	var thisCharacteristic;
-		
+	var thisCharacteristic;	
+	
+	
     if (device.capabilities["Switch Level"] !== undefined) {
         if (device.commands.levelOpenClose) {
             //This is a Window Shade
@@ -534,7 +539,7 @@ else if (device.capabilities["Valve"] !== undefined){
         
 		thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideDetected)
         thisCharacteristic.on('get', function(callback) {
-                if (that.device.attributes.carbonDioxide < 1200 )
+                if (that.device.attributes.carbonDioxide < this.carbonDioxideSet )
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
                 else
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
@@ -930,7 +935,7 @@ function loadData(data, myObject) {
     }
 }
 
-
+}
 
 function getServices() {
     return this.services;
