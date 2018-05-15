@@ -506,7 +506,7 @@ function SmartThingsAccessory(platform, device) {
 
 	    
 else if (device.capabilities["Valve"] !== undefined){
-	if (device.commands.sprinkler] !== undefined) {
+	if (device.commands.sprinkler) {
 	  this.deviceGroup = "valve";
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
             thisCharacteristic.on('get', function(callback) {
