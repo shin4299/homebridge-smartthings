@@ -24,8 +24,6 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
 };
 module.exports.SmartThingsAccessory = SmartThingsAccessory;
 
-function SmartThingsPlatform(log, config) {
-	this.carbonDioxideSet = config.carbonDioxideSet || 1200;
 
 
 function SmartThingsAccessory(platform, device) {
@@ -935,7 +933,6 @@ function loadData(data, myObject) {
     }
 }
 
-}
 
 function getServices() {
     return this.services;
