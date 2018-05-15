@@ -24,6 +24,11 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
 };
 module.exports.SmartThingsAccessory = SmartThingsAccessory;
 
+function Smartthingsconfig(log, config) {
+	// Load Wink Authentication From Config File
+	this.carbonDioxideSet = config["carbonDioxideSet"];
+	if (!this.carbonDioxideSet) this.carbonDioxideSet = 1200;
+}
 
 
 function SmartThingsAccessory(platform, device) {
