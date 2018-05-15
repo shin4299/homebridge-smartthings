@@ -348,23 +348,62 @@ function SmartThingsAccessory(platform, device) {
 	
         if (device.attributes['securityStatus'] !== undefined) {
             that.deviceGroup = 'alarm';
-            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState);
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
             thisCharacteristic.on('get', function(callback) {
-                // that.platform.log(that.deviceid + ' check 1: ' + that.device.attributes.alarmSystemStatus);
-                callback(null, convertAlarmState(that.device.attributes.door, true));
-            });
+		    switch (that.device.attributes.door) {
+	case 'stay':
+            callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+	    break;
+        case 'away':
+            callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+	    break;
+        case 'night':
+            callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+	    break;
+        case 'off':
+             callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+	    break;
+        case 'alarm_active':
+            callback(null, Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED);
+	    break;
+                }
+	    });
             that.platform.addAttributeUsage('door', this.deviceid, thisCharacteristic);
-            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState);
+		
+            thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
             thisCharacteristic.on('get', function(callback) {
-                // that.platform.log(that.deviceid + ' check 2: ' + that.device.attributes.alarmSystemStatus);
-                callback(null, convertAlarmState(that.device.attributes.door, true));
-            });
+		    switch (that.device.attributes.door) {
+	case 'stay':
+            callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
+	    break;
+        case 'away':
+            callback(null, Characteristic.SecuritySystemCurrentState.AWAY_ARM);
+	    break;
+        case 'night':
+            callback(null, Characteristic.SecuritySystemCurrentState.NIGHT_ARM);
+	    break;
+        case 'off':
+             callback(null, Characteristic.SecuritySystemCurrentState.DISARMED);
+	    break;
+        case 'alarm_active':
+            callback(null, Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED);
+	    break;
+                }
+	    });
             thisCharacteristic.on('set', function(value, callback) {
                 // that.platform.log(that.deviceid + ' set value : ' + value);
-                var val = convertAlarmState(value);
-                that.platform.api.runCommand(callback, that.deviceid, val);
-                that.device.attributes.door = val;
-            });
+                if (value == Characteristic.SecuritySystemCurrentState.STAY_ARM) {
+                    that.platform.api.runCommand(callback, that.deviceid, "stay");
+                } else if (value == Characteristic.SecuritySystemCurrentState.AWAY_ARM) {
+                    that.platform.api.runCommand(callback, that.deviceid, "away");
+                } else if (value == Characteristic.SecuritySystemCurrentState.NIGHT_ARM) {
+                    that.platform.api.runCommand(callback, that.deviceid, "night");
+                } else if (value == Characteristic.SecuritySystemCurrentState.DISARMED) {
+                    that.platform.api.runCommand(callback, that.deviceid, "off");
+                } else if (value == Characteristic.SecuritySystemCurrentState.ALARM_TRIGGERED) {
+                    that.platform.api.runCommand(callback, that.deviceid, "alarm_active");
+                }
+	    });		    
             that.platform.addAttributeUsage('door', this.deviceid, thisCharacteristic);
         }
 	
