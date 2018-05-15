@@ -551,8 +551,8 @@ else if (device.capabilities["Valve"] !== undefined){
 		}
 	            });
 		
- 		that.platform.addAttributeUsage("carbonDioxideSet", this.deviceid, thisCharacteristic);
  		that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
+ 		that.platform.addAttributeUsage("carbonDioxideSet", this.deviceid, thisCharacteristic);
 
     }
 	
