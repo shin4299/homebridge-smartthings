@@ -24,14 +24,6 @@ module.exports = function(oAccessory, oService, oCharacteristic, ouuid) {
 };
 module.exports.SmartThingsAccessory = SmartThingsAccessory;
 
-function STCon(log, config) {
-	// Load Wink Authentication From Config File
-	this.carbonDioxideSet = config["carbonDioxideSet"];
-	if (!this.carbonDioxideSet) this.carbonDioxideSet = 1200;
-	this.initService();
-	var carbonDioxideSets = this.carbonDioxideSet
-}
-
 function SmartThingsAccessory(platform, device) {
 
     this.deviceid = device.deviceid;
@@ -540,6 +532,9 @@ else if (device.capabilities["Valve"] !== undefined){
 
     if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.device.attributes.carbonDioxide)) {
         this.deviceGroup = "detectors";
+	        thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideLevel)
+		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.carbonDioxide)); })
+                that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
 
 		thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideDetected)
         thisCharacteristic.on('get', function(callback) {
@@ -556,12 +551,8 @@ else if (device.capabilities["Valve"] !== undefined){
 		}
 	            });
 		
- 		that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
  		that.platform.addAttributeUsage("carbonDioxideSet", this.deviceid, thisCharacteristic);
-
-	        thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideLevel)
-		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.carbonDioxide)); })
-                that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
+ 		that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
 
     }
 	
