@@ -557,6 +557,7 @@ else if (device.capabilities["Valve"] !== undefined){
 	            });
 		
  		that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
+ 		that.platform.addAttributeUsage("carbonDioxideSet", this.deviceid, thisCharacteristic);
 
 	        thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideLevel)
 		thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.carbonDioxide)); })
