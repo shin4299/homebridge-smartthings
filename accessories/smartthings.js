@@ -350,7 +350,7 @@ function SmartThingsAccessory(platform, device) {
             that.deviceGroup = 'alarm';
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
             thisCharacteristic.on('get', function(callback) {
-		    switch (that.device.attributes.door) {
+		    switch (this.device.attributes.door) {
 	case 'stay':
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
@@ -372,7 +372,7 @@ function SmartThingsAccessory(platform, device) {
 		
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState)
             thisCharacteristic.on('get', function(callback) {
-		    switch (that.device.attributes.door) {
+		    switch (this.device.attributes.door) {
 	case 'stay':
             callback(null, Characteristic.SecuritySystemCurrentState.STAY_ARM);
 	    break;
