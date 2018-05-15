@@ -346,26 +346,26 @@ function SmartThingsAccessory(platform, device) {
             that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
     }	   */
 	
-        if (device.attributes['SecurityStatus'] !== undefined) {
+        if (device.attributes['securityStatus'] !== undefined) {
             that.deviceGroup = 'alarm';
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState);
             thisCharacteristic.on('get', function(callback) {
                 // that.platform.log(that.deviceid + ' check 1: ' + that.device.attributes.alarmSystemStatus);
-                callback(null, convertAlarmState(that.device.attributes.SecurityStatus, true));
+                callback(null, convertAlarmState(that.device.attributes.securityStatus, true));
             });
-            that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage('securityStatus', this.deviceid, thisCharacteristic);
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemTargetState);
             thisCharacteristic.on('get', function(callback) {
                 // that.platform.log(that.deviceid + ' check 2: ' + that.device.attributes.alarmSystemStatus);
-                callback(null, convertAlarmState(that.device.attributes.SecurityStatus, true));
+                callback(null, convertAlarmState(that.device.attributes.securityStatus, true));
             });
             thisCharacteristic.on('set', function(value, callback) {
                 // that.platform.log(that.deviceid + ' set value : ' + value);
                 var val = convertAlarmState(value);
-                that.platform.api.runCommand(callback, 'SecurityStatus', val);
-                that.device.attributes.SecurityStatus = val;
+                that.platform.api.runCommand(callback, that.deviceid, val);
+                that.device.attributes.securityStatus = val;
             });
-            that.platform.addAttributeUsage('SecurityStatus', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage('securityStatus', this.deviceid, thisCharacteristic);
         }
 	
 	
