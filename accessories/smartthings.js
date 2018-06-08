@@ -135,7 +135,61 @@ function SmartThingsAccessory(platform, device) {
 		
 		
 		
-        } else if (device.commands.lowSpeed) {
+        }
+	    
+	    else if (device.commands.airpurifier) {	    
+	  this.deviceGroup = "airpurifier";
+        thisCharacteristic = this.getaddService(Service.AirPurifier).getCharacteristic(Characteristic.Active)
+	        thisCharacteristic.on('get', function(callback) {
+                if (that.device.attributes.switch == "on")
+                    callback(null, Characteristic.Active.ACTIVE);
+                else
+                    callback(null, Characteristic.Active.INACTIVE);
+            });
+        thisCharacteristic.on('set', function(value, callback) {
+                if (value)
+                    that.platform.api.runCommand(callback, that.deviceid, "on");
+                else
+                    that.platform.api.runCommand(callback, that.deviceid, "off");
+            });
+	that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+
+        thisCharacteristic = this.getaddService(Service.AirPurifier).getCharacteristic(Characteristic.CurrentAirPurifierState)
+	thisCharacteristic.on('get', function(callback) {
+                if (that.device.attributes.switch == "on")
+                    callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
+                else
+                    callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
+            });
+	that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+
+        thisCharacteristic = this.getaddService(Service.AirPurifier).getCharacteristic(Characteristic.TargetAirPurifierState)
+	        thisCharacteristic.on('get', function(callback) {
+                if (that.device.attributes.mode == "auto")
+                    callback(null, Characteristic.TargetAirPurifierState.AUTO);
+                else
+                    callback(null, Characteristic.TargetAirPurifierState.MANUAL);
+            });
+            thisCharacteristic.on('set', function(value, callback) {
+                // that.platform.log(that.deviceid + ' set value : ' + value);
+                if (value == Characteristic.TargetAirPurifierState.AUTO) {
+                    that.platform.api.runCommand(callback, that.deviceid, "auto");
+                } else if (value == Characteristic.TargetAirPurifierState.MANUAL) {
+                    that.platform.api.runCommand(callback, that.deviceid, "manual");
+                } 
+	    });		    
+		that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
+		    
+	    thisCharacteristic = this.getaddService(Service.AirPurifier).getCharacteristic(Characteristic.RotationSpeed)
+            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
+            thisCharacteristic.on('set', function(value, callback) { 
+            	    if (value > 0)
+            	    	that.platform.api.runCommand(callback, that.deviceid, "setLevel", {value1: value }); });
+	    that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+		    
+}
+	    
+	    else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
             this.deviceGroup = "fans"
             
@@ -280,9 +334,7 @@ function SmartThingsAccessory(platform, device) {
 		that.platform.addAttributeUsage("lock", this.deviceid, thisCharacteristic);
 		
     }
-	
-	
-	
+		
         if (device.attributes['securityStatus'] !== undefined) {
             that.deviceGroup = "alarm";
             thisCharacteristic = this.getaddService(Service.SecuritySystem).getCharacteristic(Characteristic.SecuritySystemCurrentState)
@@ -482,7 +534,7 @@ else if (device.capabilities["Valve"] !== undefined){
 
 	
 }
-	    
+
  else {
         this.deviceGroup = "switch";
         thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
