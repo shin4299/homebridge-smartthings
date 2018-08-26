@@ -596,7 +596,7 @@ else if (device.capabilities["Valve"] !== undefined){
                 	else
                     	callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
 		} else {
-			if (that.device.attributes.carbonDioxide < that.device.attributes.carbonDioxideSet )
+			if (that.device.attributes.carbonDioxideSet == 'normal' )
                     	callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
                 	else
                     	callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
