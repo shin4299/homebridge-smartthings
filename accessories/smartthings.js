@@ -295,6 +295,7 @@ function SmartThingsAccessory(platform, device) {
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentHumidifierDehumidifierState)
+		   thisCharacteristic.setProps({ validValues: [0, 3] });
          thisCharacteristic.on('get', function (callback) {
              if (that.device.attributes.switch == "on")
                  callback(null, Characteristic.CurrentHumidifierDehumidifierState.DEHUMIDIFYING);
