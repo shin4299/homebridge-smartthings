@@ -232,15 +232,15 @@ function SmartThingsAccessory(platform, device) {
              }
             });
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetRelativeHumidity)
-         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
-         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-         that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
          
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
          thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
-         that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
+         that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);	   
+		    
+         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityHumidifierThreshold)
+         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
+         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+         that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
          thisCharacteristic.on('get', function (callback) {
@@ -316,14 +316,14 @@ function SmartThingsAccessory(platform, device) {
          });
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetRelativeHumidity)
-         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
-         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-         that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
          thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
          that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
+		    
+         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityDehumidifierThreshold)
+         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
+         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+         that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
          thisCharacteristic.on('get', function (callback) {
