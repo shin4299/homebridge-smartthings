@@ -303,12 +303,12 @@ function SmartThingsAccessory(platform, device) {
          });
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-        this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
+/*        this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
 		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 		    
 		    
 		    
-/*         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
+         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
          thisCharacteristic.on('get', function (callback) {
              if (that.device.attributes.switch == "on")
                  callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
