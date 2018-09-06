@@ -215,7 +215,7 @@ function SmartThingsAccessory(platform, device) {
             });
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-        this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
+        this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
 		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 		    
 /*		    
@@ -336,7 +336,7 @@ function SmartThingsAccessory(platform, device) {
          thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
          thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
          that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-/*
+
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
          thisCharacteristic.on('get', function (callback) {
              if (that.device.attributes.mode == "off")
@@ -361,7 +361,7 @@ function SmartThingsAccessory(platform, device) {
                  that.platform.api.runCommand(callback, that.deviceid, "auto");
          });
          that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
-*/
+
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
          thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
          that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
