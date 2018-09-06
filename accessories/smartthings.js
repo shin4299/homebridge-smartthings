@@ -303,35 +303,34 @@ function SmartThingsAccessory(platform, device) {
          });
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-        this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+     //   this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
+	//	that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 		    
 		    
-	/*	    
+		    
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
          thisCharacteristic.on('get', function (callback) {
              if (that.device.attributes.switch == "on")
                  callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-              else
-                callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
+            //  else
+            //    callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
          });
          thisCharacteristic.on('set', function (value, callback) {
              // that.platform.log(that.deviceid + ' set value : ' + value);
              if (value == Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER) {
                  that.platform.api.runCommand(callback, that.deviceid, "on");
              }
-             else if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
-                 that.platform.api.runCommand(callback, that.deviceid, "off");
-             }
+            // else if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
+            //    that.platform.api.runCommand(callback, that.deviceid, "off");
+            // }
          });
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-*/
 
 
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
          thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
          that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
-		    
+/*		    
        //  thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityDehumidifierThreshold)
        //  thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
        //  thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
@@ -365,6 +364,7 @@ function SmartThingsAccessory(platform, device) {
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
          thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
          that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
+	 */
      }
 	    
 	    else if (device.commands.lowSpeed) {
