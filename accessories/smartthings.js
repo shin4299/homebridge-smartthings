@@ -219,8 +219,8 @@ function SmartThingsAccessory(platform, device) {
          thisCharacteristic.on('get', function (callback) {
              if (that.device.attributes.switch == "on")
                  callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
-            // else
-              //   callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
+             else
+                 callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
             });
          thisCharacteristic.on('set', function (value, callback) {
              // that.platform.log(that.deviceid + ' set value : ' + value);
