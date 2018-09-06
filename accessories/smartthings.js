@@ -304,8 +304,8 @@ function SmartThingsAccessory(platform, device) {
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
         this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
+		   thisCharacteristic.setProps({ validValues: [2] });
 		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-		    
 		    
 /*		    
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
