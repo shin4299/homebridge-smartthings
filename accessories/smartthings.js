@@ -302,8 +302,8 @@ function SmartThingsAccessory(platform, device) {
          thisCharacteristic.on('get', function (callback) {
              if (that.device.attributes.switch == "on")
                  callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-             // else
-             //   callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
+              else
+                callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
          });
          thisCharacteristic.on('set', function (value, callback) {
              // that.platform.log(that.deviceid + ' set value : ' + value);
@@ -320,10 +320,10 @@ function SmartThingsAccessory(platform, device) {
          thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
          that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
 		    
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityDehumidifierThreshold)
-         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
-         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-         that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+       //  thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityDehumidifierThreshold)
+       //  thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
+       //  thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+       //  that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
          thisCharacteristic.on('get', function (callback) {
