@@ -773,15 +773,15 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
     that.platform.addAttributeUsage("co_value", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.OzoneDensity)
-    thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.o3_value * 1000)) });
+    thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.o3_value)) });
     that.platform.addAttributeUsage("o3_value", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.NitrogenDioxideDensity)
-    thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.no2_value * 1000)) });
+    thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.no2_value)) });
     that.platform.addAttributeUsage("no2_value", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.SulphurDioxideDensity)
-    thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.so2_value * 1000)) });
+    thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.so2_value)) });
     that.platform.addAttributeUsage("so2_value", this.deviceid, thisCharacteristic);
 }
 
