@@ -304,8 +304,10 @@ function SmartThingsAccessory(platform, device) {
          });
          that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-        thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-//		   thisCharacteristic.setProps({ validValues: [2] });
+        thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState);
+		thisCharacteristic.setProps({
+            	validValues: [1]
+        	});		
 		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 		    
 /*		    
@@ -816,10 +818,21 @@ else if (device.capabilities["Valve"] !== undefined){
     }
 
     if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
+	    
+	if (device.commands.humidifier) {
+        this.deviceGroup = "noneed";	
+    	}
+	    
+	else if (device.commands.dehumidifier) {
+        this.deviceGroup = "noneed";	
+    	}
+
+	else {    
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristic.CurrentRelativeHumidity)
         thisCharacteristic.on('get', function(callback) { callback(null, Math.round(that.device.attributes.humidity)); });
 		that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
+    	}
     }
 	
     if (device.capabilities["Illuminance Measurement"] !== undefined) {
