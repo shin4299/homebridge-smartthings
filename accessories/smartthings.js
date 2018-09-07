@@ -267,6 +267,16 @@ function SmartThingsAccessory(platform, device) {
 
                 thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed).setProps({ minValue: 0, maxValue: 3, minStep: 1});
                 thisCharacteristic.on('get', function (callback) {
+			if (that.device.attributes.mode == "auto")
+                        callback(null, 0);
+                    else if (that.device.attributes.mode == "silent")
+                        callback(null, 1);
+                    else if (that.device.attributes.mode == "medium")
+                        callback(null, 2);
+                    else if (that.device.attributes.mode == "high")
+                        callback(null, 3);
+                	});
+		    /*
                     if (that.device.attributes.mode == "auto")
                         callback(null, parseInt(0));
                     else if (that.device.attributes.mode == "silent")
@@ -275,7 +285,7 @@ function SmartThingsAccessory(platform, device) {
                         callback(null, parseInt(2));
                     else if (that.device.attributes.mode == "high")
                         callback(null, parseInt(3));
-                	});
+                	});*/
                 thisCharacteristic.on('set', function (value, callback) {  
                     if (value = 0)
                         that.platform.api.runCommand(callback, that.deviceid, "auto");
