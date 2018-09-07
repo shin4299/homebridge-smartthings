@@ -188,7 +188,8 @@ function SmartThingsAccessory(platform, device) {
 	    that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 		    
 	}
-	    
+
+	    if (device.commands.humidifier) {
             this.deviceGroup = "humidifier";
                 thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.Active)
                 thisCharacteristic.on('get', function (callback) {
