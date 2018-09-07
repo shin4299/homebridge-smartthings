@@ -189,186 +189,185 @@ function SmartThingsAccessory(platform, device) {
 		    
 	}
 	    
-	    else if (device.commands.humidifier) {
-         this.deviceGroup = "humidifier";
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.Active)
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.switch == "on")
-                 callback(null, Characteristic.Active.ACTIVE);
-             else
-                 callback(null, Characteristic.Active.INACTIVE);
-             });
-         thisCharacteristic.on('set', function (value, callback) {
-             if (value)
-                 that.platform.api.runCommand(callback, that.deviceid, "on");
-             else
-                 that.platform.api.runCommand(callback, that.deviceid, "off");
-            });
-         that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+            this.deviceGroup = "humidifier";
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.Active)
+                thisCharacteristic.on('get', function (callback) {
+                    if (that.device.attributes.switch == "on")
+                        callback(null, Characteristic.Active.ACTIVE);
+                    else
+                        callback(null, Characteristic.Active.INACTIVE);
+                });
+                thisCharacteristic.on('set', function (value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off");
+                });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentHumidifierDehumidifierState)
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.switch == "on")
-                 callback(null, Characteristic.CurrentHumidifierDehumidifierState.HUMIDIFYING);
-             else
-                 callback(null, Characteristic.CurrentHumidifierDehumidifierState.INACTIVE);
-            });
-         that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentHumidifierDehumidifierState).setProps({ validValues: [0, 2] });
+                thisCharacteristic.on('get', function (callback) {
+                    if (that.device.attributes.switch == "on")
+                        callback(null, Characteristic.CurrentHumidifierDehumidifierState.HUMIDIFYING);
+                    else
+                        callback(null, Characteristic.CurrentHumidifierDehumidifierState.INACTIVE);
+                });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-        this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
-		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-		    
-/*		    
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.switch == "on")
-                 callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
-             else
-                 callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-            });
-         thisCharacteristic.on('set', function (value, callback) {
-             // that.platform.log(that.deviceid + ' set value : ' + value);
-             if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
-                 that.platform.api.runCommand(callback, that.deviceid, "on");
-             }
-             else if (value == Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER) {
-                 that.platform.api.runCommand(callback, that.deviceid, "off");
-             }
-            });
-         that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-         */
-		    
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
-         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
-         that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);	   
-		    
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityHumidifierThreshold)
-         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
-         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-         that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+                this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState).setProps({ validValues: [1] });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-/*         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.mode == "off")
-                 callback(null, parseInt(0));
-             else if (that.device.attributes.mode == "setModeAuto")
-                 callback(null, parseInt(100));
-             else if (that.device.attributes.mode == "setModeSilent")
-                 callback(null, parseInt(25));
-             else if (that.device.attributes.mode == "setModeMedium")
-                 callback(null, parseInt(50));
-             else if (that.device.attributes.mode == "setModeHigh")
-                 callback(null, parseInt(75));
-         });
-         thisCharacteristic.on('set', function (value, callback) {
-             if (value < 30)
-                 that.platform.api.runCommand(callback, that.deviceid, "silent");
-             else if (value < 60)
-                 that.platform.api.runCommand(callback, that.deviceid, "medium");
-             else if (value < 90)
-                 that.platform.api.runCommand(callback, that.deviceid, "high");
-             else 
-                 that.platform.api.runCommand(callback, that.deviceid, "auto");
-         });
-         that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
-*/
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
-         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
-         that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
-     }
+    /*		    
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
+                thisCharacteristic.on('get', function (callback) {
+                     if (that.device.attributes.switch == "on")
+                         callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
+                    else
+                         callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
+                    });
+                thisCharacteristic.on('set', function (value, callback) {
+                     // that.platform.log(that.deviceid + ' set value : ' + value);
+                        if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
+                            that.platform.api.runCommand(callback, that.deviceid, "on");
+                        }
+                        else if (value == Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER) {
+                            that.platform.api.runCommand(callback, that.deviceid, "off");
+                        }
+                });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+             */
+
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
+                thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
+                that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
+
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityHumidifierThreshold)
+                thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
+                thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+                that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+
+    /*          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
+                thisCharacteristic.on('get', function (callback) {
+                    if (that.device.attributes.mode == "off")
+                        callback(null, parseInt(0));
+                    else if (that.device.attributes.mode == "setModeAuto")
+                        callback(null, parseInt(100));
+                    else if (that.device.attributes.mode == "setModeSilent")
+                        callback(null, parseInt(25));
+                    else if (that.device.attributes.mode == "setModeMedium")
+                        callback(null, parseInt(50));
+                    else if (that.device.attributes.mode == "setModeHigh")
+                        callback(null, parseInt(75));
+                });
+                thisCharacteristic.on('set', function (value, callback) {  
+                    if (value < 30)
+                        that.platform.api.runCommand(callback, that.deviceid, "silent");
+                    else if (value < 60)
+                        that.platform.api.runCommand(callback, that.deviceid, "medium");
+                    else if (value < 90)
+                        that.platform.api.runCommand(callback, that.deviceid, "high");
+                    else 
+                        that.platform.api.runCommand(callback, that.deviceid, "auto");
+                });
+                that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
+    */
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
+                thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
+                that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
+        }
+
+        else if (device.commands.dehumidifier) {
+            this.deviceGroup = "humidifier"
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.Active)
+                thisCharacteristic.on('get', function (callback) {
+                    if (that.device.attributes.switch == "on")
+                        callback(null, Characteristic.Active.ACTIVE);
+                    else
+                        callback(null, Characteristic.Active.INACTIVE);
+                });
+                thisCharacteristic.on('set', function (value, callback) {
+                    if (value)
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "off");
+                });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentHumidifierDehumidifierState).setProps({ validValues: [0, 3] });
+                thisCharacteristic.on('get', function (callback) {
+                    if (that.device.attributes.switch == "on")
+                        callback(null, Characteristic.CurrentHumidifierDehumidifierState.DEHUMIDIFYING);
+                    else
+                        callback(null, Characteristic.CurrentHumidifierDehumidifierState.INACTIVE);
+                });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState).setProps({ validValues: [2] });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+
+                
+
+    /*		    
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
+                thisCharacteristic.on('get', function (callback) {
+                    if (that.device.attributes.switch == "on")
+                        callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
+                    else
+                        callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
+                });
+                thisCharacteristic.on('set', function (value, callback) {
+                     // that.platform.log(that.deviceid + ' set value : ' + value);
+                    if (value == Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER) {
+                        that.platform.api.runCommand(callback, that.deviceid, "on");
+                    }
+                    else if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
+                        that.platform.api.runCommand(callback, that.deviceid, "off");
+                    }
+                });
+                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+    */
+
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
+                thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
+                that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
+
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityDehumidifierThreshold)
+                thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
+                thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+                that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+    /*
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
+                thisCharacteristic.on('get', function (callback) {
+                    if (that.device.attributes.mode == "off")
+                        callback(null, parseInt(0));
+                    else if (that.device.attributes.mode == "setModeAuto")
+                        callback(null, parseInt(100));
+                    else if (that.device.attributes.mode == "setModeSilent")
+                        callback(null, parseInt(25));
+                    else if (that.device.attributes.mode == "setModeMedium")
+                        callback(null, parseInt(50));
+                    else if (that.device.attributes.mode == "setModeHigh")
+                        callback(null, parseInt(75));
+                });
+                thisCharacteristic.on('set', function (value, callback) {
+                    if (value < 30)
+                        that.platform.api.runCommand(callback, that.deviceid, "silent");
+                    else if (value < 60)
+                        that.platform.api.runCommand(callback, that.deviceid, "medium");
+                    else if (value < 90)
+                        that.platform.api.runCommand(callback, that.deviceid, "high");
+                    else
+                        that.platform.api.runCommand(callback, that.deviceid, "auto");
+                });
+                that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
+    */
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
+                thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
+                that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
+
+}
+
 	    
-	    else if (device.commands.dehumidifier) {
-         this.deviceGroup = "humidifier"
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.Active)
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.switch == "on")
-                 callback(null, Characteristic.Active.ACTIVE);
-             else
-                 callback(null, Characteristic.Active.INACTIVE);
-         });
-         thisCharacteristic.on('set', function (value, callback) {
-             if (value)
-                 that.platform.api.runCommand(callback, that.deviceid, "on");
-             else
-                 that.platform.api.runCommand(callback, that.deviceid, "off");
-         });
-         that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentHumidifierDehumidifierState)
-		   thisCharacteristic.setProps({ validValues: [0, 3] });
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.switch == "on")
-                 callback(null, Characteristic.CurrentHumidifierDehumidifierState.DEHUMIDIFYING);
-             else
-                 callback(null, Characteristic.CurrentHumidifierDehumidifierState.INACTIVE);
-         });
-         that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-
-        thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).setCharacteristic(Characteristic.TargetHumidifierDehumidifierState);
-		thisCharacteristic.setProps({
-            	validValues: [1]
-        	});		
-		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-		    
-/*		    
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.switch == "on")
-                 callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-            //  else
-            //    callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
-         });
-         thisCharacteristic.on('set', function (value, callback) {
-             // that.platform.log(that.deviceid + ' set value : ' + value);
-             if (value == Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER) {
-                 that.platform.api.runCommand(callback, that.deviceid, "on");
-             }
-            // else if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
-            //    that.platform.api.runCommand(callback, that.deviceid, "off");
-            // }
-         });
-         that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-*/
-
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
-         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
-         that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
-		    
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RelativeHumidityDehumidifierThreshold)
-         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
-         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-         that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-/*
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
-         thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.mode == "off")
-                 callback(null, parseInt(0));
-             else if (that.device.attributes.mode == "setModeAuto")
-                 callback(null, parseInt(100));
-             else if (that.device.attributes.mode == "setModeSilent")
-                 callback(null, parseInt(25));
-             else if (that.device.attributes.mode == "setModeMedium")
-                 callback(null, parseInt(50));
-             else if (that.device.attributes.mode == "setModeHigh")
-                 callback(null, parseInt(75));
-         });
-         thisCharacteristic.on('set', function (value, callback) {
-             if (value < 30)
-                 that.platform.api.runCommand(callback, that.deviceid, "silent");
-             else if (value < 60)
-                 that.platform.api.runCommand(callback, that.deviceid, "medium");
-             else if (value < 90)
-                 that.platform.api.runCommand(callback, that.deviceid, "high");
-             else
-                 that.platform.api.runCommand(callback, that.deviceid, "auto");
-         });
-         that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
-*/
-         thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
-         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
-         that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
-	 
-     }
 	    
 	    else if (device.commands.lowSpeed) {
             //This is a Ceiling Fan
