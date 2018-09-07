@@ -756,7 +756,7 @@ if ((device.capabilities["Carbon Monoxide Detector"] !== undefined) && (that.dev
     that.platform.addAttributeUsage("airQuality", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.StatusActive)
-    thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.airQuality > 0)); });
+    thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.airQuality > 50)); });
     that.platform.addAttributeUsage("airQuality", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM2_5Density)
