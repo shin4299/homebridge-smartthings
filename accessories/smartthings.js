@@ -265,9 +265,9 @@ function SmartThingsAccessory(platform, device) {
                 thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
                 that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
-      /*          thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed).setProps({ minValue: 0, maxValue: 3, minStep: 1});
+                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed).setProps({ minValue: 0, maxValue: 3});
                 thisCharacteristic.on('get', function (callback) {
-			if (that.device.attributes.mode == "auto")
+	/*		if (that.device.attributes.mode == "auto")
                         callback(null, 0);
                     else if (that.device.attributes.mode == "silent")
                         callback(null, 1);
@@ -276,7 +276,7 @@ function SmartThingsAccessory(platform, device) {
                     else if (that.device.attributes.mode == "high")
                         callback(null, 3);
                 	});
-		    
+	 */	    
                     if (that.device.attributes.mode == "auto")
                         callback(null, parseInt(0));
                     else if (that.device.attributes.mode == "silent")
@@ -297,7 +297,7 @@ function SmartThingsAccessory(platform, device) {
                         that.platform.api.runCommand(callback, that.deviceid, "setModeHigh");
                 	});
                 that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
-    */
+   
                 thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
                 thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
                 that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
