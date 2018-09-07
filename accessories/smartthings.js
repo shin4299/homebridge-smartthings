@@ -285,7 +285,7 @@ function SmartThingsAccessory(platform, device) {
                         callback(null, parseInt(2));
                     else if (that.device.attributes.mode == "high")
                         callback(null, parseInt(3));
-                	});*/
+                	});
                 thisCharacteristic.on('set', function (value, callback) {  
                     if (value = 0)
                         that.platform.api.runCommand(callback, that.deviceid, "auto");
@@ -295,7 +295,7 @@ function SmartThingsAccessory(platform, device) {
                         that.platform.api.runCommand(callback, that.deviceid, "setModeMedium");
                     else if (value =3)
                         that.platform.api.runCommand(callback, that.deviceid, "setModeHigh");
-                	});
+                	});*/
                 that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
     
                 thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
