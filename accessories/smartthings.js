@@ -283,7 +283,7 @@ function SmartThingsAccessory(platform, device) {
                         callback(null, parseInt(1));
                     else if (that.device.attributes.mode == "medium")
                         callback(null, parseInt(2));
-                    else if (that.device.attributes.mode == "high")
+                    else if (that.device.attributes.mode == "hight")
                         callback(null, parseInt(3));
                     else
                         callback(null, parseInt(0));
