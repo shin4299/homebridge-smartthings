@@ -285,6 +285,8 @@ function SmartThingsAccessory(platform, device) {
                         callback(null, parseInt(2));
                     else if (that.device.attributes.mode == "high")
                         callback(null, parseInt(3));
+                    else
+                        callback(null, parseInt(0));
                 	});
                 thisCharacteristic.on('set', function (value, callback) {  
                     if (value = 0)
