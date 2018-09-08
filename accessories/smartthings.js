@@ -216,7 +216,7 @@ function SmartThingsAccessory(platform, device) {
                 that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
 		thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState).setProps({ validValues: [1] });
-    		thisCharacteristic.on('get', function (callback) {
+/*    		thisCharacteristic.on('get', function (callback) {
 		        if (that.device.attributes.switch == "on")
             			callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
         		else
@@ -229,7 +229,7 @@ function SmartThingsAccessory(platform, device) {
         		else {
             			that.platform.api.runCommand(callback, that.deviceid, "off");
         		}
-    		});
+    		});*/
     		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
 		    /*
