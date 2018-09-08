@@ -226,7 +226,7 @@ function SmartThingsAccessory(platform, device) {
         		if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
             			that.platform.api.runCommand(callback, that.deviceid, "on");
         		}
-        		else (value == Characteristic.TargetHumidifierDehumidifierState.INACTIVE) {
+        		else {
             			that.platform.api.runCommand(callback, that.deviceid, "off");
         		}
     		});
