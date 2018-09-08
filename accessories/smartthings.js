@@ -216,20 +216,6 @@ function SmartThingsAccessory(platform, device) {
                 that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
 		thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState).setProps({ validValues: [1] });
-/*    		thisCharacteristic.on('get', function (callback) {
-		        if (that.device.attributes.switch == "on")
-            			callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
-        		else
-            			callback(null, Characteristic.TargetHumidifierDehumidifierState.INACTIVE);
-    		});
-    		thisCharacteristic.on('set', function (value, callback) {
-        		if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
-            			that.platform.api.runCommand(callback, that.deviceid, "on");
-        		}
-        		else {
-            			that.platform.api.runCommand(callback, that.deviceid, "off");
-        		}
-    		});*/
     		that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
 		    /*
@@ -280,17 +266,7 @@ function SmartThingsAccessory(platform, device) {
                 that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
                 thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed).setProps({ minValue: 0, maxValue: 3});
-                thisCharacteristic.on('get', function (callback) {
-	/*		if (that.device.attributes.mode == "auto")
-                        callback(null, 0);
-                    else if (that.device.attributes.mode == "silent")
-                        callback(null, 1);
-                    else if (that.device.attributes.mode == "medium")
-                        callback(null, 2);
-                    else if (that.device.attributes.mode == "high")
-                        callback(null, 3);
-                	});
-	 */	    
+                thisCharacteristic.on('get', function (callback) {	    
                     if (that.device.attributes.mode == "auto")
                         callback(null, parseInt(0));
                     else if (that.device.attributes.mode == "silent")
