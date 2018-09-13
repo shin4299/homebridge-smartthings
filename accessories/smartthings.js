@@ -231,7 +231,7 @@ function SmartThingsAccessory(platform, device) {
 		    
 	}
 
-	    if (device.commands.humidifier) {
+	    else if (device.commands.humidifier) {
             this.deviceGroup = "humidifier";
                 thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.Active)
                 thisCharacteristic.on('get', function (callback) {
