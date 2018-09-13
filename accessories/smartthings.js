@@ -116,7 +116,7 @@ function SmartThingsAccessory(platform, device) {
             that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value });
     });
     that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-/*
+
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.SwingMode)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.setangle == "off")
@@ -156,7 +156,7 @@ function SmartThingsAccessory(platform, device) {
         }
     });
     that.platform.addAttributeUsage("fanmode", this.deviceid, thisCharacteristic);
-*/
+
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.RotationDirection)
     thisCharacteristic.on('get', function(callback) {
         if (that.device.attributes.fanmode == 'natural')
