@@ -87,55 +87,89 @@ function SmartThingsAccessory(platform, device) {
                     callback(null,  parseInt(100));
                 else if (that.device.attributes.level <= 98)
                     callback(null, parseInt(that.device.attributes.level)); });
-        }  else if (device.commands.kukufan) {
-            //This is a Ceiling Fan
-            this.deviceGroup = "fans"
-            
-            thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.On)
-            thisCharacteristic.on('get', function(callback) { callback(null, that.device.attributes.switch == "on"); })
-            thisCharacteristic.on('set', function(value, callback) {
-                    if (value)
-                        that.platform.api.runCommand(callback, that.deviceid, null);
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "off"); });
-		        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+        }  else if (device.commands.miFan) {
+    //This is a Ceiling Fan
+    this.deviceGroup = "fans"
 
-	    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationSpeed)
-            thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
-            thisCharacteristic.on('set', function(value, callback) { 
-            	    if (value > 0)
-            	    	that.platform.api.runCommand(callback, that.deviceid, "setLevel", {value1: value }); });
-			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.Active)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.switch == "on")
+            callback(null, Characteristic.Active.ACTIVE);
+        else
+            callback(null, Characteristic.Active.INACTIVE);
+    });
+    thisCharacteristic.on('set', function (value, callback) {
+        if (value)
+            that.platform.api.runCommand(callback, that.deviceid, "on");
+        else
+            that.platform.api.runCommand(callback, that.deviceid, "off");
+    });
+    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-            thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)		
-            thisCharacteristic.on('set', function(value, callback) {
-                if (value == Characteristic.SwingMode.SWING_ENABLED) 
-                    that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 else 
-                    that.platform.api.runCommand(callback, that.deviceid, "swingMode");
-                 }); 
-	    that.platform.addAttributeUsage("swingMode", this.deviceid, thisCharacteristic);	
-		
-		
-            thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)		
-/*            thisCharacteristic.on('get', function(callback) {
-		if (that.device.attributes.sleepMode == 'off')
-                    callback(null, Characteristic.RotationDirection.COUNTER_CLOCKWISE);
-                else if (that.device.attributes.sleepMode == 'on')
-                    callback(null, Characteristic.RotationDirection.CLOCKWISE);
-            });		    
-*/		
-            thisCharacteristic.on('set', function(value, callback) {
-                if (value == Characteristic.RotationDirection.CLOCKWISE) {
-                    that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-                } else if (value == Characteristic.RotationDirection.COUNTER_CLOCKWISE) {
-                    that.platform.api.runCommand(callback, that.deviceid, "sleepMode");
-                } });
-		 that.platform.addAttributeUsage("sleepMode", this.deviceid, thisCharacteristic);	
-		
-		
-		
+    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationSpeed)
+    thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
+    thisCharacteristic.on('set', function (value, callback) {
+        if (value > 0)
+            that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value });
+    });
+    that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+
+    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.setangle == "off")
+            callback(null, Characteristic.SwingMode.SWING_DISABLED);
+        else 
+            callback(null, Characteristic.SwingMode.SWING_ENABLED);
+   });
+    thisCharacteristic.on('set', function (value, callback) {
+        if (value == Characteristic.SwingMode.SWING_ENABLED)
+            that.platform.api.runCommand(callback, that.deviceid, "setAngleOn");
+        else if (value == Characteristic.SwingMode.SWING_DISABLED)
+            that.platform.api.runCommand(callback, that.deviceid, "setAngleOff");
+    });
+    that.platform.addAttributeUsage("setangle", this.deviceid, thisCharacteristic);
+/*
+    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.CurrentFanState).setProps({ validValues: [0, 2] });
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.switch == "on")
+            callback(null, Characteristic.CurrentFanState.BLOWING_AIR);
+        else
+            callback(null, Characteristic.CurrentFanState.INACTIVE);
+    });
+    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+*/
+    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.TargetFanState)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.fanmode == 'natural')
+            callback(null, Characteristic.TargetFanState.AUTO);
+        else if (that.device.attributes.fanmode == 'general')
+            callback(null, Characteristic.TargetFanState.MANUAL);
+    });
+    thisCharacteristic.on('set', function (value, callback) {
+        if (value == Characteristic.TargetFanState.MANUAL) {
+            that.platform.api.runCommand(callback, that.deviceid, "generalOn");
+        } else if (value == Characteristic.TargetFanState.AUTO) {
+            that.platform.api.runCommand(callback, that.deviceid, "naturalOn");
         }
+    });
+    that.platform.addAttributeUsage("fanmode", this.deviceid, thisCharacteristic);
+
+    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)
+    thisCharacteristic.on('get', function(callback) {
+        if (that.device.attributes.fanmode == 'natural')
+            callback(null, Characteristic.RotationDirection.COUNTER_CLOCKWISE);
+        else if (that.device.attributes.fanmode == 'general')
+            callback(null, Characteristic.RotationDirection.CLOCKWISE);
+    });		    
+    thisCharacteristic.on('set', function (value, callback) {
+        if (value == Characteristic.RotationDirection.CLOCKWISE) {
+            that.platform.api.runCommand(callback, that.deviceid, "generalOn");
+        } else if (value == Characteristic.RotationDirection.COUNTER_CLOCKWISE) {
+            that.platform.api.runCommand(callback, that.deviceid, "naturalOn");
+            }
+    });
+    that.platform.addAttributeUsage("fanmode", this.deviceid, thisCharacteristic);
+}
 	    
 	    else if (device.commands.airpurifier) {	    
 	  this.deviceGroup = "airpurifier";
