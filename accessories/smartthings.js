@@ -79,7 +79,7 @@ function SmartThingsAccessory(platform, device) {
                 else if (that.device.attributes.level <= 98)
                     callback(null, parseInt(that.device.attributes.level)); });
             thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
-			that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+	    that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
             
             thisCharacteristic = this.getaddService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition)
             thisCharacteristic.on('get', function(callback) {
@@ -87,7 +87,10 @@ function SmartThingsAccessory(platform, device) {
                     callback(null,  parseInt(100));
                 else if (that.device.attributes.level <= 98)
                     callback(null, parseInt(that.device.attributes.level)); });
-        }  else if (device.commands.miFan) {
+	    that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+        }  
+	   
+	    else if (device.commands.miFan) {
     //This is a Ceiling Fan
     this.deviceGroup = "fans"
 
@@ -137,7 +140,7 @@ function SmartThingsAccessory(platform, device) {
             callback(null, Characteristic.CurrentFanState.INACTIVE);
     });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-*/
+
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.TargetFanState)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.fanmode == 'natural')
@@ -153,7 +156,7 @@ function SmartThingsAccessory(platform, device) {
         }
     });
     that.platform.addAttributeUsage("fanmode", this.deviceid, thisCharacteristic);
-
+*/
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.RotationDirection)
     thisCharacteristic.on('get', function(callback) {
         if (that.device.attributes.fanmode == 'natural')
