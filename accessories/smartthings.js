@@ -52,7 +52,7 @@ function SmartThingsAccessory(platform, device) {
 
     this.deviceGroup = "unknown"; //This way we can easily tell if we set a device group
 	var thisCharacteristic;	
-	
+
 	
     if (device.capabilities["Switch Level"] !== undefined) {
         if (device.commands.levelOpenClose) {
