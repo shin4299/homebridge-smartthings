@@ -1015,7 +1015,7 @@ if (device.capabilities["Battery"] !== undefined) {
     });
     that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
     
-    hisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.ChargingState)
+    thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.ChargingState)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.powerSource == 'dc')
             callback(null, Characteristic.ChargingState.CHARGING);
