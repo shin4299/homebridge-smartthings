@@ -91,7 +91,7 @@ function SmartThingsAccessory(platform, device) {
     //This is a Ceiling Fan
     this.deviceGroup = "fans"
 
-    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.Active)
+    thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.Active)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.switch == "on")
             callback(null, Characteristic.Active.ACTIVE);
@@ -106,7 +106,7 @@ function SmartThingsAccessory(platform, device) {
     });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationSpeed)
+    thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.RotationSpeed)
     thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
     thisCharacteristic.on('set', function (value, callback) {
         if (value > 0)
@@ -114,7 +114,7 @@ function SmartThingsAccessory(platform, device) {
     });
     that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
 
-    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.SwingMode)
+    thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.SwingMode)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.setangle == "off")
             callback(null, Characteristic.SwingMode.SWING_DISABLED);
@@ -129,7 +129,7 @@ function SmartThingsAccessory(platform, device) {
     });
     that.platform.addAttributeUsage("setangle", this.deviceid, thisCharacteristic);
 /*
-    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.CurrentFanState).setProps({ validValues: [0, 2] });
+    thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.CurrentFanState).setProps({ validValues: [0, 2] });
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.switch == "on")
             callback(null, Characteristic.CurrentFanState.BLOWING_AIR);
@@ -138,7 +138,7 @@ function SmartThingsAccessory(platform, device) {
     });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 */
-    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.TargetFanState)
+    thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.TargetFanState)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.fanmode == 'natural')
             callback(null, Characteristic.TargetFanState.AUTO);
@@ -154,7 +154,7 @@ function SmartThingsAccessory(platform, device) {
     });
     that.platform.addAttributeUsage("fanmode", this.deviceid, thisCharacteristic);
 
-    thisCharacteristic = this.getaddService(Service.Fan).getCharacteristic(Characteristic.RotationDirection)
+    thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.RotationDirection)
     thisCharacteristic.on('get', function(callback) {
         if (that.device.attributes.fanmode == 'natural')
             callback(null, Characteristic.RotationDirection.COUNTER_CLOCKWISE);
