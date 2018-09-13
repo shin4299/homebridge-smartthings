@@ -110,13 +110,18 @@ function SmartThingsAccessory(platform, device) {
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.RotationSpeed)
-    thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
+    thisCharacteristic.on('get', function(callback) { callback(null, parseInt(that.device.attributes.level)); });
+    thisCharacteristic.on('set', function(value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+    that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);		    
+
+/*    thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
     thisCharacteristic.on('set', function (value, callback) {
         if (value > 0)
             that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value });
     });
     that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-
+*/
+		    
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.SwingMode)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.setangle == "off")
