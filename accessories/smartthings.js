@@ -138,15 +138,6 @@ function SmartThingsAccessory(platform, device) {
             });
             that.platform.addAttributeUsage("setangle", this.deviceid, thisCharacteristic);
             /*
-                thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.CurrentFanState).setProps({ validValues: [0, 2] });
-                thisCharacteristic.on('get', function (callback) {
-                    if (that.device.attributes.switch == "on")
-                        callback(null, Characteristic.CurrentFanState.BLOWING_AIR);
-                    else
-                        callback(null, Characteristic.CurrentFanState.INACTIVE);
-                });
-                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-            
                 thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.TargetFanState)
                 thisCharacteristic.on('get', function (callback) {
                     if (that.device.attributes.fanmode == 'natural')
@@ -1017,14 +1008,21 @@ if (device.capabilities["Battery"] !== undefined) {
 
     thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.StatusLowBattery)
     thisCharacteristic.on('get', function (callback) {
-        if (that.device.attributes.battery < 0.20)
+        if (that.device.attributes.battery < 20)
             callback(null, Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW);
         else
             callback(null, Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
     });
-
-    this.getaddService(Service.BatteryService).setCharacteristic(Characteristic.ChargingState, Characteristic.ChargingState.NOT_CHARGING);
     that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
+    
+    hisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.ChargingState)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.powerSource == 'dc')
+            callback(null, Characteristic.ChargingState.CHARGING);
+        else
+            callback(null, Characteristic.ChargingState.NOT_CHARGING);
+    });
+    that.platform.addAttributeUsage("powerSource", this.deviceid, thisCharacteristic);
 }
 
 if (device.capabilities["Energy Meter"] !== undefined) {
