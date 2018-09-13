@@ -90,7 +90,7 @@ function SmartThingsAccessory(platform, device) {
 	    that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
         }  
 	   
-	    else if (device.commands.miFan) {
+	    else if (device.commands.swingfan) {
     //This is a Ceiling Fan
     this.deviceGroup = "fans"
 
@@ -116,7 +116,7 @@ function SmartThingsAccessory(platform, device) {
             that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value });
     });
     that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-
+/*
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.SwingMode)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.setangle == "off")
@@ -131,7 +131,7 @@ function SmartThingsAccessory(platform, device) {
             that.platform.api.runCommand(callback, that.deviceid, "setAngleOff");
     });
     that.platform.addAttributeUsage("setangle", this.deviceid, thisCharacteristic);
-/*
+
     thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.CurrentFanState).setProps({ validValues: [0, 2] });
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.switch == "on")
