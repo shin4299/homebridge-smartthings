@@ -941,6 +941,11 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
 }
 
 if (device.capabilities["Air Quality Sensor"] !== undefined) {
+    if (device.commands.noAQS) {
+        this.deviceGroup = "noneed";
+    }
+
+    else {
     this.deviceGroup = "detectors";
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality).setProps({ minValue: -20 })
     thisCharacteristic.on('get', function (callback) {
@@ -986,6 +991,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.SulphurDioxideDensity)
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.so2_value)) });
     that.platform.addAttributeUsage("so2_value", this.deviceid, thisCharacteristic);
+    }
 }
 
 if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attributes.smoke)) {
