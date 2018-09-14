@@ -830,7 +830,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
     that.platform.addAttributeUsage("dustLevel", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.CarbonMonoxideLevel)
-    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.co_value) });
+    thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.co_value).toFixed(1)) });
     that.platform.addAttributeUsage("co_value", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.OzoneDensity)
