@@ -453,13 +453,13 @@ else if (device.commands.airpurifier2) {
             callback(null, parseInt(0));
     });
     thisCharacteristic.on('set', function (value, callback) {
-        if (value = 0)
-            that.platform.api.runCommand(callback, that.deviceid, "auto");
-        else if (value = 1)
+        if (value == 0)
+            that.platform.api.runCommand(callback, that.deviceid, "setModeAuto");
+        else if (value == 1)
             that.platform.api.runCommand(callback, that.deviceid, "setModeSilent");
-        else if (value = 2)
+        else if (value == 2)
             that.platform.api.runCommand(callback, that.deviceid, "setModeMedium");
-        else if (value = 3)
+        else if (value == 3)
             that.platform.api.runCommand(callback, that.deviceid, "setModeHigh");
     });
     that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
