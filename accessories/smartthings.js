@@ -233,17 +233,17 @@ function SmartThingsAccessory(platform, device) {
             callback(null, parseInt(0));
     });
     thisCharacteristic.on('set', function (value, callback) {
-        if (value = 0)
+        if (value == 0)
             that.platform.api.runCommand(callback, that.deviceid, "setModeAuto");
-        else if (value = 1)
+        else if (value == 1)
             that.platform.api.runCommand(callback, that.deviceid, "setModeSilent");
-        else if (value = 2)
+        else if (value == 2)
             that.platform.api.runCommand(callback, that.deviceid, "setModeLow");
-        else if (value = 3)
+        else if (value == 3)
             that.platform.api.runCommand(callback, that.deviceid, "setModeMedium");
-        else if (value = 4)
+        else if (value == 4)
             that.platform.api.runCommand(callback, that.deviceid, "setModeHigh");
-        else if (value = 5)
+        else if (value == 5)
             that.platform.api.runCommand(callback, that.deviceid, "setModeStrong");
     });
     that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
