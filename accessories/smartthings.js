@@ -938,11 +938,7 @@ if (device.capabilities["Presence Sensor"] !== undefined) {
 
 if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
 
-    if (device.commands.humidifier) {
-        this.deviceGroup = "noneed";
-    }
-
-    else if (device.commands.dehumidifier) {
+    if (device.commands.noHumi) {
         this.deviceGroup = "noneed";
     }
 
@@ -976,6 +972,12 @@ if (device.capabilities["Illuminance Measurement"] !== undefined) {
 }
 
 if (device.capabilities["Temperature Measurement"] !== undefined) {
+    
+    if (device.commands.noTemp) {
+        this.deviceGroup = "noneed";
+    }
+
+    else {
     if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
     thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({ minValue: -20 })
     thisCharacteristic.on('get', function (callback) {
@@ -985,6 +987,7 @@ if (device.capabilities["Temperature Measurement"] !== undefined) {
             callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8) * 10) / 10);
     });
     that.platform.addAttributeUsage("temperature", this.deviceid, thisCharacteristic);
+    }
 }
 
 
