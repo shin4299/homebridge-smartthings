@@ -952,7 +952,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
         if (that.device.attributes.airQuality < 30)
             callback(null, Characteristic.AirQuality.EXCELLENT);
         else if (that.device.attributes.airQuality < 50)
-            callback(null, Characteristic.AirQuality.Good);
+            callback(null, Characteristic.AirQuality.GOOD);
         else if (that.device.attributes.airQuality < 100)
             callback(null, Characteristic.AirQuality.FAIR);
         else if (that.device.attributes.airQuality < 250)
