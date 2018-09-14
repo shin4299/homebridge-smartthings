@@ -208,7 +208,7 @@ function SmartThingsAccessory(platform, device) {
     thisCharacteristic.on('set', function (value, callback) {
         // that.platform.log(that.deviceid + ' set value : ' + value);
         if (value == Characteristic.TargetAirPurifierState.AUTO) {
-            that.platform.api.runCommand(callback, that.deviceid, "auto");
+            that.platform.api.runCommand(callback, that.deviceid, "setModeAuto");
         } else if (value == Characteristic.TargetAirPurifierState.MANUAL) {
             that.platform.api.runCommand(callback, that.deviceid, "setModeSilent");
         }
@@ -225,7 +225,7 @@ function SmartThingsAccessory(platform, device) {
             callback(null, parseInt(2));
         else if (that.device.attributes.mode == "medium")
             callback(null, parseInt(3));
-        else if (that.device.attributes.mode == "hight")
+        else if (that.device.attributes.mode == "high")
             callback(null, parseInt(4));
         else if (that.device.attributes.mode == "strong")
             callback(null, parseInt(5));
@@ -290,7 +290,7 @@ else if (device.commands.airpurifier2) {
     thisCharacteristic.on('set', function (value, callback) {
         // that.platform.log(that.deviceid + ' set value : ' + value);
         if (value == Characteristic.TargetAirPurifierState.AUTO) {
-            that.platform.api.runCommand(callback, that.deviceid, "auto");
+            that.platform.api.runCommand(callback, that.deviceid, "setModeAuto");
         } else if (value == Characteristic.TargetAirPurifierState.MANUAL) {
             that.platform.api.runCommand(callback, that.deviceid, "setModeFavorite");
         }
