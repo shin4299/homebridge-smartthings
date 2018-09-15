@@ -342,13 +342,13 @@ else if (device.commands.xiaomivacuums) {
             callback(null, parseInt(0));
     });
     thisCharacteristic.on('set', function (value, callback) {
-        if (value = 0)
+        if (value == 0)
             that.platform.api.runCommand(callback, that.deviceid, "quiet");
-        else if (value = 1)
+        else if (value == 1)
             that.platform.api.runCommand(callback, that.deviceid, "balanced");
-        else if (value = 2)
+        else if (value == 2)
             that.platform.api.runCommand(callback, that.deviceid, "turbo");
-        else if (value = 3)
+        else if (value == 3)
             that.platform.api.runCommand(callback, that.deviceid, "fullSpeed");
     });
     that.platform.addAttributeUsage("fanSpeed", this.deviceid, thisCharacteristic);
