@@ -309,7 +309,7 @@ else if (device.commands.airpurifier2) {
 }
 
         
-else if (device.commands.xiaomivaccums) {
+else if (device.commands.xiaomivacuums) {
     //This is a Ceiling Fan
     this.deviceGroup = "fans"
 
@@ -332,11 +332,11 @@ else if (device.commands.xiaomivaccums) {
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.fanSpeed == "quiet")
             callback(null, parseInt(0));
-        else if (that.device.attributes.mode == "balanced")
+        else if (that.device.attributes.fanSpeed == "balanced")
             callback(null, parseInt(1));
-        else if (that.device.attributes.mode == "turbo")
+        else if (that.device.attributes.fanSpeed == "turbo")
             callback(null, parseInt(2));
-        else if (that.device.attributes.mode == "fullSpeed")
+        else if (that.device.attributes.fanSpeed == "fullSpeed")
             callback(null, parseInt(3));
         else
             callback(null, parseInt(0));
@@ -372,7 +372,7 @@ else if (device.commands.xiaomivaccums) {
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.paused == 'restart')
             callback(null, Characteristic.RotationDirection.COUNTER_CLOCKWISE);
-        else if (that.device.attributes.fanmode == 'paused')
+        else if (that.device.attributes.paused == 'paused')
             callback(null, Characteristic.RotationDirection.CLOCKWISE);
     });
     thisCharacteristic.on('set', function (value, callback) {
