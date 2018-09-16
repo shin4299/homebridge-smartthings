@@ -1254,7 +1254,8 @@ if (device.capabilities["Battery"] !== undefined) {
             callback(null, Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
     });
     that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
-    
+
+    if (device.capabilities["Power Source"] !== undefined) {
     thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.ChargingState)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.powerSource == 'dc')
@@ -1265,6 +1266,7 @@ if (device.capabilities["Battery"] !== undefined) {
             callback(null, Characteristic.ChargingState.NOT_CHARGING);
     });
     that.platform.addAttributeUsage("powerSource", this.deviceid, thisCharacteristic);
+    }
 }
 
 if (device.capabilities["Energy Meter"] !== undefined) {
