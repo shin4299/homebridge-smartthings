@@ -802,14 +802,6 @@ if (device.capabilities["Button"] !== undefined) {
             callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
     });
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
-    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
-        thisCharacteristic.on('get', function (callback) {
-            if (that.device.attributes.carbonMonoxide == 'clear')
-                callback(null, Characteristic.CarbonMonoxideDetected.CO_LEVELS_NORMAL);
-            else
-                callback(null, Characteristic.CarbonMonoxideDetected.CO_LEVELS_ABNORMAL);
-        });
-        that.platform.addAttributeUsage("carbonMonoxide", this.deviceid, thisCharacteristic);
 }
 
 
@@ -1280,7 +1272,7 @@ if (device.capabilities["Battery"] !== undefined) {
     });
     that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
 
-    if (device.capabilities["Power Source"] !== undefined) {
+    if (device.capabilities["Power Source"]) {
     thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.ChargingState)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.powerSource == 'dc')
