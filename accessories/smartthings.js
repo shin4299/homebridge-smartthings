@@ -1089,7 +1089,7 @@ if (device.capabilities["Motion Sensor"] !== undefined) {
         
     thisCharacteristic = this.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.name)
     thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.testname) });
-    that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);    
+    that.platform.addAttributeUsage("testname", this.deviceid, thisCharacteristic);    
     }
 
     else {    
