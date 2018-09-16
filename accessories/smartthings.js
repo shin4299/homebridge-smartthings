@@ -803,7 +803,7 @@ if (device.capabilities["Button"] !== undefined) {
         else if (that.device.attributes.button == "held")
             .setValue(Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
 //            callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
-    });
+//    });
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
     
 }
