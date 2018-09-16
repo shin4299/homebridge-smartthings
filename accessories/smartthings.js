@@ -1113,8 +1113,7 @@ if (device.capabilities["Water Sensor"] !== undefined) {
         callback(null, reply);
         });
         that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
-
-//        thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 비감지")
+        thisCharacteristic = this.getaddService(Service.LeakSensor).setCharacteristic(Characteristic.Name,  "비감지")
     }
     else {
     if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
@@ -1146,6 +1145,7 @@ if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
         thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristic.CurrentRelativeHumidity)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
         that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);        
+        thisCharacteristic = this.getaddService(Service.HumiditySensor).setCharacteristic(Characteristic.Name,  "웨더 습도")
     }
     else {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
@@ -1196,8 +1196,8 @@ if (device.commands.wfWind) {
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.wind_gust)); });
         that.platform.addAttributeUsage("wind_gust", this.deviceid, thisCharacteristic)        
 
-        thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  that.device.attributes.wind_direction)
-        that.platform.addAttributeUsage("wind_direction", this.deviceid, thisCharacteristic);    
+        thisCharacteristic = this.getaddService(Service.LightSensor).setCharacteristic(Characteristic.Name,  that.device.attributes.wind_direction)
+//        that.platform.addAttributeUsage("wind_direction", this.deviceid, thisCharacteristic);    
     }     
 if (device.capabilities["Temperature Measurement"] !== undefined) {
     
@@ -1214,6 +1214,7 @@ if (device.capabilities["Temperature Measurement"] !== undefined) {
                 callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8) * 10) / 10);
         });
         that.platform.addAttributeUsage("temperature", this.deviceid, thisCharacteristic);
+        thisCharacteristic = this.getaddService(Service.HumiditySensor).setCharacteristic(Characteristic.Name,  "웨더 도")        
     }
     else {
     if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
