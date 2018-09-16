@@ -797,6 +797,8 @@ if (device.capabilities["Button"] !== undefined) {
         if (that.device.attributes.button == 'pushed')
             callback(null, Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
     });
+    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+    
     thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.button == 'double')
