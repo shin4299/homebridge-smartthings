@@ -1322,7 +1322,7 @@ if (device.capabilities["Contact Sensor"] !== undefined) {
 }
 
 if (device.capabilities["Battery"] !== undefined) {
-	if (device.capabilities["Power Source"]) {
+	if (device.capabilities["Power Source"] !== undefined) {
     thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.BatteryLevel)
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.battery)); });
     that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
