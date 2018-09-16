@@ -1080,11 +1080,25 @@ if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.d
 
 
 if (device.capabilities["Motion Sensor"] !== undefined) {
+    if (device.commands.testmotion) {
+        if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
+
+    thisCharacteristic = this.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.MotionDetected)
+    thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.motion == "active")); });
+    that.platform.addAttributeUsage("motion", this.deviceid, thisCharacteristic);
+        
+    thisCharacteristic = this.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.name)
+    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.testname) });
+    that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);    
+    }
+
+    else {    
     if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
 
     thisCharacteristic = this.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.MotionDetected)
     thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.motion == "active")); });
     that.platform.addAttributeUsage("motion", this.deviceid, thisCharacteristic);
+    }
 }
 
 if (device.capabilities["Water Sensor"] !== undefined) {
