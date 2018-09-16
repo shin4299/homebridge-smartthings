@@ -793,11 +793,28 @@ if (device.attributes['securityStatus'] !== undefined) {
 if (device.capabilities["Button"] !== undefined) {
     this.deviceGroup = "button";
     thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
-    thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.button == 'pushed')
-            callback(null, Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
-    });
+            thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
+        else if (that.device.attributes.button == 'double')
+            thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
+        else if (that.device.attributes.button == 'held')
+            thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+/*
+    if (gesture == '1') {
+        this.switch1Service
+	.getCharacteristic(Characteristic.ProgrammableSwitchEvent)
+     	.setValue(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
+		} else if (gesture == '2') {
+        this.switch1Service
+	.getCharacteristic(Characteristic.ProgrammableSwitchEvent)
+     	.setValue(Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
+		} else if (gesture == '3') {
+        this.switch1Service
+	.getCharacteristic(Characteristic.ProgrammableSwitchEvent)
+     	.setValue(Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
+		}
+    
     
     thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
     thisCharacteristic.on('get', function (callback) {
@@ -810,6 +827,7 @@ if (device.capabilities["Button"] !== undefined) {
             callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
     });
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+    */
 }
 
 
