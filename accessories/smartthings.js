@@ -1080,7 +1080,7 @@ if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.d
 
 
 if (device.capabilities["Motion Sensor"] !== undefined) {
-    if (device.commands.testmotion) {
+    if (device.commands.aaa) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
 
     thisCharacteristic = this.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.MotionDetected)
@@ -1104,7 +1104,7 @@ if (device.capabilities["Motion Sensor"] !== undefined) {
 
 if (device.capabilities["Water Sensor"] !== undefined) {
     
-    if (device.commands.pollWeatherFlow) {
+    if (device.commands.wfWater) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LeakSensor).getCharacteristic(Characteristic.LeakDetected)
         thisCharacteristic.on('get', function (callback) {
@@ -1114,7 +1114,7 @@ if (device.capabilities["Water Sensor"] !== undefined) {
         });
         that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
 
-        thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 비감지")
+//        thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 비감지")
     }
     else {
     if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
@@ -1145,9 +1145,7 @@ if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristic.CurrentRelativeHumidity)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
-        that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
-        thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 습도")
-        
+        that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);        
     }
     else {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
@@ -1199,6 +1197,7 @@ if (device.commands.wfWind) {
         that.platform.addAttributeUsage("wind_gust", this.deviceid, thisCharacteristic)        
 
         thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  that.device.attributes.wind_direction)
+        that.platform.addAttributeUsage("wind_direction", this.deviceid, thisCharacteristic);    
     }     
 if (device.capabilities["Temperature Measurement"] !== undefined) {
     
@@ -1215,7 +1214,6 @@ if (device.capabilities["Temperature Measurement"] !== undefined) {
                 callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8) * 10) / 10);
         });
         that.platform.addAttributeUsage("temperature", this.deviceid, thisCharacteristic);
-        thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 기온")
     }
     else {
     if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
