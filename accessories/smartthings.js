@@ -792,6 +792,17 @@ if (device.attributes['securityStatus'] !== undefined) {
 
 if (device.capabilities["Button"] !== undefined) {
     this.deviceGroup = "button";
+    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.button == "pushed")
+            callback(null, Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
+        else if (that.device.attributes.button == "double")
+            callback(null, Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
+        else if (that.device.attributes.button == "held")
+            callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
+    });
+    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+    
 }
 
 
