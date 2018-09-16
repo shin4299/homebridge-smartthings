@@ -798,7 +798,7 @@ if (device.capabilities["Button"] !== undefined) {
             callback(null, Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
         else if (that.device.attributes.button == 'double')
             callback(null, Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
-        else if (that.device.attributes.button == 'held/)
+        else if (that.device.attributes.button == 'held')
             callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
     });
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
