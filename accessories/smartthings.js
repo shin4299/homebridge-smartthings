@@ -792,7 +792,23 @@ if (device.attributes['securityStatus'] !== undefined) {
 
 if (device.capabilities["Button"] !== undefined) {
     this.deviceGroup = "button";
+            thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent);
+            thisCharacteristic.on('get', function (callback) {
+                switch (that.device.attributes.button) {
+                    case 'pushed':
+                        callback(null, Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
+                        break;
+                    case 'double':
+                        callback(null, Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
+                        break;
+                    case 'held':
+                        callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
+                        break;
+                }
+            });
+            that.platform.addAttributeUsage('button', this.deviceid, thisCharacteristic);
 
+/*
     thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
 //        if (that.device.attributes.button == 'pushed')
             thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS, that.device.attributes.button == 'pushed');
@@ -801,27 +817,6 @@ if (device.capabilities["Button"] !== undefined) {
 //        else if (that.device.attributes.button == 'held')
             thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.LONG_PRESS, that.device.attributes.button == 'held');
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
-/*
-
-            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
-            thisCharacteristic.on('get', function (callback) {
-                switch (that.device.attributes.valvetype) {
-                    case 'Faucet':
-                        callback(null, Characteristic.ValveType.WATER_FAUCET);
-                        break;
-                    case 'ShowerHead':
-                        callback(null, Characteristic.ValveType.SHOWER_HEAD);
-                        break;
-                    case 'Sprinkler':
-                        callback(null, Characteristic.ValveType.IRRIGATION);
-                        break;
-                    case 'GenericValve':
-                    default:
-                        callback(null, Characteristic.ValveType.GENERIC_VALVE);
-                        break;
-                }
-            });
-            that.platform.addAttributeUsage('valvetype', this.deviceid, thisCharacteristic);
 
 
 	thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).setCharacteristic(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS, that.device.attributes.button == 'pushed')
