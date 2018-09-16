@@ -787,18 +787,15 @@ if (device.attributes['securityStatus'] !== undefined) {
 }
 
 
-
-
-
 if (device.capabilities["Button"] !== undefined) {
     this.deviceGroup = "button";
     thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
     thisCharacteristic.on('get', function (callback) {
-        if (that.device.attributes.button == "pushed")
+        if (that.device.attributes.button == 'pushed')
             callback(null, Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
-        else if (that.device.attributes.button == "double")
+        else if (that.device.attributes.button == 'double')
             callback(null, Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
-        else if (that.device.attributes.button == "held")
+        else if (that.device.attributes.button == 'held')
             callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
     });
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
@@ -1325,6 +1322,7 @@ if (device.capabilities["Contact Sensor"] !== undefined) {
 }
 
 if (device.capabilities["Battery"] !== undefined) {
+	if (device.capabilities["Power Source"]) {
     thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.BatteryLevel)
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.battery)); });
     that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
@@ -1338,7 +1336,6 @@ if (device.capabilities["Battery"] !== undefined) {
     });
     that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
 
-    if (device.capabilities["Power Source"]) {
     thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.ChargingState)
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.powerSource == 'dc')
@@ -1350,6 +1347,20 @@ if (device.capabilities["Battery"] !== undefined) {
     });
     that.platform.addAttributeUsage("powerSource", this.deviceid, thisCharacteristic);
     }
+	else {
+    thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.BatteryLevel)
+    thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.battery)); });
+    that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);
+
+    thisCharacteristic = this.getaddService(Service.BatteryService).getCharacteristic(Characteristic.StatusLowBattery)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.battery < 20)
+            callback(null, Characteristic.StatusLowBattery.BATTERY_LEVEL_LOW);
+        else
+            callback(null, Characteristic.StatusLowBattery.BATTERY_LEVEL_NORMAL);
+    });
+    that.platform.addAttributeUsage("battery", this.deviceid, thisCharacteristic);		
+	}	
 }
 
 if (device.capabilities["Energy Meter"] !== undefined) {
