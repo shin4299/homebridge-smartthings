@@ -1141,7 +1141,7 @@ if (device.capabilities["Relative Humidity Measurement"] !== undefined) {
     if (device.commands.noHumi) {
         this.deviceGroup = "noneed";
     }
-    else if (device.commands.pollWeatherFlow) {
+    else if (device.commands.wfHumi) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.HumiditySensor).getCharacteristic(Characteristic.CurrentRelativeHumidity)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
@@ -1165,7 +1165,7 @@ if (device.capabilities["Illuminance Measurement"] !== undefined) {
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.Light)); });
         that.platform.addAttributeUsage("Light", this.deviceid, thisCharacteristic);
     }
-    else if (device.commands.pollWeatherFlow) {
+    else if (device.commands.wfLux) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.illuminance)); });
@@ -1202,7 +1202,7 @@ if (device.capabilities["Temperature Measurement"] !== undefined) {
     if (device.commands.noTemp) {
         this.deviceGroup = "noneed";
     }
-    else if (device.commands.pollWeatherFlow) {
+    else if (device.commands.wfTemp) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({ minValue: -20 })
         thisCharacteristic.on('get', function (callback) {
