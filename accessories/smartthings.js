@@ -1166,12 +1166,13 @@ if (device.capabilities["Illuminance Measurement"] !== undefined) {
         that.platform.addAttributeUsage("Light", this.deviceid, thisCharacteristic);
     }
     else if (device.commands.wfLux) {
-        if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
+/*        if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.illuminance)); });
         that.platform.addAttributeUsage("illuminance", this.deviceid, thisCharacteristic)        
 
         thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 조도")
+        */
     }
     else {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
@@ -1182,12 +1183,14 @@ if (device.capabilities["Illuminance Measurement"] !== undefined) {
 }
 
 if (device.commands.wfUV) {
+    /*
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.ultravioletIndex)); });
         that.platform.addAttributeUsage("ultravioletIndex", this.deviceid, thisCharacteristic)        
 
         thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 자외선")
+        */
     }    
 if (device.commands.wfWind) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
