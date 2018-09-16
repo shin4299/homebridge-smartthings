@@ -1087,8 +1087,9 @@ if (device.capabilities["Motion Sensor"] !== undefined) {
     thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.motion == "active")); });
     that.platform.addAttributeUsage("motion", this.deviceid, thisCharacteristic);
         
-    thisCharacteristic = this.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.name)
-    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.testname) });
+    thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  that.device.attributes.testname)
+//    getCharacteristic(Characteristic.name)
+//    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.testname) });
     that.platform.addAttributeUsage("testname", this.deviceid, thisCharacteristic);    
     }
 
