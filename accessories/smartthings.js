@@ -1190,7 +1190,7 @@ if (device.commands.wfUV) {
         thisCharacteristic = this.getaddService(Service.MotionSensor).setCharacteristic(Characteristic.Name,  "웨더 자외선")
         */
     }    
-if (device.commands.wfWind) {
+/*if (device.commands.wfWind) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.wind_gust)); });
@@ -1198,7 +1198,7 @@ if (device.commands.wfWind) {
 
         thisCharacteristic = this.getaddService(Service.LightSensor).setCharacteristic(Characteristic.Name,  that.device.attributes.wind_direction)
 //        that.platform.addAttributeUsage("wind_direction", this.deviceid, thisCharacteristic);    
-    }     
+    }     */
 if (device.capabilities["Temperature Measurement"] !== undefined) {
     
     if (device.commands.noTemp) {
@@ -1214,6 +1214,11 @@ if (device.capabilities["Temperature Measurement"] !== undefined) {
                 callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8) * 10) / 10);
         });
         that.platform.addAttributeUsage("temperature", this.deviceid, thisCharacteristic);
+        
+        thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
+        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.wind_gust)); });
+        that.platform.addAttributeUsage("wind_gust", this.deviceid, thisCharacteristic)        
+        
         thisCharacteristic = this.getaddService(Service.TemperatureSensor).setCharacteristic(Characteristic.Name,  "웨더 온도")        
     }
     else {
