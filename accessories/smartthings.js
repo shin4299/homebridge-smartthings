@@ -796,7 +796,6 @@ if (device.capabilities["Button"] !== undefined) {
 			thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
       	 	 else if (that.device.attributes.button == 'held')
 			thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
-    	});
    	that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);	
 
 /*	
