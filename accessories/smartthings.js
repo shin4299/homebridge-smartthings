@@ -789,17 +789,18 @@ if (device.attributes['securityStatus'] !== undefined) {
 
 if (device.capabilities["Button"] !== undefined) {
     this.deviceGroup = "button";
-    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent).setProps({ validValues: [0] });
-    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.button == "pushed"); })
-    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+	thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
+	thisCharacteristic.updateValue(function (callback) {
+        	if (that.device.attributes.button == 'pushed')
+         	   callback(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
+       		 else if (that.device.attributes.button == 'double')
+         	   callback(Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
+      	 	 else if (that.device.attributes.button == 'held')
+         	   callback(Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
+    	});
+   	that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);	
 	
-    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent).setProps({ validValues: [1] });
-    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.button == "double"); })
-    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
-
-    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent).setProps({ validValues: [2] });
-    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.button == "held"); })
-    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+	
 /*	
 	thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS) 
         else if (that.device.attributes.button == 'double')
