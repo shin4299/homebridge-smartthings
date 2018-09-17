@@ -791,14 +791,16 @@ if (device.capabilities["Button"] !== undefined) {
     this.deviceGroup = "button";
     thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
     thisCharacteristic.on('get', function (callback) {
-        if (that.device.attributes.bt == 'pushed')
+        if (that.device.attributes.button == 'pushed')
             callback(null, Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS);
-        else if (that.device.attributes.bt == 'double')
+        else if (that.device.attributes.button == 'double')
             callback(null, Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS);
-        else if (that.device.attributes.bt == 'held')
+        else if (that.device.attributes.button == 'held')
             callback(null, Characteristic.ProgrammableSwitchEvent.LONG_PRESS);
+	else
+	    callback(null, Characteristic.ProgrammableSwitchEvent);
     });
-    that.platform.addAttributeUsage("bt", this.deviceid, thisCharacteristic);
+    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
 /*	
             thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent);
             thisCharacteristic.on('get', function (callback) {
