@@ -789,19 +789,33 @@ if (device.attributes['securityStatus'] !== undefined) {
 
 if (device.capabilities["Button"] !== undefined) {
     this.deviceGroup = "button";
-    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
-        if (that.device.attributes.button == 'pushed')
-	    thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS) 
+    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent).setProps({ validValues: [0] });
+    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.button == "pushed"); })
+    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+	
+    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent).setProps({ validValues: [1] });
+    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.button == "double"); })
+    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+
+    thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent).setProps({ validValues: [2] });
+    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.button == "held"); })
+    that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+/*	
+	thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.SINGLE_PRESS) 
         else if (that.device.attributes.button == 'double')
 	    thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.DOUBLE_PRESS) 
         else if (that.device.attributes.button == 'held')
 	    thisCharacteristic.setValue(Characteristic.ProgrammableSwitchEvent.LONG_PRESS) 
     that.platform.addAttributeUsage("button", this.deviceid, thisCharacteristic);
+
 	
+	            thisCharacteristic = this.getaddService(Service.Outlet).getCharacteristic(Characteristic.On)
+            thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.switch == "on"); })
+
 //	service.getCharacteristic(Characteristic.ProgrammableSwitchEvent)
 //	thisCharacteristic.setValue(actionMap[event.action])
 	
-/*	
+	
 
 thisCharacteristic = this.getaddService(Service.StatelessProgrammableSwitch).getCharacteristic(Characteristic.ProgrammableSwitchEvent)
     thisCharacteristic.on('get', function (callback) {
