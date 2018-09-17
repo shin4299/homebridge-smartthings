@@ -1103,6 +1103,13 @@ if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attrib
             callback(null, Characteristic.SmokeDetected.SMOKE_DETECTED);
     });
     that.platform.addAttributeUsage("smoke", this.deviceid, thisCharacteristic);
+    if (device.capabilities['Tamper Alert'] !== undefined) {
+                thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
+                thisCharacteristic.on('get', function(callback) {
+                    callback(null, (device.attributes.tamperAlert === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
+                });
+                that.platform.addAttributeUsage('tamper', that.deviceid, thisCharacteristic);
+    }
 }
 
 if ((device.capabilities["Carbon Monoxide Detector"] !== undefined) && (that.device.attributes.carbonMonoxide)) {
@@ -1174,6 +1181,13 @@ if (device.capabilities["Motion Sensor"] !== undefined) {
     thisCharacteristic = this.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.MotionDetected)
     thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.motion == "active")); });
     that.platform.addAttributeUsage("motion", this.deviceid, thisCharacteristic);
+    if (device.capabilities['Tamper Alert'] !== undefined) {
+        thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
+        thisCharacteristic.on('get', function(callback) {
+             callback(null, (device.attributes.tamperAlert === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
+           });
+        that.platform.addAttributeUsage('tamper', that.deviceid, thisCharacteristic);
+     }	    
     }
 }
 
@@ -1321,6 +1335,13 @@ if (device.capabilities["Contact Sensor"] !== undefined) {
 
     });
     that.platform.addAttributeUsage("contact", this.deviceid, thisCharacteristic);
+    if (device.capabilities['Tamper Alert'] !== undefined) {
+        thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
+        thisCharacteristic.on('get', function(callback) {
+             callback(null, (device.attributes.tamperAlert === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
+           });
+        that.platform.addAttributeUsage('tamper', that.deviceid, thisCharacteristic);
+     }
 }
 
 if (device.capabilities["Battery"] !== undefined) {
