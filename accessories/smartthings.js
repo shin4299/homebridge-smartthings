@@ -1102,7 +1102,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
     that.platform.addAttributeUsage("dustLevel", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.CarbonMonoxideLevel)
-    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.co_value) });
+    thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.co_value)) });
     that.platform.addAttributeUsage("co_value", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.OzoneDensity)
@@ -1342,7 +1342,7 @@ if (device.capabilities["Temperature Measurement"] !== undefined) {
     thisCharacteristic = this.getaddService(Service.TemperatureSensor).getCharacteristic(Characteristic.CurrentTemperature).setProps({ minValue: -20 })
     thisCharacteristic.on('get', function (callback) {
         if (that.platform.temperature_unit == 'C')
-            callback(null, parseInt(that.device.attributes.temperature));
+            callback(null, parseFloat(that.device.attributes.temperature));
         else
             callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8) * 10) / 10);
     });
