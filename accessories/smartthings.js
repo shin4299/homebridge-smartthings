@@ -172,7 +172,7 @@ function SmartThingsAccessory(platform, device) {
 
         }
         
-        else if (device.commands.airpurifier) {
+    else if (device.commands.airpurifier) {
     this.deviceGroup = "airpurifier";
     thisCharacteristic = this.getaddService(Service.AirPurifier).getCharacteristic(Characteristic.Active)
     thisCharacteristic.on('get', function (callback) {
@@ -252,6 +252,16 @@ function SmartThingsAccessory(platform, device) {
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.fineDustLevel)); })
     that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
 
+	    if (device.capabilities["Power Meter"] !== undefined) {
+            thisCharacteristic = this.getaddService(Service.AirPurifier).addCharacteristic(Characteristic.CarbonDioxideLevel)
+            thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.power)); })
+            that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+		    if (device.capabilities["Energy Meter"] !== undefined) {
+            thisCharacteristic = this.getaddService(Service.AirPurifier).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
+            thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.energy)); })
+            that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
+		    }
+        	}
 }
 
 else if (device.commands.airpurifier2) {
@@ -415,44 +425,6 @@ else if (device.commands.xiaomivacuums) {
     thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState).setProps({ validValues: [1] });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-    /*            
-    thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetFanState)
-    thisCharacteristic.on('get', function(callback) {
-            if (that.device.attributes.mode == "auto")
-                    callback(null, Characteristic.TargetFanState.AUTO);
-            else
-                    callback(null, Characteristic.TargetFanState.MANUAL);
-            });
-        thisCharacteristic.on('set', function(value, callback) {
-        // that.platform.log(that.deviceid + ' set value : ' + value);
-            if (value == Characteristic.TargetFanState.AUTO) {
-                    that.platform.api.runCommand(callback, that.deviceid, "auto");
-            } else if (value == Characteristic.TargetFanState.MANUAL) {
-                    that.platform.api.runCommand(callback, that.deviceid, "setModeSilent");
-            } 
-    });		    
-    that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
-    
-        
-        thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
-        thisCharacteristic.on('get', function (callback) {
-             if (that.device.attributes.switch == "on")
-                 callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
-            else
-                 callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-            });
-        thisCharacteristic.on('set', function (value, callback) {
-             // that.platform.log(that.deviceid + ' set value : ' + value);
-                if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
-                    that.platform.api.runCommand(callback, that.deviceid, "on");
-                }
-                else if (value == Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER) {
-                    that.platform.api.runCommand(callback, that.deviceid, "off");
-                }
-        });
-        that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-     */
-
     thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
     that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
@@ -490,6 +462,18 @@ else if (device.commands.xiaomivacuums) {
     thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
     that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
+	
+	    if (device.capabilities["Power Meter"] !== undefined) {
+            thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).addCharacteristic(Characteristic.CarbonDioxideLevel)
+            thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.power)); })
+            that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+		    if (device.capabilities["Energy Meter"] !== undefined) {
+            thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
+            thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.energy)); })
+            that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
+		    }
+        	}
+
 }
 
 else if (device.commands.dehumidifier) {
@@ -521,28 +505,6 @@ else if (device.commands.dehumidifier) {
     thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState).setProps({ validValues: [2] });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
-
-
-    /*		    
-                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.TargetHumidifierDehumidifierState)
-                thisCharacteristic.on('get', function (callback) {
-                    if (that.device.attributes.switch == "on")
-                        callback(null, Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER);
-                    else
-                        callback(null, Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER);
-                });
-                thisCharacteristic.on('set', function (value, callback) {
-                     // that.platform.log(that.deviceid + ' set value : ' + value);
-                    if (value == Characteristic.TargetHumidifierDehumidifierState.DEHUMIDIFIER) {
-                        that.platform.api.runCommand(callback, that.deviceid, "on");
-                    }
-                    else if (value == Characteristic.TargetHumidifierDehumidifierState.HUMIDIFIER) {
-                        that.platform.api.runCommand(callback, that.deviceid, "off");
-                    }
-                });
-                that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-    */
-
     thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CurrentRelativeHumidity)
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
     that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
@@ -551,35 +513,22 @@ else if (device.commands.dehumidifier) {
     thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
     thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
     that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
-    /*
-                thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.RotationSpeed)
-                thisCharacteristic.on('get', function (callback) {
-                    if (that.device.attributes.mode == "off")
-                        callback(null, parseInt(0));
-                    else if (that.device.attributes.mode == "setModeAuto")
-                        callback(null, parseInt(100));
-                    else if (that.device.attributes.mode == "setModeSilent")
-                        callback(null, parseInt(25));
-                    else if (that.device.attributes.mode == "setModeMedium")
-                        callback(null, parseInt(50));
-                    else if (that.device.attributes.mode == "setModeHigh")
-                        callback(null, parseInt(75));
-                });
-                thisCharacteristic.on('set', function (value, callback) {
-                    if (value < 30)
-                        that.platform.api.runCommand(callback, that.deviceid, "silent");
-                    else if (value < 60)
-                        that.platform.api.runCommand(callback, that.deviceid, "medium");
-                    else if (value < 90)
-                        that.platform.api.runCommand(callback, that.deviceid, "high");
-                    else
-                        that.platform.api.runCommand(callback, that.deviceid, "auto");
-                });
-                that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
-    */
+    
     thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.WaterLevel)
     thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.water)); });
     that.platform.addAttributeUsage("water", this.deviceid, thisCharacteristic);
+
+	    if (device.capabilities["Power Meter"] !== undefined) {
+            thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).addCharacteristic(Characteristic.CarbonDioxideLevel)
+            thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.power)); })
+            that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+		    if (device.capabilities["Energy Meter"] !== undefined) {
+            thisCharacteristic = this.getaddService(Service.HumidifierDehumidifier).getCharacteristic(Characteristic.CarbonDioxidePeakLevel)
+            thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.energy)); })
+            that.platform.addAttributeUsage("energy", this.deviceid, thisCharacteristic);
+		    }
+        	}
+
 
 }
 
@@ -1133,7 +1082,7 @@ if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attrib
     if (device.capabilities['Tamper Alert'] !== undefined) {
                 thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
                 thisCharacteristic.on('get', function(callback) {
-                    callback(null, (device.attributes.tamperAlert === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
+                    callback(null, (device.attributes.tamper === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
                 });
                 that.platform.addAttributeUsage('tamper', that.deviceid, thisCharacteristic);
     }
@@ -1211,7 +1160,7 @@ if (device.capabilities["Motion Sensor"] !== undefined) {
     if (device.capabilities['Tamper Alert'] !== undefined) {
         thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
         thisCharacteristic.on('get', function(callback) {
-             callback(null, (device.attributes.tamperAlert === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
+             callback(null, (device.attributes.tamper === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
            });
         that.platform.addAttributeUsage('tamper', that.deviceid, thisCharacteristic);
      }	    
@@ -1361,7 +1310,7 @@ if (device.capabilities["Contact Sensor"] !== undefined) {
     if (device.capabilities['Tamper Alert'] !== undefined) {
         thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
         thisCharacteristic.on('get', function(callback) {
-             callback(null, (device.attributes.tamperAlert === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
+             callback(null, (device.attributes.tamper === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
            });
         that.platform.addAttributeUsage('tamper', that.deviceid, thisCharacteristic);
      }
