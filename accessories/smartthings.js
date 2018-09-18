@@ -1276,7 +1276,7 @@ if (device.capabilities["Illuminance Measurement"] !== undefined) {
     if (device.commands.LightSensor) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.Light)); });
+        thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.Light)); });
         that.platform.addAttributeUsage("Light", this.deviceid, thisCharacteristic);
     }
     else if (device.commands.wfLux) {
@@ -1291,7 +1291,7 @@ if (device.capabilities["Illuminance Measurement"] !== undefined) {
     else {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.illuminance)); });
+        thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.illuminance)); });
         that.platform.addAttributeUsage("illuminance", this.deviceid, thisCharacteristic);
     }
 }
@@ -1309,7 +1309,7 @@ if (device.commands.wfUV) {
 if (device.commands.wfWind) {
         if (this.deviceGroup == 'unknown') this.deviceGroup = "sensor";
         thisCharacteristic = this.getaddService(Service.LightSensor).getCharacteristic(Characteristic.CurrentAmbientLightLevel)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.wind_gust)); });
+        thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.wind_gust)); });
         that.platform.addAttributeUsage("wind_gust", this.deviceid, thisCharacteristic)        
 
         thisCharacteristic = this.getaddService(Service.LightSensor).setCharacteristic(Characteristic.Name,  that.device.attributes.wind_direction)
