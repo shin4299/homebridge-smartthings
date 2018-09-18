@@ -1080,7 +1080,7 @@ if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attrib
     });
     that.platform.addAttributeUsage("smoke", this.deviceid, thisCharacteristic);
     if (device.capabilities['Tamper Alert'] !== undefined) {
-                thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
+                thisCharacteristic = that.getaddService(Service.SmokeSensor).getCharacteristic(Characteristic.StatusTampered);
                 thisCharacteristic.on('get', function(callback) {
                     callback(null, (device.attributes.tamper === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
                 });
@@ -1158,7 +1158,7 @@ if (device.capabilities["Motion Sensor"] !== undefined) {
     thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.motion == "active")); });
     that.platform.addAttributeUsage("motion", this.deviceid, thisCharacteristic);
     if (device.capabilities['Tamper Alert'] !== undefined) {
-        thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
+        thisCharacteristic = that.getaddService(Service.MotionSensor).getCharacteristic(Characteristic.StatusTampered);
         thisCharacteristic.on('get', function(callback) {
              callback(null, (device.attributes.tamper === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
            });
@@ -1313,6 +1313,13 @@ if (device.capabilities["Contact Sensor"] !== undefined) {
              callback(null, (device.attributes.tamper === 'detected') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
            });
         that.platform.addAttributeUsage('tamper', that.deviceid, thisCharacteristic);
+     }
+	if (device.capabilities['Three Axis'] !== undefined) {
+        thisCharacteristic = that.getaddService(Service.ContactSensor).getCharacteristic(Characteristic.StatusTampered);
+        thisCharacteristic.on('get', function(callback) {
+             callback(null, (device.attributes.acceleration === 'active') ? Characteristic.StatusTampered.TAMPERED : Characteristic.StatusTampered.NOT_TAMPERED);
+           });
+        that.platform.addAttributeUsage('acceleration', that.deviceid, thisCharacteristic);
      }
 }
 
