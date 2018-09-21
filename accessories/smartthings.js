@@ -1559,68 +1559,10 @@ if (device.commands.cooler) {
     });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
     that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
-    /*
-        thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentHeatingCoolingState)
-        thisCharacteristic.on('get', function (callback) {
-            switch (that.device.attributes.thermostatOperatingState) {
-                case "pending cool":
-                case "cooling":
-                    callback(null, Characteristic.CurrentHeatingCoolingState.COOL);
-                    break;
-                case "pending heat":
-                case "heating":
-                    callback(null, Characteristic.CurrentHeatingCoolingState.HEAT);
-                    break;
-                default: //The above list should be inclusive, but we need to return something if they change stuff.
-                    //TODO: Double check if Smartthings can send "auto" as operatingstate. I don't think it can.
-                    callback(null, Characteristic.CurrentHeatingCoolingState.OFF);
-                    break;
-            }
-        });
-        that.platform.addAttributeUsage("thermostatOperatingState", this.deviceid, thisCharacteristic);
-        */
-    //Handle the Target State
+ 
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.TargetHeaterCoolerState).setProps({ validValues: [2] });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
-    /*    thisCharacteristic.on('get', function (callback) {
-            switch (that.device.attributes.thermostatMode) {
-                case "cool":
-                    callback(null, Characteristic.TargetHeatingCoolingState.COOL);
-                    break;
-                case "emergency heat":
-                case "heat":
-                    callback(null, Characteristic.TargetHeatingCoolingState.HEAT);
-                    break;
-                case "auto":
-                    callback(null, Characteristic.TargetHeatingCoolingState.AUTO);
-                    break;
-                default: //The above list should be inclusive, but we need to return something if they change stuff.
-                    callback(null, Characteristic.TargetHeatingCoolingState.OFF);
-                    break;
-            }
-        })
-        thisCharacteristic.on('set', function (value, callback) {
-            switch (value) {
-                case Characteristic.TargetHeatingCoolingState.COOL:
-                    that.platform.api.runCommand(callback, that.deviceid, "cool");
-                    that.device.attributes.thermostatMode = 'cool';
-                    break;
-                case Characteristic.TargetHeatingCoolingState.HEAT:
-                    that.platform.api.runCommand(callback, that.deviceid, "heat");
-                    that.device.attributes.thermostatMode = 'heat';
-                    break;
-                case Characteristic.TargetHeatingCoolingState.AUTO:
-                    that.platform.api.runCommand(callback, that.deviceid, "auto");
-                    that.device.attributes.thermostatMode = 'auto';
-                    break;
-                case Characteristic.TargetHeatingCoolingState.OFF:
-                    that.platform.api.runCommand(callback, that.deviceid, "off");
-                    that.device.attributes.thermostatMode = 'off';
-                    break;
-            }
-        });
-        that.platform.addAttributeUsage("thermostatMode", this.deviceid, thisCharacteristic);
-        */
+
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentTemperature)
     thisCharacteristic.on('get', function (callback) {
         if (that.platform.temperature_unit == 'C')
@@ -1634,6 +1576,10 @@ if (device.commands.cooler) {
     thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.level)); });
     thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
     that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
+	
+	thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CarbonDioxideLevel)
+     	thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.power)); })
+        that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 
 }
 else if (device.commands.heater) {
