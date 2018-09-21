@@ -1090,7 +1090,7 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
     }
 
     else {
-	    if (device.commands.noswitch) {
+	    if (device.commands.noSwitch) {
         this.deviceGroup = "noneed";
     }
     else {
