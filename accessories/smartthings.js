@@ -1090,6 +1090,10 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
     }
 
     else {
+	    if (device.commands.noswitch) {
+        this.deviceGroup = "noneed";
+    }
+    else {
         this.deviceGroup = "switch";
         thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
         thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.switch == "on"); })
@@ -1107,6 +1111,7 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
             thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
             that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
         }
+    }
     }
 }
 
