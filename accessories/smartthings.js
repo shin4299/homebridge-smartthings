@@ -1526,13 +1526,12 @@ if (device.commands.cooler) {
 
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentHeaterCoolerState).setProps({ validValues: [0, 1, 3] });
     thisCharacteristic.on('get', function (callback) {
-        if (that.device.attributes.switch == "off") {
-            callback(null, Characteristic.CurrentHeaterCoolerState.INACTIVE)};
-        else { 
-		if (that.device.attributes.power <= 50)
+        if (that.device.attributes.switch == "off") 
+            callback(null, Characteristic.CurrentHeaterCoolerState.INACTIVE);
+        else if (that.device.attributes.switch == "on" || that.device.attributes.power <= 50)
             callback(null, Characteristic.CurrentHeaterCoolerState.IDLE);
-        else
-            callback(null, Characteristic.CurrentHeaterCoolerState.COOLING)};
+        else if (that.device.attributes.switch == "on" || that.device.attributes.power >= 51)
+            callback(null, Characteristic.CurrentHeaterCoolerState.COOLING);
     });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
     that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
