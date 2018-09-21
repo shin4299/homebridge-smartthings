@@ -1528,9 +1528,9 @@ if (device.commands.cooler) {
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.switch == "off") 
             callback(null, Characteristic.CurrentHeaterCoolerState.INACTIVE);
-        else if (that.device.attributes.switch == "on" || that.device.attributes.power <= 50)
+        else if (that.device.attributes.switch == "on" && that.device.attributes.power <= 50)
             callback(null, Characteristic.CurrentHeaterCoolerState.IDLE);
-        else if (that.device.attributes.switch == "on" || that.device.attributes.power >= 51)
+        else if (that.device.attributes.switch == "on" && that.device.attributes.power >= 51)
             callback(null, Characteristic.CurrentHeaterCoolerState.COOLING);
     });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
