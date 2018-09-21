@@ -1121,62 +1121,10 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
 
 if (device.capabilities["Air Quality Sensor"] !== undefined) {
     if (device.commands.noAQS) {
-        this.deviceGroup = "detectors";
-        thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality).setProps({ minValue: -20 })
-        thisCharacteristic.on('get', function (callback) {
-            if (that.device.attributes.fineDustLevel < 5)
-                callback(null, Characteristic.AirQuality.EXCELLENT);
-            else if (that.device.attributes.fineDustLevel < 10)
-                callback(null, Characteristic.AirQuality.GOOD);
-            else if (that.device.attributes.fineDustLevel < 30)
-                callback(null, Characteristic.AirQuality.FAIR);
-            else if (that.device.attributes.fineDustLevel < 100)
-                callback(null, Characteristic.AirQuality.INFAIR);
-            else if (that.device.attributes.fineDustLevel < 1000)
-                callback(null, Characteristic.AirQuality.POOR);
-            else
-                callback(null, Characteristic.AirQuality.UNKNOWN);
-        });
-        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
-
-        if (device.attributes['airQuality'])
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.StatusActive)
-        thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.airQuality > 50)) });
-        that.platform.addAttributeUsage("airQuality", this.deviceid, thisCharacteristic);
-
-        if (device.attributes['fineDustLevel'])
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM2_5Density)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.fineDustLevel)) });
-        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
-
-        if (device.attributes['dustLevel'])
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM10Density)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.dustLevel)) });
-        that.platform.addAttributeUsage("dustLevel", this.deviceid, thisCharacteristic);
-
-        if (device.attributes['co_value'])
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.CarbonMonoxideLevel)
-        thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.co_value)) });
-        that.platform.addAttributeUsage("co_value", this.deviceid, thisCharacteristic);
-
-        if (device.attributes['o3_value'])
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.OzoneDensity)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.o3_value)) });
-        that.platform.addAttributeUsage("o3_value", this.deviceid, thisCharacteristic);
-
-        if (device.attributes['no2_value'])
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.NitrogenDioxideDensity)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.no2_value)) });
-        that.platform.addAttributeUsage("no2_value", this.deviceid, thisCharacteristic);
-
-        if (device.attributes['so2_value'])
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.SulphurDioxideDensity)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.so2_value)) });
-        that.platform.addAttributeUsage("so2_value", this.deviceid, thisCharacteristic);
-
+        this.deviceGroup = "noneed";
     } else {
         this.deviceGroup = "detectors";
-        thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality).setProps({ minValue: -20 })
+        thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality)
         thisCharacteristic.on('get', function (callback) {
             if (that.device.attributes.airQuality < 30)
                 callback(null, Characteristic.AirQuality.EXCELLENT);
@@ -1193,43 +1141,60 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
         });
         that.platform.addAttributeUsage("airQuality", this.deviceid, thisCharacteristic);
 
-        if (device.attributes['airQuality'])
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.StatusActive)
         thisCharacteristic.on('get', function (callback) { callback(null, (that.device.attributes.airQuality > 50)) });
         that.platform.addAttributeUsage("airQuality", this.deviceid, thisCharacteristic);
 
-        if (device.attributes['fineDustLevel'])
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM2_5Density)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.fineDustLevel)) });
         that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
 
-        if (device.attributes['dustLevel'])
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM10Density)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.dustLevel)) });
         that.platform.addAttributeUsage("dustLevel", this.deviceid, thisCharacteristic);
 
-        if (device.attributes['co_value'])
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.CarbonMonoxideLevel)
         thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.co_value)) });
         that.platform.addAttributeUsage("co_value", this.deviceid, thisCharacteristic);
 
-        if (device.attributes['o3_value'])
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.OzoneDensity)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.o3_value)) });
         that.platform.addAttributeUsage("o3_value", this.deviceid, thisCharacteristic);
 
-        if (device.attributes['no2_value'])
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.NitrogenDioxideDensity)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.no2_value)) });
         that.platform.addAttributeUsage("no2_value", this.deviceid, thisCharacteristic);
 
-        if (device.attributes['so2_value'])
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.SulphurDioxideDensity)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.so2_value)) });
         that.platform.addAttributeUsage("so2_value", this.deviceid, thisCharacteristic);
     }
 }
+/*	
+if (device.commands.XiaomiPM25) {
+    this.deviceGroup = "detectors";
+        thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality)
+        thisCharacteristic.on('get', function (callback) {
+            if (that.device.attributes.fineDustLevel < 5)
+                callback(null, Characteristic.AirQuality.EXCELLENT);
+            else if (that.device.attributes.fineDustLevel < 10)
+                callback(null, Characteristic.AirQuality.GOOD);
+            else if (that.device.attributes.fineDustLevel < 30)
+                callback(null, Characteristic.AirQuality.FAIR);
+            else if (that.device.attributes.fineDustLevel < 100)
+                callback(null, Characteristic.AirQuality.INFAIR);
+            else if (that.device.attributes.fineDustLevel < 1000)
+                callback(null, Characteristic.AirQuality.POOR);
+            else
+                callback(null, Characteristic.AirQuality.UNKNOWN);
+        });
+        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
 
+            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM2_5Density)
+        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.fineDustLevel)) });
+        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
+}
+*/
 
 if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attributes.smoke)) {
     this.deviceGroup = "detectors";
