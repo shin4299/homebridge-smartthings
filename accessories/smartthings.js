@@ -1561,13 +1561,26 @@ if (device.commands.cooler) {
     that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
  
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.TargetHeaterCoolerState).setProps({ validValues: [2] });
-    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.switch == "on"); })
+    thisCharacteristic.on('get', function (callback) {
+        switch (that.device.attributes.switch) {
+            case "on":
+                callback(null, Characteristic.TargetHeaterCoolerState.COOL);
+                break;
+            default: //The above list should be inclusive, but we need to return something if they change stuff.
+                callback(null, Characteristic.TargetHeaterCoolerState.OFF);
+                break;
+        }
+    })
     thisCharacteristic.on('set', function (value, callback) {
-                if (value)
-                    that.platform.api.runCommand(callback, that.deviceid, "on");
-                else
-                    that.platform.api.runCommand(callback, that.deviceid, "off");
-            });
+        switch (value) {
+            case Characteristic.TargetHeaterCoolerState.COOL:
+            that.platform.api.runCommand(callback, that.deviceid, "on");
+                break;
+            case Characteristic.TargetHeaterCoolerState.OFF:
+                that.platform.api.runCommand(callback, that.deviceid, "off");
+                break;
+        }
+    });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentTemperature)
