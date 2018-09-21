@@ -1124,7 +1124,8 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
         this.deviceGroup = "noneed";
     }
 
-    else {
+    else  {
+// if (device.attributes['airQuality']) 	
     this.deviceGroup = "detectors";
     thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality).setProps({ minValue: -20 })
     thisCharacteristic.on('get', function (callback) {
