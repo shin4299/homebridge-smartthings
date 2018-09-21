@@ -558,6 +558,9 @@ else if (device.commands.lowSpeed) {
 
 
 } else if (device.commands.setLevel) {
+	 if (device.commands.noSwitch) {
+        this.deviceGroup = "noneed";
+    } else {
     this.deviceGroup = "lights";
     thisCharacteristic = this.getaddService(Service.Lightbulb).getCharacteristic(Characteristic.On)
     thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.switch == "on"); });
@@ -584,6 +587,7 @@ else if (device.commands.lowSpeed) {
         thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.saturation)); });
         thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setSaturation", { value1: value }); });
         that.platform.addAttributeUsage("saturation", this.deviceid, thisCharacteristic);
+    }
     }
 }
     }
