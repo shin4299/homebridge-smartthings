@@ -1561,6 +1561,13 @@ if (device.commands.cooler) {
     that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
  
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.TargetHeaterCoolerState).setProps({ validValues: [2] });
+    thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.switch == "on"); })
+    thisCharacteristic.on('set', function (value, callback) {
+                if (value)
+                    that.platform.api.runCommand(callback, that.deviceid, "on");
+                else
+                    that.platform.api.runCommand(callback, that.deviceid, "off");
+            });
     that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
 
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentTemperature)
