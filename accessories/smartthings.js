@@ -1120,8 +1120,30 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
 }
 
 if (device.capabilities["Air Quality Sensor"] !== undefined) {
-    if (device.commands.noAQS) {
-        this.deviceGroup = "noneed";
+    	
+if (device.commands.XiaomiPM25) {
+    this.deviceGroup = "detectors";
+        thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality)
+        thisCharacteristic.on('get', function (callback) {
+            if (that.device.attributes.fineDustLevel < 5)
+                callback(null, Characteristic.AirQuality.EXCELLENT);
+            else if (that.device.attributes.fineDustLevel < 10)
+                callback(null, Characteristic.AirQuality.GOOD);
+            else if (that.device.attributes.fineDustLevel < 30)
+                callback(null, Characteristic.AirQuality.FAIR);
+            else if (that.device.attributes.fineDustLevel < 100)
+                callback(null, Characteristic.AirQuality.INFAIR);
+            else if (that.device.attributes.fineDustLevel < 1000)
+                callback(null, Characteristic.AirQuality.POOR);
+            else
+                callback(null, Characteristic.AirQuality.UNKNOWN);
+        });
+        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
+
+            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM2_5Density)
+        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.fineDustLevel)) });
+        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
+
     } else {
         this.deviceGroup = "detectors";
         thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality)
@@ -1170,31 +1192,6 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
         that.platform.addAttributeUsage("so2_value", this.deviceid, thisCharacteristic);
     }
 }
-/*	
-if (device.commands.XiaomiPM25) {
-    this.deviceGroup = "detectors";
-        thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirQuality)
-        thisCharacteristic.on('get', function (callback) {
-            if (that.device.attributes.fineDustLevel < 5)
-                callback(null, Characteristic.AirQuality.EXCELLENT);
-            else if (that.device.attributes.fineDustLevel < 10)
-                callback(null, Characteristic.AirQuality.GOOD);
-            else if (that.device.attributes.fineDustLevel < 30)
-                callback(null, Characteristic.AirQuality.FAIR);
-            else if (that.device.attributes.fineDustLevel < 100)
-                callback(null, Characteristic.AirQuality.INFAIR);
-            else if (that.device.attributes.fineDustLevel < 1000)
-                callback(null, Characteristic.AirQuality.POOR);
-            else
-                callback(null, Characteristic.AirQuality.UNKNOWN);
-        });
-        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
-
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM2_5Density)
-        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.fineDustLevel)) });
-        that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
-}
-*/
 
 if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attributes.smoke)) {
     this.deviceGroup = "detectors";
