@@ -1604,6 +1604,75 @@ if (device.commands.cooler) {
 }
 else if (device.commands.heater) {
     this.deviceGroup = "thermostats";
+
+    thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.Active)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.thermostatMode == "heat")
+            callback(null, Characteristic.Active.ACTIVE);
+        else
+            callback(null, Characteristic.Active.INACTIVE);
+    });
+    thisCharacteristic.on('set', function (value, callback) {
+        if (value)
+            that.platform.api.runCommand(callback, that.deviceid, "heat");
+        else
+            that.platform.api.runCommand(callback, that.deviceid, "off");
+    });
+    that.platform.addAttributeUsage("thermostatMode", this.deviceid, thisCharacteristic);
+
+    thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentHeaterCoolerState).setProps({ validValues: [0, 1, 2] });
+    thisCharacteristic.on('get', function (callback) {
+        if (that.device.attributes.thermostatMode == "off") 
+            callback(null, Characteristic.CurrentHeaterCoolerState.INACTIVE);
+        else if (that.device.attributes.thermostatMode == "heat" && that.device.attributes.thermostatOperatingState == "heating")
+            callback(null, Characteristic.CurrentHeaterCoolerState.IDLE);
+        else if (that.device.attributes.thermostatMode == "heat" && that.device.attributes.thermostatOperatingState == "idle")
+            callback(null, Characteristic.CurrentHeaterCoolerState.HEATING);
+    });
+    that.platform.addAttributeUsage("thermostatMode", this.deviceid, thisCharacteristic);
+    that.platform.addAttributeUsage("thermostatOperatingState", this.deviceid, thisCharacteristic);
+ 
+    thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.TargetHeaterCoolerState).setProps({ validValues: [1] });
+    thisCharacteristic.on('get', function (callback) {
+        switch (that.device.attributes.thermostatMode) {
+            case "heat":
+                callback(null, Characteristic.TargetHeaterCoolerState.HEAT);
+                break;
+            default: //The above list should be inclusive, but we need to return something if they change stuff.
+                callback(null, Characteristic.TargetHeaterCoolerState.OFF);
+                break;
+        }
+    })
+    thisCharacteristic.on('set', function (value, callback) {
+        switch (value) {
+            case Characteristic.TargetHeaterCoolerState.HEAT:
+            that.platform.api.runCommand(callback, that.deviceid, "heat");
+                break;
+            case Characteristic.TargetHeaterCoolerState.OFF:
+                that.platform.api.runCommand(callback, that.deviceid, "off");
+                break;
+        }
+    });
+    that.platform.addAttributeUsage("switch", this.deviceid, thisCharacteristic);
+
+    thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentTemperature)
+    thisCharacteristic.on('get', function (callback) {
+        if (that.platform.temperature_unit == 'C')
+            callback(null, parseFloat(that.device.attributes.temperature * 10) / 10);
+        else
+            callback(null, Math.round(((that.device.attributes.temperature - 32) / 1.8) * 10) / 10);
+    });
+    that.platform.addAttributeUsage("temperature", this.deviceid, thisCharacteristic);
+
+    thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.HeatingThresholdTemperature).setProps({ minValue: 16, maxValue: 32 });
+    thisCharacteristic.on('get', function (callback) { callback(null, parseInt(that.device.attributes.heatingSetpoint)); });
+    thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
+    that.platform.addAttributeUsage("heatingSetpoint", this.deviceid, thisCharacteristic);
+	
+	thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CarbonDioxideLevel)
+     	thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.power)); })
+        that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+
 }
 else {	
 	
