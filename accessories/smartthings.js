@@ -1669,9 +1669,28 @@ else if (device.commands.heater) {
     thisCharacteristic.on('set', function (value, callback) { that.platform.api.runCommand(callback, that.deviceid, "setLevel", { value1: value }); });
     that.platform.addAttributeUsage("heatingSetpoint", this.deviceid, thisCharacteristic);
 	
-	thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CarbonDioxideLevel)
-     	thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.power)); })
-        that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
+	thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.CurrentRelativeHumidity)
+        thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.humidity)); });
+        that.platform.addAttributeUsage("humidity", this.deviceid, thisCharacteristic);
+	
+	thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.LockPhysicalControls)
+    	thisCharacteristic.on('get', function (callback) {
+        	if (that.device.attributes.childlock == 'on')
+            		callback(null, Characteristic.LockPhysicalControls.CONTROL_LOCK_ENABLED);
+        	else if (that.device.attributes.childlock == 'off')
+            		callback(null, Characteristic.LockPhysicalControls.CONTROL_LOCK_DISABLED);
+    	});
+    	thisCharacteristic.on('set', function (value, callback) {
+        	if (value == Characteristic.LockPhysicalControls.CONTROL_LOCK_ENABLED) {
+            		that.platform.api.runCommand(callback, that.deviceid, "childLockOn");
+            		that.device.attributes.childlock = "on";
+        	} else if (value == Characteristic.LockPhysicalControls.CONTROL_LOCK_DISABLED) {
+            		that.platform.api.runCommand(callback, that.deviceid, "childLockOff");
+            		that.device.attributes.childlock = "off";
+       	 	}
+    	});
+    	that.platform.addAttributeUsage("door", this.deviceid, thisCharacteristic);
+
 
 }
 else {	
