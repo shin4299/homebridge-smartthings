@@ -1624,9 +1624,9 @@ else if (device.commands.Xiaomiheater) {
     thisCharacteristic.on('get', function (callback) {
         if (that.device.attributes.thermostatMode == "off") 
             callback(null, Characteristic.CurrentHeaterCoolerState.INACTIVE);
-        else if (that.device.attributes.thermostatMode == "heat" && that.device.attributes.thermostatOperatingState == "heating")
-            callback(null, Characteristic.CurrentHeaterCoolerState.IDLE);
         else if (that.device.attributes.thermostatMode == "heat" && that.device.attributes.thermostatOperatingState == "idle")
+            callback(null, Characteristic.CurrentHeaterCoolerState.IDLE);
+        else if (that.device.attributes.thermostatMode == "heat" && that.device.attributes.thermostatOperatingState == "heating")
             callback(null, Characteristic.CurrentHeaterCoolerState.HEATING);
     });
     that.platform.addAttributeUsage("thermostatMode", this.deviceid, thisCharacteristic);
