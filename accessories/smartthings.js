@@ -1602,7 +1602,7 @@ if (device.commands.cooler) {
         that.platform.addAttributeUsage("power", this.deviceid, thisCharacteristic);
 
 }
-else if (device.commands.heater) {
+else if (device.commands.Xiaomiheater) {
     this.deviceGroup = "thermostats";
 
     thisCharacteristic = this.getaddService(Service.HeaterCooler).getCharacteristic(Characteristic.Active)
