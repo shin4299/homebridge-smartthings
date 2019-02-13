@@ -1362,13 +1362,13 @@ if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.d
 
         thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideDetected)
         thisCharacteristic.on('get', function (callback) {
-            if (!that.device.attributes.carbonDioxideSet) {
-                if (that.device.attributes.carbonDioxide < 1200)
+            if (!that.device.attributes.co2notice) {
+                if (that.device.attributes.carbonDioxide < 1500)
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
                 else
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
             } else {
-                if (that.device.attributes.carbonDioxideSet == 'normal')
+                if (that.device.attributes.co2notice == 'unnotice')
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_NORMAL);
                 else
                     callback(null, Characteristic.CarbonDioxideDetected.CO2_LEVELS_ABNORMAL);
@@ -1376,7 +1376,7 @@ if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.d
         });
 
         that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
-        that.platform.addAttributeUsage("carbonDioxideSet", this.deviceid, thisCharacteristic);
+        that.platform.addAttributeUsage("co2notice", this.deviceid, thisCharacteristic);
     }
 }
 
