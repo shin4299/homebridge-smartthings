@@ -1351,10 +1351,7 @@ if ((device.capabilities["Carbon Monoxide Detector"] !== undefined) && (that.dev
 }
 
 if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.device.attributes.carbonDioxide)) {
-    if (device.capabilities["Air Quality Sensor"]) {
-        this.deviceGroup = "noneed";
-    }
-    else {
+
         this.deviceGroup = "detectors";
         thisCharacteristic = this.getaddService(Service.CarbonDioxideSensor).getCharacteristic(Characteristic.CarbonDioxideLevel)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.carbonDioxide)); })
@@ -1377,7 +1374,7 @@ if ((device.capabilities["Carbon Dioxide Measurement"] !== undefined) && (that.d
 
         that.platform.addAttributeUsage("carbonDioxide", this.deviceid, thisCharacteristic);
         that.platform.addAttributeUsage("co2notice", this.deviceid, thisCharacteristic);
-    }
+    
 }
 
 
