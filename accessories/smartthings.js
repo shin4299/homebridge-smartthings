@@ -1260,6 +1260,18 @@ if (device.commands.XiaomiPM25) {
         that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
 
 //            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.PM2_5Density)
+	
+	
+            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirParticulateSize)
+            thisCharacteristic.on('get', function (callback) {
+                switch (that.device.attributes.valvetype) {
+                    default:
+                        callback(null, Characteristic.AirParticulateSize.size2_5);
+                        break;
+                }
+            });
+            that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
+	
             thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.AirParticulateDensity)
         thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.fineDustLevel)) });
         that.platform.addAttributeUsage("fineDustLevel", this.deviceid, thisCharacteristic);
