@@ -1353,11 +1353,11 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
             that.platform.addAttributeUsage("so2_value", this.deviceid, thisCharacteristic);
         }
 
-                if (device.capabilities["Tvoc Measurement"] !== undefined) {
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.VolatileOrganicCompoundDensity)
-            thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.tvocLevel)) });
-            that.platform.addAttributeUsage("tvocLevel", this.deviceid, thisCharacteristic);
-        }
+ //               if (device.capabilities["Tvoc Measurement"] !== undefined) {
+   //         thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.VolatileOrganicCompoundDensity)
+     //       thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.tvocLevel)) });
+       //     that.platform.addAttributeUsage("tvocLevel", this.deviceid, thisCharacteristic);
+        //}
     }
 }
 
