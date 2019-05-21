@@ -1354,7 +1354,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
         }
 
         if (device.capabilities["Tvoc Measurement"] !== undefined) {
-            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.VolatileOrganicCompoundsDensity)
+            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.VOCDensity)
             thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.tvocLevel)) });
             that.platform.addAttributeUsage("tvocLevel", this.deviceid, thisCharacteristic);
         }
