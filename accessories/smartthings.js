@@ -1251,7 +1251,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
             else if (that.device.attributes.fineDustLevel < 30)
                 callback(null, Characteristic.AirQuality.FAIR);
             else if (that.device.attributes.fineDustLevel < 100)
-                callback(null, Characteristic.AirQuality.INFAIR);
+                callback(null, Characteristic.AirQuality.INFERIOR);
             else if (that.device.attributes.fineDustLevel < 1000)
                 callback(null, Characteristic.AirQuality.POOR);
             else
@@ -1288,7 +1288,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
                 else if (that.device.attributes.airQuality > 70)
                     callback(null, Characteristic.AirQuality.FAIR);
                 else if (that.device.attributes.airQuality > 60)
-                    callback(null, Characteristic.AirQuality.INFAIR);
+                    callback(null, Characteristic.AirQuality.INFERIOR);
                 else if (that.device.attributes.airQuality > 0)
                     callback(null, Characteristic.AirQuality.POOR);
                 else
@@ -1305,7 +1305,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
                 else if (that.device.attributes.airQuality < 100)
                     callback(null, Characteristic.AirQuality.FAIR);
                 else if (that.device.attributes.airQuality < 250)
-                    callback(null, Characteristic.AirQuality.INFAIR);
+                    callback(null, Characteristic.AirQuality.INFERIOR);
                 else if (that.device.attributes.airQuality < 1000)
                     callback(null, Characteristic.AirQuality.POOR);
                 else
@@ -1353,11 +1353,11 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
             that.platform.addAttributeUsage("so2_value", this.deviceid, thisCharacteristic);
         }
 
- //               if (device.capabilities["Tvoc Measurement"] !== undefined) {
-   //         thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.VolatileOrganicCompoundDensity)
-     //       thisCharacteristic.on('get', function (callback) { callback(null, Math.round(that.device.attributes.tvocLevel)) });
-       //     that.platform.addAttributeUsage("tvocLevel", this.deviceid, thisCharacteristic);
-        //}
+        if (device.capabilities["Tvoc Measurement"] !== undefined) {
+            thisCharacteristic = this.getaddService(Service.AirQualitySensor).getCharacteristic(Characteristic.VolatileOrganicCompoundsDensity)
+            thisCharacteristic.on('get', function (callback) { callback(null, parseFloat(that.device.attributes.tvocLevel)) });
+            that.platform.addAttributeUsage("tvocLevel", this.deviceid, thisCharacteristic);
+        }
     }
 }
 
