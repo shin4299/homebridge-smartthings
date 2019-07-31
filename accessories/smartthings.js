@@ -1181,13 +1181,20 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
                     case 'ShowerHead':
                         callback(null, Characteristic.ValveType.SHOWER_HEAD);
                         break;
+		    case 'GenericValve':
+                        callback(null, Characteristic.ValveType.GENERIC_VALVEIRRIGATION);
+                        break;
                     case 'Sprinkler':
+                    default:
+                        callback(null, Characteristic.ValveType.IRRIGATION);
+                        break;
+         /*           case 'Sprinkler':
                         callback(null, Characteristic.ValveType.IRRIGATION);
                         break;
                     case 'GenericValve':
                     default:
                         callback(null, Characteristic.ValveType.GENERIC_VALVE);
-                        break;
+                        break;*/
                 }
             });
             that.platform.addAttributeUsage('valvetype', this.deviceid, thisCharacteristic);
