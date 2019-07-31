@@ -1207,27 +1207,18 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
                 callback(null, that.device.attributes.switch == "on");
             });
             that.platform.addAttributeUsage('switch', this.deviceid, thisCharacteristic);
-//	if (device.attributes["mode"]) {	
-	    thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.LockPhysicalControls)
-            thisCharacteristic.on('get', function (callback) {
-                if (that.device.attributes.mode == "auto")
-                    callback(null, Characteristic.LockPhysicalControls.CONTROL_LOCK_ENABLED);
-                else if (that.device.attributes.mode == "manual")
-                    callback(null, Characteristic.LockPhysicalControls.CONTROL_LOCK_DISABLED);
-            });
-            thisCharacteristic.on('set', function (value, callback) {
-                if (value == Characteristic.LockPhysicalControls.CONTROL_LOCK_ENABLED) {
-                    that.platform.api.runCommand(callback, that.deviceid, "auto");
-                    that.device.attributes.mode = "auto";
-                } else if (value == Characteristic.LockPhysicalControls.CONTROL_LOCK_DISABLED) {
-                    that.platform.api.runCommand(callback, that.deviceid, "manual");
-                    that.device.attributes.mode = "manual";
-                }
-            });
-            that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
-				
-//	  }		 		  
-        }
+	if (device.attributes["mode"]) {	
+     	   thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
+     	   thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.mode == "auto"); })
+    	    thisCharacteristic.on('set', function (value, callback) {
+      	      if (value)
+     	           that.platform.api.runCommand(callback, that.deviceid, "auto");
+        	    else
+         	       that.platform.api.runCommand(callback, that.deviceid, "manual");
+      		});
+      	  that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
+	  }		 		  
+     }
 
 
     }
