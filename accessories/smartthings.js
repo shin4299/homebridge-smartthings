@@ -1207,6 +1207,23 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
                 callback(null, that.device.attributes.switch == "on");
             });
             that.platform.addAttributeUsage('switch', this.deviceid, thisCharacteristic);
+	if (device.attributes["mode"]) {	
+	    thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.TargetAirPurifierState)
+            thisCharacteristic.on('get', function (callback) {
+        	if (that.device.attributes.mode == "auto")
+            	callback(null, Characteristic.TargetAirPurifierState.AUTO);
+        	else
+            	callback(null, Characteristic.TargetAirPurifierState.MANUAL);
+    	    });
+      	    thisCharacteristic.on('set', function (value, callback) {
+	        if (value == Characteristic.TargetAirPurifierState.AUTO) {
+        	    that.platform.api.runCommand(callback, that.deviceid, "auto");
+        	} else if (value == Characteristic.TargetAirPurifierState.MANUAL) {
+            	    that.platform.api.runCommand(callback, that.deviceid, "manual");
+        	}
+    	    });
+	    that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);	
+	  }		 		  
         }
 
 
