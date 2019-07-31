@@ -1187,7 +1187,7 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
                     case 'GenericValve':
                     default:
                         callback(null, Characteristic.ValveType.GENERIC_VALVE);
-                        break;*/
+                        break;
                 }
             });
             that.platform.addAttributeUsage('valvetype', this.deviceid, thisCharacteristic);
