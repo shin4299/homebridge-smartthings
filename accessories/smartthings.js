@@ -1207,7 +1207,7 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
                 callback(null, that.device.attributes.switch == "on");
             });
             that.platform.addAttributeUsage('switch', this.deviceid, thisCharacteristic);
-	if (device.attributes["mode"]) {	
+//	if (device.attributes["mode"]) {	
 	    thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.TargetAirPurifierState)
             thisCharacteristic.on('get', function (callback) {
         	if (that.device.attributes.mode == "auto")
@@ -1223,7 +1223,7 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
         	}
     	    });
 	    that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);	
-	  }		 		  
+//	  }		 		  
         }
 
 
