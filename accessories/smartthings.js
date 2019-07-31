@@ -1217,11 +1217,11 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
             });
             thisCharacteristic.on('set', function (value, callback) {
                 if (value == Characteristic.LockPhysicalControls.CONTROL_LOCK_ENABLED) {
-                    that.platform.api.runCommand(callback, that.deviceid, "childLockOn");
-                    that.device.attributes.childlock = "auto";
+                    that.platform.api.runCommand(callback, that.deviceid, "auto");
+                    that.device.attributes.mode = "auto";
                 } else if (value == Characteristic.LockPhysicalControls.CONTROL_LOCK_DISABLED) {
-                    that.platform.api.runCommand(callback, that.deviceid, "childLockOff");
-                    that.device.attributes.childlock = "manual";
+                    that.platform.api.runCommand(callback, that.deviceid, "manual");
+                    that.device.attributes.mode = "manual";
                 }
             });
             that.platform.addAttributeUsage("mode", this.deviceid, thisCharacteristic);
