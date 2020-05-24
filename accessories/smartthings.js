@@ -1249,7 +1249,7 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
     }
 }
 	
-if ((device.capabilities["valve"] !== undefined)) {
+if ((device.capabilities["Valve"] !== undefined)) {
             this.deviceGroup = "valve";
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
             thisCharacteristic.on('get', function (callback) {
