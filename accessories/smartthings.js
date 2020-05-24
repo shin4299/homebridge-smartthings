@@ -1193,7 +1193,12 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
             that.platform.addAttributeUsage('valvetype', this.deviceid, thisCharacteristic);
             //Defines Valve State (opened/closed)
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
-            thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.valve == "open"); })
+		thisCharacteristic.on('get', function (callback) {
+                if (that.device.attributes.valve == "open")
+                    callback(null, Characteristic.Active.ACTIVE);
+                else
+                    callback(null, Characteristic.Active.INACTIVE);
+            });
             thisCharacteristic.on('set', function (value, callback) {
                 if (value)
                     that.platform.api.runCommand(callback, that.deviceid, "open");
@@ -1202,6 +1207,16 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
             });
             that.platform.addAttributeUsage("valve", this.deviceid, thisCharacteristic);
 
+		
+       /*     thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.valve == "open"); })
+            thisCharacteristic.on('set', function (value, callback) {
+                if (value)
+                    that.platform.api.runCommand(callback, that.deviceid, "open");
+                else
+                    that.platform.api.runCommand(callback, that.deviceid, "close");
+            });
+            that.platform.addAttributeUsage("valve", this.deviceid, thisCharacteristic);
+	*/
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.InUse);
             thisCharacteristic.on('get', function (callback) {
                 callback(null, that.device.attributes.valve == "open");
