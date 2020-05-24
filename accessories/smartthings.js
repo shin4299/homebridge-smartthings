@@ -1200,13 +1200,13 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
                 else
                     that.platform.api.runCommand(callback, that.deviceid, "close");
             });
-            that.platform.addAttributeUsage('valve', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage("valve", this.deviceid, thisCharacteristic);
 
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.InUse);
             thisCharacteristic.on('get', function (callback) {
                 callback(null, that.device.attributes.valve == "open");
             });
-            that.platform.addAttributeUsage('valve', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage("valve", this.deviceid, thisCharacteristic);
 	if (device.attributes["mode"]) {	
      	   thisCharacteristic = this.getaddService(Service.Switch).getCharacteristic(Characteristic.On)
      	   thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.mode == "auto"); })
