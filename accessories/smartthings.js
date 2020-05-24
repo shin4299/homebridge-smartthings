@@ -1200,7 +1200,7 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
                 else
                     that.platform.api.runCommand(callback, that.deviceid, "close");
             });
-            that.platform.addAttributeUsage('switch', this.deviceid, thisCharacteristic);
+            that.platform.addAttributeUsage('valve', this.deviceid, thisCharacteristic);
 
             thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.InUse);
             thisCharacteristic.on('get', function (callback) {
