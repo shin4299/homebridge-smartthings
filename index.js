@@ -111,7 +111,7 @@ SmartThingsPlatform.prototype = {
 			"Contact Sensor", "Three Axis", "Acceleration Sensor", "Momentary", "Door Control", "Garage Door Control",
 			"Relative Humidity Measurement", "Presence Sensor", "Thermostat", "Energy Meter", "Power Meter",
 			"Thermostat Cooling Setpoint", "Thermostat Mode", "Thermostat Fan Mode", "Thermostat Operating State",
-			"Thermostat Heating Setpoint", "Thermostat Setpoint", "Indicator"];
+			"Thermostat Heating Setpoint", "Thermostat Setpoint", "Indicator", "Valve"];
 		this.temperature_unit = 'F';
 
 		smartthings.init(this.app_url, this.app_id, this.access_token);
