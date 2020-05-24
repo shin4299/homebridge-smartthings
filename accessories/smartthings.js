@@ -1248,7 +1248,46 @@ if (device.capabilities["Switch"] !== undefined && this.deviceGroup == "unknown"
     }
     }
 }
+	
+if ((device.capabilities["valve"] !== undefined)) {
+            this.deviceGroup = "valve";
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.ValveType);
+            thisCharacteristic.on('get', function (callback) {
+                switch (that.device.attributes.valvetype) {
+                    case 'Faucet':
+                        callback(null, Characteristic.ValveType.WATER_FAUCET);
+                        break;
+                    case 'ShowerHead':
+                        callback(null, Characteristic.ValveType.SHOWER_HEAD);
+                        break;
+	           case 'Sprinkler':
+                        callback(null, Characteristic.ValveType.IRRIGATION);
+                        break;
+                    case 'GenericValve':
+                    default:
+                        callback(null, Characteristic.ValveType.GENERIC_VALVE);
+                        break;
+                }
+            });
+            that.platform.addAttributeUsage('valvetype', this.deviceid, thisCharacteristic);
+            //Defines Valve State (opened/closed)
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.Active);
+            thisCharacteristic.on('get', function (callback) { callback(null, that.device.attributes.valve == "open"); })
+            thisCharacteristic.on('set', function (value, callback) {
+                if (value)
+                    that.platform.api.runCommand(callback, that.deviceid, "open");
+                else
+                    that.platform.api.runCommand(callback, that.deviceid, "close");
+            });
+            that.platform.addAttributeUsage('switch', this.deviceid, thisCharacteristic);
 
+            thisCharacteristic = this.getaddService(Service.Valve).getCharacteristic(Characteristic.InUse);
+            thisCharacteristic.on('get', function (callback) {
+                callback(null, that.device.attributes.valve == "open");
+            });
+            that.platform.addAttributeUsage('valve', this.deviceid, thisCharacteristic);
+}
+	
 if (device.capabilities["Air Quality Sensor"] !== undefined) {
     	
     if (device.commands.XiaomiPM25) {
@@ -1371,7 +1410,7 @@ if (device.capabilities["Air Quality Sensor"] !== undefined) {
         }
     }
 }
-
+	
 if ((device.capabilities["Smoke Detector"] !== undefined) && (that.device.attributes.smoke)) {
     this.deviceGroup = "detectors";
 
