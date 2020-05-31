@@ -122,7 +122,7 @@ function SmartThingsAccessory(platform, device) {
                 });
                 that.platform.addAttributeUsage("level", this.deviceid, thisCharacteristic);
             */
-
+	if (device.attributes["setangle"]) {
             thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.SwingMode)
             thisCharacteristic.on('get', function (callback) {
                 if (that.device.attributes.setangle == "off")
@@ -137,7 +137,9 @@ function SmartThingsAccessory(platform, device) {
                     that.platform.api.runCommand(callback, that.deviceid, "setAngleOff");
             });
             that.platform.addAttributeUsage("setangle", this.deviceid, thisCharacteristic);
+	}
             /*
+	   
                 thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.TargetFanState)
                 thisCharacteristic.on('get', function (callback) {
                     if (that.device.attributes.fanmode == 'natural')
@@ -154,6 +156,7 @@ function SmartThingsAccessory(platform, device) {
                 });
                 that.platform.addAttributeUsage("fanmode", this.deviceid, thisCharacteristic);
             */
+	if (device.attributes["fanmode"]) {
             thisCharacteristic = this.getaddService(Service.Fanv2).getCharacteristic(Characteristic.RotationDirection)
             thisCharacteristic.on('get', function (callback) {
                 if (that.device.attributes.fanmode == 'natural')
@@ -169,6 +172,7 @@ function SmartThingsAccessory(platform, device) {
                 }
             });
             that.platform.addAttributeUsage("fanmode", this.deviceid, thisCharacteristic);
+	}
 
         }
         
